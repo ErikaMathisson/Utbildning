@@ -10,32 +10,40 @@ namespace Assignment2
     {
         static void Main(string[] args)
         {
-            int distanceToCup = 500;
+            double distanceToCup = 500;
             int maximumDistance = 750;
             int maxNumberOfSwings = 10;
             double gravity = 9.8;
             int angle;
             double angleInRadians;
-            double distance;
+            double distance = 0;
             int velocity;
+            int numberOfSwings = 0;
 
 
 
             Console.WriteLine("****** Golf game *******\n");
-            Console.WriteLine("Distance to cup is: "+distanceToCup);
-            Console.Write("Please enter an angle: ");
-            angle = int.Parse(Console.ReadLine());
-            angleInRadians = Math.PI / 180 * angle;
 
-            Console.Write("Please enter velocity: ");
-            velocity = int.Parse(Console.ReadLine());
-            distance = Math.Pow(velocity, 2) / gravity * Math.Sin(2 * angleInRadians);
+            while (distanceToCup != distance)
+            {
+                Console.WriteLine("Distance to cup is: " + distanceToCup + " m");
+                Console.Write("Please enter an angle: ");
+                angle = int.Parse(Console.ReadLine());
+                angleInRadians = Math.PI / 180 * angle;
+
+                Console.Write("Please enter velocity: ");
+                velocity = int.Parse(Console.ReadLine());
+                distance = Math.Pow(velocity, 2) / gravity * Math.Sin(2 * angleInRadians);
 
 
-            Console.WriteLine("Number of meters: "+distance);
+                Console.WriteLine("Number of meters: " + distance);
 
+                distanceToCup = distanceToCup - distance;
+                Console.WriteLine("New distance to cup is: " + distanceToCup + "m");
+                numberOfSwings++;
 
-
+            }
+            
 
 
             Console.ReadKey();
