@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +67,18 @@ namespace Exercise
                         case 14:
                             RunExcerciseFourteen();
                             break;
+                        case 18:
+                            RunExcerciseEightteen();
+                            break;
+                        case 19:
+                            RunExcerciseNineteen();
+                            break;
+                        case 21:
+                            RunExcerciseTwentyOne();
+                            break;
+                        case 27:
+                            RunExcerciseTwentyseven();
+                            break;
                         case -1:
                             KeepAlive = false;
                             break;
@@ -87,15 +100,16 @@ namespace Exercise
 
                 }
             }
-}
-       
+        }
+
+
         private static void RunExerciseOne()
         {
             String firstName = "Erika";
             String lastName = "Mathisson";
-          
+
             Console.WriteLine("Hello " + firstName + " " + lastName + " I'm glad to inform you that you are the test subject for my first assignment!");
-           
+
         }
 
         private static void RunExerciseTwo()
@@ -111,7 +125,7 @@ namespace Exercise
             Console.WriteLine("Yesterdays date is: " + yesterdayDate);
             // output of the subtracting dates
             //   Console.WriteLine("subtract: " + subtract);
-                                  
+
         }
 
         private static void RunExerciseThree()
@@ -119,7 +133,7 @@ namespace Exercise
 
             String firstName;
             String lastName;
-            
+
             Console.Write("Enter your first name: ");
             firstName = Console.ReadLine();
 
@@ -133,7 +147,7 @@ namespace Exercise
         private static void RunExcerciseFour()
         {
             String str = "The quick fox Jumped Over the DOG";
-            
+
             str = str.Replace("quick", "brown");
             str = str.Replace("DOG", "dog");
             str = str.Replace("J", "j");
@@ -148,38 +162,40 @@ namespace Exercise
         {
 
             String str = "Arrays are very common in programming, they look something like [1,2,3,4,5]";
-       //     Console.ReadLine(); why are this suppose to be there?
+            //     Console.ReadLine(); why are this suppose to be there?
             Console.WriteLine(str);
             // the text [1,2,3,4,5] are stored in variable newStr
             String newStr = str.Substring(64);
             //remove string "2,3,"
-            newStr = newStr.Remove(3,4);
-            newStr = newStr.Insert(6,",6,7,8,9,10");
+            newStr = newStr.Remove(3, 4);
+            newStr = newStr.Insert(6, ",6,7,8,9,10");
 
             Console.WriteLine(newStr);
-            
+
         }
 
         private static void RunExcerciseSix()
         {
             int firstNumber;
             int secondNumber;
-            
+
             Console.Write("Please enter a first integer: ");
             firstNumber = int.Parse(Console.ReadLine());
             Console.Write("Please enter a second integer: ");
             secondNumber = int.Parse(Console.ReadLine());
 
-            if(firstNumber > secondNumber)
+            if (firstNumber > secondNumber)
             {
                 Console.WriteLine("The first integer " + firstNumber + " is the biggest number");
                 Console.WriteLine("The second integer " + secondNumber + " is the smallest number");
-            }else if(firstNumber < secondNumber)
+            }
+            else if (firstNumber < secondNumber)
             {
                 Console.WriteLine("The first integer " + firstNumber + " is the smallest number");
                 Console.WriteLine("The second integer " + secondNumber + " is the biggest number");
 
-            }else
+            }
+            else
             {
                 Console.WriteLine("The first integer " + firstNumber + " and the second integer " + secondNumber + " are equal");
             }
@@ -195,7 +211,7 @@ namespace Exercise
 
             double ratio = firstNumber / (double)secondNumber;
             Console.WriteLine("The ratio between the integers are: " + ratio);
-            
+
 
         }
 
@@ -211,7 +227,7 @@ namespace Exercise
 
             double volume = (4 * Math.PI * radius * radius * radius) / 3;
             Console.WriteLine("The volume is: " + volume);
-            
+
         }
 
         private static void RunExcerciseEight()
@@ -233,7 +249,7 @@ namespace Exercise
 
             timesTen = Math.Pow(decimalNumber, 10);
             Console.WriteLine("The decimalnumber " + decimalNumber + " raised to the power of 10 is: " + timesTen);
-            
+
         }
 
         private static void RunExcerciseNine()
@@ -247,25 +263,25 @@ namespace Exercise
             Console.Write("Please enter your name: ");
             name = Console.ReadLine();
 
-            Console.Write("Hello, " + name+ " what year where you born (YYYY)? ");
+            Console.Write("Hello, " + name + " what year where you born (YYYY)? ");
             birthYear = int.Parse(Console.ReadLine());
 
             age = DateTime.Now.Year - birthYear;
             Console.WriteLine("You are " + age + " years old");
 
-            if(age > 18)
+            if (age > 18)
             {
                 Console.Write("Do you want to order a beer, y for yes and n for no? ");
                 orderBeer = Console.ReadLine();
-                if(orderBeer == "y")
+                if (orderBeer == "y")
                 {
                     Console.WriteLine("The beer has been ordered! ");
                 }
-                else if(orderBeer == "n")
+                else if (orderBeer == "n")
                 {
                     Console.Write("Do you want to order a coke, y for yes and n for no? ");
                     orderCoke = Console.ReadLine();
-                    if(orderCoke== "y")
+                    if (orderCoke == "y")
                     {
                         Console.WriteLine("The coke has been ordered! ");
 
@@ -287,7 +303,7 @@ namespace Exercise
             {
                 Console.Write("Do you want to order a coke, y for yes and n for no? ");
                 orderCoke = Console.ReadLine();
-                if(orderCoke == "y")
+                if (orderCoke == "y")
                 {
                     Console.WriteLine("The coke has been ordered ");
 
@@ -330,13 +346,13 @@ namespace Exercise
                         if (Console.ForegroundColor == ConsoleColor.Green)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            
+
                         }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
                         }
-                    
+
                         break;
 
                     case -1:
@@ -364,7 +380,7 @@ namespace Exercise
             Console.Write("Please enter a second number: ");
             b = int.Parse(Console.ReadLine());
 
-            if(b != 0)
+            if (b != 0)
             {
                 product = a / (double)b;
                 Console.WriteLine("The product between " + a + " and " + b + " is " + product);
@@ -385,18 +401,18 @@ namespace Exercise
             Console.Write("Please enter an integer above zero: ");
             number = int.Parse(Console.ReadLine());
 
-            if(number == 0)
+            if (number == 0)
             {
                 Console.WriteLine("The number zero is not a valid number");
             }
             else
             {
 
-                for(int i=0; i<=number; i++)
+                for (int i = 0; i <= number; i++)
                 {
                     dividedByTwo = i % 2;
 
-                    if(dividedByTwo == 0)
+                    if (dividedByTwo == 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
 
@@ -415,10 +431,10 @@ namespace Exercise
 
                 Console.WriteLine("----------------------------------------");
 
-                for(int j=number; j>=0; j--)
+                for (int j = number; j >= 0; j--)
                 {
                     dividedByTwo = j % 2;
-                    if(dividedByTwo == 0)
+                    if (dividedByTwo == 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                     }
@@ -427,7 +443,7 @@ namespace Exercise
                         Console.ForegroundColor = ConsoleColor.Green;
 
                     }
-                    
+
                     Console.WriteLine(j);
 
                 }
@@ -448,8 +464,8 @@ namespace Exercise
                 for (int j = 1; j <= 10; j++)
                 {
                     k = i * j;
-                    
-                    Console.Write(k +"\t");
+
+                    Console.Write(k + "\t");
 
                 }
                 Console.Write("\n");
@@ -462,16 +478,16 @@ namespace Exercise
             int number;
             int numberOfGuesses = 1;
             var keepAlive = true;
-            
+
             Random rnd = new Random();
             int randomNumber = rnd.Next(1, 500);
-            
+
             Console.Write("Please guess a number between 1 and 500: ");
             number = int.Parse(Console.ReadLine());
-            
-            while(keepAlive)
+
+            while (keepAlive)
             {
-            
+
                 if (number == randomNumber)
                 {
                     Console.WriteLine("Your guess is correct! The random number is: " + randomNumber);
@@ -481,12 +497,12 @@ namespace Exercise
                 }
                 else
                 {
-                    if(number > randomNumber)
+                    if (number > randomNumber)
                     {
                         Console.WriteLine("Your guess was to big ");
                         Console.Write("Please enter a new number: ");
                         number = int.Parse(Console.ReadLine());
-                        
+
                     }
                     else
                     {
@@ -498,7 +514,7 @@ namespace Exercise
                 }
 
                 numberOfGuesses++;
-                
+
             }
 
         }
@@ -507,17 +523,17 @@ namespace Exercise
         private static void RunExcerciseFourteen()
         {
 
-            int number=0;
+            int number = 0;
             int amountOfNumbers = 0;
-            int sum=0;
-            double average=0.0;
+            int sum = 0;
+            double average = 0.0;
 
-            while(number != -1)
+            while (number != -1)
             {
                 Console.Write("Please enter a number, if -1 is entered the method will stop: ");
                 number = int.Parse(Console.ReadLine());
 
-                if(number!= -1)
+                if (number != -1)
                 {
                     sum = number + sum;
                     amountOfNumbers++;
@@ -526,17 +542,184 @@ namespace Exercise
 
             }
 
-            if(sum != 0)
+            if (sum != 0)
             {
                 average = sum / (double)amountOfNumbers;
             }
-           
+
 
             Console.WriteLine("Sum: " + sum);
             Console.WriteLine("Average: " + average);
 
         }
 
-     
+        /// <summary>
+        /// Create an array of ten integers and assign every element with a new random number
+        /// Create an array of ten doubles and assign every element with the value of 1/the integer from the first array
+        /// Loop through both arrays and print out the values, use a foreach loop
+        /// </summary>
+        private static void RunExcerciseEightteen()
+        {
+            //create an array of integers with ten elements
+            int[] intArray = new int[10];
+            //create an array of doules with ten elements
+            double[] doubleArray = new double[10];
+            Random rand = new Random(); //generating a random integer
+
+            //assign the intArray with random integer value on each element
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                int rnd = rand.Next(100); //creates a new random value of type int with maximum value of 100
+                intArray[i] = rnd; //store the randominteger in the array
+            }
+
+            //assign the values to the doublearray
+            for (int j = 0; j < doubleArray.Length; j++)
+            {
+                //the value for the doubleArray is 1/the value from the intArray
+                doubleArray[j] = 1 / (double)intArray[j];
+
+            }
+
+            //print out all the elements in the array of integers
+            foreach (int item in intArray)
+            {
+                Console.WriteLine("Value of array of integers: " + item);
+
+            }
+            //print out all the elements in the array of doubles
+            foreach (double item in doubleArray)
+            {
+                Console.WriteLine("Value of array of doubles: " + item);
+
+            }
+
+
+            Console.ReadKey();
+
+        }
+
+        /// <summary>
+        /// Create a program that outputs a price that the customer (user) needs to pay. 
+        /// This should be an integer value. 
+        /// Then let the user input the sum he hands the cashier.  
+        /// Let your program then calculate the change that the customer should get back in different coin unit.
+        /// For example, if the user hands the cashier 500 kr and the price is 376 kr, the change will be 124. 
+        /// This can be divided up into 100x1 kr. + 20x1 kr. + 4x1 kr. 
+        /// The goal here is to get as few coins as possible.
+        /// Tip: Use an array to store the different coin units, like 100, 50, 20 etc.
+        /// When you have calculated the change, go through the coin units from larges to smallest and 
+        /// calculate how many of each type the customer should get back.Here is a perfect scenario when integer division and modulus is viable to use.
+        /// </summary>
+        private static void RunExcerciseNineteen()
+        {
+
+            int[] changeValues = new int[] { 1000, 500, 200, 100, 50, 20, 10, 5, 1 }; //add all possible values for change in an array
+
+            Random rand = new Random(); 
+            int price = rand.Next(100, 1000); //price a random number between 100 and 1000
+            int sumEntered; //how much sum did the user enter
+
+            int change; //how much change should the user get back
+
+            Console.WriteLine("You need to pay: " + price);
+            Console.WriteLine("Please enter sum entered: ");
+            sumEntered = int.Parse(Console.ReadLine());
+            change = sumEntered - price;
+            Console.WriteLine("You should get " + change + " back");
+            Console.WriteLine("Coins distribution: ");
+
+            foreach (int item in changeValues)
+            {
+                int changeBack = change / item;  //how much of each value should the user get
+
+                Console.WriteLine(item + " coins = " + changeBack);
+
+                if (changeBack != 0)
+                {
+                    change = change - item;
+                }
+
+
+            }
+            Console.ReadKey();
+            
+        }
+
+        /// <summary>
+        /// Let the user input a string with numbers comma separated like “1,2,34,83,19,45”.  
+        /// Create the code to separate the numbers in the string into an array and find the min, max and average value.
+        /// Print these out to the screen.
+        /// Tip: use the Split-function on the String-object. 
+        /// Keep in mind that the Split-method returns an array of Strings, so you have to convert each value to an integer 
+        /// before you can do the calculations.
+        /// </summary>
+        private static void RunExcerciseTwentyOne()
+        {
+            string enteredNumbers;
+            int maxValue;
+            int minValue;
+            int sum=0;
+            double averageValue;
+
+
+            Console.WriteLine("Please enter a string with numbers commasepareted");
+            enteredNumbers = Console.ReadLine();
+            char separator = ',';
+
+            string[] values = enteredNumbers.Split(separator);
+            int[] numbers = new int[values.Length];
+
+            maxValue = numbers[0];
+            minValue = numbers[0];
+            
+
+            for (int i = 0; i < values.Length; i++)
+            {
+               
+                numbers[i] = int.Parse(values[i]);
+
+                if(numbers[i] > maxValue)
+                {
+                    maxValue = numbers[i];
+                
+                }
+                if (numbers[i]< minValue)
+                {
+                    Console.WriteLine("Min value 1: " + minValue);
+                    minValue = numbers[i];
+
+                }
+
+                sum = sum + numbers[i];
+
+
+            }
+
+            averageValue = sum / (double)numbers.Length;
+            Console.WriteLine("Max value: "+maxValue);
+            Console.WriteLine("Min value: " +minValue);
+            Console.WriteLine("Average value: " +averageValue);
+            
+
+        }
+        private static void RunExcerciseTwentyseven()
+        {
+
+            StreamReader str = new StreamReader("TextFile1.txt");
+
+            while (!str.EndOfStream)
+            {
+                Console.WriteLine("From file: " + str.ReadLine());
+
+            }
+          
+
+
+        }
+
+       
+
+
     }
 }
