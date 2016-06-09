@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment2
+namespace Golf
 {
     class Program
     {
@@ -14,18 +14,16 @@ namespace Assignment2
             double distance = 0;
             string userAngle = "";
             string userVelocity = "";
-            bool keepAlive = true;
-            bool alive = true;
+            bool innerAlive = true;
+            bool outerAlive = true;
+            double angle;
+            double velocity;
 
-            while (alive)
+            while (outerAlive) //while for starting a new game after the first game has been run
             {
                 List<double> swingDistance = new List<double>(); //list for all swings for later presentation
-                int numberOfSwings = 0;
-
-
-                //double distanceToCup = SetDistanceToCup(); //set the distance to the cup
-
-                double distanceToCup = 640;
+                int numberOfSwings = 0; //no swings have been made
+                double distanceToCup = SetDistanceToCup(); //set the distance to the cup
                 int maxNumberOfSwings = SetMaximumNumberOfSwings(distanceToCup); //determine how many swings that are maximum
                 int maximumDistance = (int)distanceToCup + 200; //set the maximum distance the user can swing before exception
 
@@ -37,51 +35,24 @@ namespace Assignment2
 
                 try
                 {
-                    while (keepAlive)
+                    //loop for playing until goal is reached or an exception has occured
+                    while (innerAlive)
                     {
-                        double angle;
-                        double velocity;
-
                         Console.Write("\nPlease enter an angle: ");
                         userAngle = Console.ReadLine(); //angle input from user in format string
-                        // validates if the angle can be converted to double, if it can't be converted, make the user enter a new angle until it can
-                        while (!CanBeConverted(userAngle))
-                        {
-                            Console.WriteLine("Not a valid number entered!");
-                            Console.Write("Please enter an angle: ");
-                            userAngle = Console.ReadLine();
-                        }
-
-                        angle = ConvertToDouble(userAngle); //convert the angle from user from string to double
-
-                        if (angle < 0) // the angle can't be of negative value, convert to abs value instead
-                        {
-                            Console.WriteLine("The angle can't be negative, will convert it to a positive number!");
-                            angle = Math.Abs(angle);
-                        }
+                        //validates the user angle input and converts to double
+                        angle = ValidateConvertAngle(userAngle);
 
                         Console.Write("Please enter velocity (m/s): ");
-                        userVelocity = Console.ReadLine(); //velocity input from user in format string
-                        //validates if the velocity can be converted to double, if it can't be converted, make the user enter a new velocity until it can
-                        while (!CanBeConverted(userVelocity))
-                        {
-                            Console.WriteLine("Not a valid number entered!");
-                            Console.Write("Please enter a velocity (m/s): ");
-                            userVelocity = Console.ReadLine();
-                        }
+                        userVelocity = Console.ReadLine(); //velocity input from user in format string  
+                        //validates the user velocity input and converts to double               
+                        velocity = ValidateConvertVelocity(userVelocity);
+                        //calculate the distance for the swing
+                        distance = CalculateDistance(angle, velocity, gravity);
+                        //add the distance of the swing to the list for later presentation
+                        swingDistance.Add(distance);
 
-                        velocity = ConvertToDouble(userVelocity); //convert the velocity from string to double
-
-                        if (velocity < 0) //the velocity can't be negative, convert to abs value instead
-                        {
-                            Console.WriteLine("The velocity can't be negative, will convert it to a positive number!");
-                            velocity = Math.Abs(velocity);
-                        }
-
-                        distance = CalculateDistance(angle, velocity, gravity); //calculate the distance for the swing
-                        swingDistance.Add(distance); //add the distance of the swing to the list for later presentation
-
-                        //checks if the distance of the swing is longer than maximumdistance
+                        //checks if the distance of the swing is longer than maximum distance
                         if (distance > maximumDistance)
                         {
                             throw new CustomException("The length of you swing extended maximumlength! ");
@@ -101,91 +72,69 @@ namespace Assignment2
                             distanceToCup = distanceToCup - distance;
                         }
 
-
                         numberOfSwings++;  //increment the number of swings used
 
                         //the distance to cup is smaller than 0.2 (the size of the cup) -> the user has hit the target, the game will end
                         if (distanceToCup < 0.2)
                         {
-                            keepAlive = false; //no need to swing anymore target reached
+                            innerAlive = false; //no need to try anymore target reached
 
                             Console.ForegroundColor = ConsoleColor.Yellow; //set the color for victory
                             Console.WriteLine("\nCongratulations, the ball is in the cup! ");  //the ball is in the cup
                             Console.WriteLine("Your total number of swings: " + numberOfSwings); //total number of swings needed
-                            Console.WriteLine("Maximum number of swings allowed: " +maxNumberOfSwings); //maximum number of swings
-
+                            Console.WriteLine("Maximum number of swings allowed: " + maxNumberOfSwings); //maximum number of swings
+                            //print how long every swing was
                             for (int i = 0; i < swingDistance.Count; i++)
                             {
-                                Console.WriteLine("Swing number: " +$"{i+1}" +" was: " +swingDistance[i] + " m");
-                           
+                                Console.WriteLine("Swing number: " + $"{i + 1}" + " was: " + swingDistance[i] + " m");
                             }
 
-
-                            Console.ForegroundColor = ConsoleColor.White; //reset the text color
-                     //       Console.ReadKey();
-
-
-
+                            Console.ForegroundColor = ConsoleColor.White; //reset the text color                            
                         }
-                        else if (numberOfSwings == maxNumberOfSwings)
+                        else if (numberOfSwings == maxNumberOfSwings) //the maximum number of swings has been reached
                         {
-
                             Console.WriteLine("Distance to cup is: " + distanceToCup + " m");
-                            Console.WriteLine("Number of swings: "+numberOfSwings);
+                            Console.WriteLine("Number of swings: " + numberOfSwings);
                             throw new CustomException("Maximum number of swings reached and you didn't reach the goal! ");
 
                         }
                         else
                         {
+                            //set the new distance to cup, round up to two decimals
                             distanceToCup = Math.Round(distanceToCup, 2);
-
-                       
                             Console.WriteLine("New distance to cup is: " + distanceToCup + " m"); //write the new distance to cup for the user
-                            Console.WriteLine("Number of swings: " + numberOfSwings);
-
-
+                            Console.WriteLine("Number of swings: " + numberOfSwings); //print out the number of swings
                         }
-                                                                   
-                      
-              //          Console.WriteLine("Number of swings: " + numberOfSwings);                     
 
                     }
-
-
-                    //Console.WriteLine("\nCongratulations, the ball is in the cup! ");  //the ball is in the cup
-                    //Console.WriteLine("Number of swings: " + numberOfSwings); //total number of swings needed
-                    //foreach (var item in swingDistance)
-                    //{
-                    //    Console.WriteLine("Distance of swings: " + item); //print out the distans of all swings needed
-                    //}
-               //     Console.ReadKey();
 
                 }
                 catch (CustomException e)
                 {
                     Console.ForegroundColor = ConsoleColor.Red; //set the error text to red
-
                     Console.WriteLine(e.Message); //print the exception message to the user
                     Console.ForegroundColor = ConsoleColor.White; //reset the text color
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadKey();
                 }
-
-                Console.Write("Do yo want to play again? (y) for yes and (n) for no: ");
-                if (Console.ReadLine() == "n")
+                finally
                 {
-                    alive = false;
-                }
-                else
-                {
-                    swingDistance.Clear();
-                    keepAlive = true;
-                    Console.Clear();
+                    //another game?
+                    Console.Write("Do yo want to play again? (y) for yes and (n) for no: ");
+                    //the user don't want to play again, exit the program
+                    if (Console.ReadLine() == "n")
+                    {
+                        outerAlive = false;
+                    }
+                    else
+                    {
+                        swingDistance.Clear(); //clears the list for another game
+                        innerAlive = true;
+                        Console.Clear(); //clear the console
+                    }
                 }
 
             }
-
-
         }
 
         /// <summary>
@@ -216,7 +165,6 @@ namespace Assignment2
         /// <returns>bool</returns>
         private static bool CanBeConverted(string inputText)
         {
-
             double convertTo = 0.0;
 
             if (double.TryParse(inputText, out convertTo))
@@ -259,8 +207,63 @@ namespace Assignment2
             return distance;
         }
 
+        /// <summary>
+        /// Validates the user input for angle and convert it to double
+        /// </summary>
+        /// <param name="userAngle">Input from user in format string</param>
+        /// <returns>double</returns>
+        private static double ValidateConvertAngle(string userAngle)
+        {
+            // validates if the angle can be converted to double, if it can't be converted, make the user enter a new angle until it can
+            while (!CanBeConverted(userAngle))
+            {
+                Console.WriteLine("Not a valid number entered!");
+                Console.Write("Please enter an angle: ");
+                userAngle = Console.ReadLine();
+            }
+
+            double angle = ConvertToDouble(userAngle); //convert the angle from user from string to double
+            // the angle can't be of negative value, convert to abs value instead
+            if (angle < 0)
+            {
+                Console.WriteLine("The angle can't be negative, will convert it to a positive number!");
+                angle = Math.Abs(angle);
+            }
+
+            return angle;
+        }
+
+        /// <summary>
+        /// Validates the user input for velocity and convert it to double
+        /// </summary>
+        /// <param name="userVelocity">Input from user in format string</param>
+        /// <returns>double</returns>
+        private static double ValidateConvertVelocity(string userVelocity)
+        {
+            double velocity;
+            //validates if the velocity can be converted to double, if it can't be converted, make the user enter a new velocity until it can
+            while (!CanBeConverted(userVelocity))
+            {
+                Console.WriteLine("Not a valid number entered!");
+                Console.Write("Please enter a velocity (m/s): ");
+                userVelocity = Console.ReadLine();
+            }
+
+            velocity = ConvertToDouble(userVelocity); //convert the velocity from string to double
+
+            if (velocity < 0) //the velocity can't be negative, convert to abs value instead
+            {
+                Console.WriteLine("The velocity can't be negative, will convert it to a positive number!");
+                velocity = Math.Abs(velocity);
+            }
+
+            return velocity;
+
+        }
+
 
     }
 }
+
 
 
