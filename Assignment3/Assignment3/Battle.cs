@@ -28,6 +28,12 @@ namespace Assignment3
 
 
         /// <summary>
+        /// For keeping track of which round it is in the battle
+        /// </summary>
+        public int roundNumber { get; set; }
+
+
+        /// <summary>
         /// A list of all rounds taken for a battle
         /// </summary>
         public List<Round> rounds { get; set; }
