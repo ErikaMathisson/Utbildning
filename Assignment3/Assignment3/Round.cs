@@ -17,7 +17,7 @@ namespace Assignment3
         /// <summary>
         /// The roll for the character
         /// </summary>
-        public int CharacterRoll { get; set; }
+        public int PlayerRoll { get; set; }
 
         /// <summary>
         /// The roll for the opponent
@@ -25,10 +25,19 @@ namespace Assignment3
         public int OpponentRoll { get; set; }
 
         /// <summary>
-        /// For keeping track of who won this round
+        /// The total score for the player each round
         /// </summary>
-        public bool CharacterWon { get; set; }
+        public int PlayerTotal { get; set; }
 
+        /// <summary>
+        /// The total score for the opponent each round
+        /// </summary>
+        public int OpponentTotal { get; set; }
+        
+        /// <summary>
+        /// Name of the winner each round
+        /// </summary>
+        public string NameOfWinner { get; set; }
 
     }
 }

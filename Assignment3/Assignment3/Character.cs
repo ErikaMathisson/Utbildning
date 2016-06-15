@@ -12,8 +12,9 @@ namespace Assignment3
         /// <summary>
         /// Empty constructor for Character
         /// </summary>
-        public Character()
+        private Character()
         {
+            battles = new List<Battle>();
 
         }
 
@@ -23,7 +24,7 @@ namespace Assignment3
         /// <param name="name">Name of the character</param>
         /// <param name="strength">The strength of the character(random value)</param>
         /// <param name="health">The health of the character (random value)</param>
-        public Character(string name, int strength, int health)
+        public Character(string name, int strength, int health, bool isOpponent):this()
         {
             //if (name.Length != 0 && name != null)
             //{
@@ -44,19 +45,11 @@ namespace Assignment3
             this.Health = health;
             this.Damage = strength / 2;
             this.isAlive = true;
-
-            //Console.WriteLine("strength " + this.Strength);
-            //Console.WriteLine("helth " + this.Health);
-            //Console.WriteLine("damage " + this.Damage);
-
-
-
+            this.IsOpponent = isOpponent;
+               
 
         }
-
-
-
-
+        
         /// <summary>
         /// Constructor for character that takes a name as input
         /// </summary>
@@ -102,6 +95,10 @@ namespace Assignment3
         }
 
 
+        /// <summary>
+        /// A list of all battles connected to the character
+        /// </summary>
+        public List<Battle> battles { get; set; }
 
 
         /// <summary>
@@ -128,6 +125,12 @@ namespace Assignment3
         /// Is the character still alive
         /// </summary>
         public bool isAlive { get; set; }
+
+        /// <summary>
+        /// Is the character an opponent or not
+        /// </summary>
+        public bool IsOpponent { get; set; }
+
 
 
         /// <summary>
