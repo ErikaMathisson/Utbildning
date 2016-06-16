@@ -10,7 +10,7 @@ namespace Assignment3
     {
 
         /// <summary>
-        /// Empty constructor for Character
+        /// Constructor for Character with new list of battles
         /// </summary>
         private Character()
         {
@@ -24,82 +24,26 @@ namespace Assignment3
         /// <param name="name">Name of the character</param>
         /// <param name="strength">The strength of the character(random value)</param>
         /// <param name="health">The health of the character (random value)</param>
+        /// <param name="isOpponent">Bool parameter if the user is the opponent or not</param>
         public Character(string name, int strength, int health, bool isOpponent):this()
         {
-            //if (name.Length != 0 && name != null)
-            //{
             this.Name = name;
-            //    Console.WriteLine("Konstruktor: " + name);
-            //}
-            //else
-            //{
-
-            //    //todo needs to be handled or maybe another way...
-
-            //    throw new NotValidNameException();
-
-            //}
-
-
             this.Strength = strength;
             this.Health = health;
             this.Damage = strength / 2;
             this.isAlive = true;
             this.IsOpponent = isOpponent;
-               
-
         }
-        
+
         /// <summary>
-        /// Constructor for character that takes a name as input
+        /// The score a player gets for every win
         /// </summary>
-        /// <param name="name">The name of the character</param>
-        public Character(string name)
-        {
-            //if (name.Length != 0 && name != null)
-            //{
-            //    this.Name = name;
-            //    Console.WriteLine("Konstruktor input name: " + name);
-            //}
-            //else
-            //{
-
-            //    //todo needs to be handled or maybe another way...
-            //    throw new NotValidNameException();
-
-            //}
-
-
-            this.Name = name;
-            Random rand = new Random();
-            this.Strength = rand.Next(1, 8) + 2;
-            this.Health = rand.Next(1, 8) + 2;
-
-            
-
-            //invokes a randomgenerator to get the strength
-        //    this.Strength = RandomGenerator();
-       //     Console.WriteLine("strengh random " + Strength);
-            //invokes a randomgenerator to get the health
-         //   this.Health = RandomGenerator();
-        //    Console.WriteLine("helth random " +Health);
-            this.Damage = Strength / 2;
-
-            Console.WriteLine("strength " + this.Strength);
-            Console.WriteLine("helth " + this.Health);
-            Console.WriteLine("damage " + this.Damage);
-
-
-
-
-        }
-
+        public const int ScoreWin = 3;
 
         /// <summary>
-        /// A list of all battles connected to the character
+        /// A list of all battles performed by the player
         /// </summary>
         public List<Battle> battles { get; set; }
-
 
         /// <summary>
         /// The name of the character
@@ -131,66 +75,10 @@ namespace Assignment3
         /// </summary>
         public bool IsOpponent { get; set; }
 
-
-
         /// <summary>
-        /// The strength of the character
+        /// The  player gets a score for every win
         /// </summary>
-        //public int Strength{
-        //    //get
-        //    //{
-        //    //    return Strength;
-        //    //}
-
-        //    //set
-        //  get  {
-        //        Random rand = new Random();
-        //        int strength = rand.Next(1, 8) + 2;
-        //      //  this.Strength = strength;
-
-        //        Console.WriteLine("strength "+strength);
-        //        Console.WriteLine("Strength " + Strength);
-        //        return strength;
-
-        //    }
-
-
-        //}
-
-        /// <summary>
-        /// The damage the character can distribute to the opponent
-        /// </summary>
-        //public int Damage{
-        //    get{
-
-        //        return Damage; 
-
-
-        //    }
-        //    set
-        //    {
-        //        this.Damage = Strength/2;
-        //        Console.WriteLine("Damage " + Damage);
-
-
-        //    }
-        //}
-
-
-
-
-
-        //public static int RandomGenerator()
-        //{
-        //    Random rand = new Random();
-        //    int randomValue = rand.Next(1, 8) + 2;
-        //    return randomValue;
-
-
-
-
-
-        //}
+        public int Score { get; set; }
 
     }
 }

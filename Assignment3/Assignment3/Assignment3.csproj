@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Battle.cs" />
     <Compile Include="Character.cs" />
-    <Compile Include="NotValidNameException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Round.cs" />

@@ -9,13 +9,16 @@ namespace Assignment3
     class Round
     {
 
+        /// <summary>
+        /// Empty constructor for round
+        /// </summary>
         public Round()
         {
                 
         }
 
         /// <summary>
-        /// The roll for the character
+        /// The roll for the player
         /// </summary>
         public int PlayerRoll { get; set; }
 
@@ -35,7 +38,7 @@ namespace Assignment3
         public int OpponentTotal { get; set; }
         
         /// <summary>
-        /// Name of the winner each round
+        /// Name of the winner each round, can be player name, opponent name or draw
         /// </summary>
         public string NameOfWinner { get; set; }
 
