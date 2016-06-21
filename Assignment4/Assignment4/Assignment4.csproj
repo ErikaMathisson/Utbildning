@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Drinks.cs" />
+    <Compile Include="Fruit.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Snacks.cs" />
     <Compile Include="User.cs" />
     <Compile Include="VendingMachine.cs" />
   </ItemGroup>
