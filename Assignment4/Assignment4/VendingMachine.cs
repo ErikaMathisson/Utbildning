@@ -8,7 +8,9 @@ namespace Assignment4
 {
     class VendingMachine
     {
-
+        /// <summary>
+        /// Empty constructor for the vending machine
+        /// </summary>
         public VendingMachine()
         {
 
@@ -22,6 +24,31 @@ namespace Assignment4
             {
                 return new int[] { 1000, 500, 100, 50, 20, 10, 5, 1 };
             }
+        }
+
+        /// <summary>
+        /// Method for adding products to the vending machine. Right now only hard coded products.
+        /// </summary>
+        /// <param name="products">List of products that should be added to the vending machine</param>
+        /// <returns>List of products</returns>
+        internal List<Product> AddProducts(List<Product> products)
+        {
+            //adding different types of products to the list of products; drinks, fruits and snacks.
+            //All different types of products has tha information about: name of product, price of product and an id (based on how many products that exist)
+            Product product = new Drinks("Water", 14, products.Count + 1);
+            products.Add(product);
+            product = new Drinks("Juice", 18, products.Count + 1);
+            products.Add(product);
+            product = new Fruit("Banana", 8, products.Count + 1);
+            products.Add(product);
+            product = new Fruit("Apple", 7, products.Count + 1);
+            products.Add(product);
+            product = new Snacks("Chips", 28, products.Count + 1);
+            products.Add(product);
+            product = new Snacks("Chocolate", 26, products.Count + 1);
+            products.Add(product);
+            return products;
+
         }
 
         /// <summary>
@@ -56,76 +83,83 @@ namespace Assignment4
             }
         }
 
-
+        /// <summary>
+        /// Method for buying products
+        /// </summary>
+        /// <param name="products">existing products in the vending machine</param>
+        /// <param name="user">The user who wants to buy products</param>
         internal void BuyProduct(List<Product> products, User user)
         {
-
+            //bool value for letting the user buy as many products that the user wants to
             bool keepAlive = true;
-
+            //loop for letting the user buy many products
             while (keepAlive)
             {
+                //clear the screen, print the menu and show what credit the user have
                 Console.Clear();
                 Console.WriteLine("BUY PRODUCT\n");
                 Console.WriteLine($"Your credit is: {user.MoneyPool}\n");
                 this.ExamineProduct(products);
-                Console.WriteLine("\nPlease enter id for wanted product or (q) for quit: ");
+                Console.Write("\nPlease enter id for wanted product or (q) for quit: ");
+                //what does the user want to do?
                 string choice = Console.ReadLine();
                 int id;
-
+                // does entered id exist in the list of products?
+                bool productExist = false;
+                //the user don't want to quit
                 if (choice != "q")
                 {
                     //check if input from user can be converted to integer
-                    if (CanBeConverted(choice))
+                    if(ValidatationConversion.CanBeConverted(choice))
                     {
                         //convert the string input to integer
-                        id = ConvertToInt(choice);
-                        Console.WriteLine("Wanted id: " + id);
-
-                        foreach (Product p in products)
+                        id = ValidatationConversion.ConvertToInt(choice);
+                       
+                        //loop through the list to see if wanted product exist
+                        foreach (Product p in products.ToList())
                         {
-
+                            //the wanted product is found
                             if (p.itemId == id)
                             {
-
-                                Console.WriteLine("Wanted product: " + p.itemName);
-
-
+                                //the product exist in the list
+                                productExist = true;
+                                //the user have enough money to buy the product
                                 if (user.MoneyPool >= p.itemPrice)
                                 {
-                                    p.Purchase();
-
+                                    //buy the product; depending on what type of product different classes are invoked
+                                    p.Purchase(p);
+                                    //take money (price of product) from the users moneypool 
                                     user.MoneyPool = user.MoneyPool - p.itemPrice;
-                                    Console.WriteLine("money pool " + user.MoneyPool);
-
-                                    // todo:: how to remove an element from the list without error??
-                            //        products.Remove(p);
-
+                                    //use the product
+                                    p.Use(p);        
+                                    //remove the product from the list, the user has already bought it                                                                                    
+                                    products.Remove(p);
 
                                 }
-                                else
+                                else  //the user don't have enough money, print information about this
                                 {
                                     Console.WriteLine("Sorry you don't have enough money, please add some... ");
                                     Console.WriteLine("Press any key...");
 
-                                }
-
-                                Console.ReadKey();
-
-                               
-
+                                }                             
                             }
-
                         }
                     }
                     else
                     {
-                        //the user input can't be converted to integer, print error message and take another input from the user
-                        Console.WriteLine("Not a valid input, press any key...");
+                        //the user input can't be converted to integer, print information about this
+                        Console.WriteLine("Not a valid input...");
                     }
-                  
+                    //the product doesn't exist, print information about this to the user
+                    if (productExist == false)
+                    {
+                        Console.WriteLine("No product with that id exists!\n");
+                    }
+
+                    Console.WriteLine("Press any key...");
                     Console.ReadKey();
                 }
-                else
+                else //the user doesn't want to buy anymore products (choose q in the menu), no need to loop anymore
                 {
                     keepAlive = false;
                 }
@@ -133,52 +167,20 @@ namespace Assignment4
             }
         }
 
-
+        /// <summary>
+        /// Method for examining the different products in the vending machine. Depending on type of product different examine methods is invoked
+        /// </summary>
+        /// <param name="products">the product that should be examined</param>
         internal void ExamineProduct(List<Product> products)
         {
             Console.WriteLine("Current products in the vending machine\n");
+            //loop through all products in the vending machine and print information about them
+            //depending of what type of product (fruit, drink or snacks), different methods are invoked 
             foreach (Product p in products)
             {
                 p.Examine(p);
             }
-
-        }
-
-
-
-
-        /// <summary>
-        /// Method for checking if the input text from user can be converted to an integer
-        /// </summary>
-        /// <param name="input">String input from user</param>
-        /// <returns>bool</returns>
-        private bool CanBeConverted(string input)
-        {
-            int result;
-            if (int.TryParse(input, out result))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        /// <summary>
-        /// Method for convering an input string to integer
-        /// </summary>
-        /// <param name="input">The text input from the user</param>
-        /// <returns>int</returns>
-        private int ConvertToInt(string input)
-        {
-            return int.Parse(input);
-        }
+        }        
     }
-
-
-
-
 }
 
