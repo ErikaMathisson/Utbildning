@@ -76,8 +76,14 @@ namespace Exercise
                         case 21:
                             RunExcerciseTwentyOne();
                             break;
+                        case 26:
+                            RunExcerciseTwentySix();
+                            break;
                         case 27:
                             RunExcerciseTwentyseven();
+                            break;
+                        case 28:
+                            RunExcerciseTwentyEight();
                             break;
                         case -1:
                             KeepAlive = false;
@@ -616,7 +622,7 @@ namespace Exercise
 
             int[] changeValues = new int[] { 1000, 500, 200, 100, 50, 20, 10, 5, 1 }; //add all possible values for change in an array
 
-            Random rand = new Random(); 
+            Random rand = new Random();
             int price = rand.Next(100, 1000); //price a random number between 100 and 1000
             int sumEntered; //how much sum did the user enter
 
@@ -643,7 +649,7 @@ namespace Exercise
 
             }
             Console.ReadKey();
-            
+
         }
 
         /// <summary>
@@ -659,7 +665,7 @@ namespace Exercise
             string enteredNumbers;
             int maxValue;
             int minValue;
-            int sum=0;
+            int sum = 0;
             double averageValue;
 
 
@@ -672,19 +678,19 @@ namespace Exercise
 
             maxValue = numbers[0];
             minValue = numbers[0];
-            
+
 
             for (int i = 0; i < values.Length; i++)
             {
-               
+
                 numbers[i] = int.Parse(values[i]);
 
-                if(numbers[i] > maxValue)
+                if (numbers[i] > maxValue)
                 {
                     maxValue = numbers[i];
-                
+
                 }
-                if (numbers[i]< minValue)
+                if (numbers[i] < minValue)
                 {
                     Console.WriteLine("Min value 1: " + minValue);
                     minValue = numbers[i];
@@ -697,12 +703,144 @@ namespace Exercise
             }
 
             averageValue = sum / (double)numbers.Length;
-            Console.WriteLine("Max value: "+maxValue);
-            Console.WriteLine("Min value: " +minValue);
-            Console.WriteLine("Average value: " +averageValue);
-            
+            Console.WriteLine("Max value: " + maxValue);
+            Console.WriteLine("Min value: " + minValue);
+            Console.WriteLine("Average value: " + averageValue);
+
 
         }
+
+        // In this exercise, you are going to print out the folder path to some different locations on your computer. 
+        // These can be found in the Enviroment-class. To print one of the common folders on your computer, you can use the Enviroment.GetFolderPath,
+        // passing it one of the values from the Enviroment.
+        //
+        // SpecialFolder enumeration. For example Enviroment.GetFolderPath(Enviroment.SpecialFolder.Desktop) will give back a
+        // string representing the folder path to the desktop.
+        // Print out the following locations on your computer: 
+
+        //   My documents 
+        //   My Pictures 
+        //   Program files (x86) 
+        //   The folder containing information about cookies 
+        //   Current Directory(found inside in the Enviroment class) 
+        //
+        // In the same method, create a new file on the desktop, using File.Create(filepath), by retrieving the folder 
+        // path to the desktop and append the filename at the end of the file path. 
+        // When creating a new file using File.Create, a new FileStream will be created, and this must be closed using the Close method.
+        // Note: Depending on which computer you are running your application, some
+
+        private static void RunExcerciseTwentySix()
+        {
+            Console.WriteLine($"Path to desktop: {(Environment.GetFolderPath(Environment.SpecialFolder.Desktop))} ");
+            Console.WriteLine($"Path to My documents: {(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments))} ");
+            Console.WriteLine($"Path to My pictures: {(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))} ");
+            Console.WriteLine($"Path to Program files (x86): {(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86))} ");
+            Console.WriteLine($"Path to folder with cookies information: {(Environment.GetFolderPath(Environment.SpecialFolder.Cookies))} ");
+            Console.WriteLine($"Path to current directory: {Environment.CurrentDirectory} ");
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            Console.WriteLine($"Path: {path}");
+
+            string fileName = "\\textFile.txt";
+            path = path + fileName;
+            Console.WriteLine($"Path and filename {path}");
+
+            if (!File.Exists(path))
+            {
+
+                FileStream fs = File.Create(path);
+                fs.Close();
+                ////  File.Create(path);
+                //Console.WriteLine("File created");
+                //Console.WriteLine("Write to file");
+
+                ////Create the file.
+                //using (FileStream fs = File.Create(path))
+                //{
+                //    AddText(fs, "This is some text");
+                //    AddText(fs, "This is some more text,");
+                //    AddText(fs, "\r\nand this is on a new line");
+                //    AddText(fs, "\r\n\r\nThe following is a subset of characters:\r\n");
+
+                //    for (int i = 1; i < 120; i++)
+                //    {
+                //        AddText(fs, Convert.ToChar(i).ToString());
+
+                //    }
+                //}
+
+
+
+
+
+
+
+
+
+                //        using (StreamWriter sw = File.CreateText(path))
+                //        {
+                //            sw.WriteLine("Hej");
+                //            sw.WriteLine("världen ");
+                //        }
+                //    }
+
+
+                //    using (StreamReader sr = File.OpenText(path))
+                //    {
+                //        string s = "";
+
+                //        while ((s = sr.ReadLine()) != null)
+                //        {
+                //            Console.WriteLine("Read file");
+                //            Console.WriteLine(s);
+
+                //        }
+                //    }
+            }
+
+
+            else
+            {
+                Console.WriteLine("File already exist...");
+            }
+
+            ////Open the stream and read it back.
+            //using (FileStream fs = File.OpenRead(path))
+            //{
+            //    Console.WriteLine("Openstream");
+            //    byte[] b = new byte[1024];
+            //    UTF8Encoding temp = new UTF8Encoding(true);
+            //    while (fs.Read(b, 0, b.Length) > 0)
+            //    {
+            //        Console.WriteLine(temp.GetString(b));
+            //    }
+            //}
+
+
+        }
+
+
+
+        //private static void AddText(FileStream fs, string value)
+        //{
+
+        //    byte[] info = new UTF8Encoding(true).GetBytes(value);
+        //    fs.Write(info, 0, info.Length);
+
+        //}  
+
+
+        // Inside your project in Visual Studio, right-click on your project and add a new text file.
+        // Open the file and add at least 10 names on one row each.
+        // Right click on the file and hit Properties. 
+        // In the Properties window, make sure that Copy to Output Directory is set to Copy Always. 
+        // This will make sure that the files are copied to the binfolder when your program is compiled (see figure 5).  
+        // Now, use a StreamReader object (found inside System.IO) to read the names from the file and output them to the console window.
+        // Note: There are a few possibilities when reading from a file, but one thing to be careful about, 
+        // is that file might have a larger size than the available memory on your computer. 
+        // Using ReadToEnd(), which reads every byte in the file would then cause a OutOfMemoryException.This is however not an issue with this exercise.
+        
         private static void RunExcerciseTwentyseven()
         {
 
@@ -713,13 +851,50 @@ namespace Exercise
                 Console.WriteLine("From file: " + str.ReadLine());
 
             }
-          
+            
+        }
+
+
+        private static void RunExcerciseTwentyEight()
+        {
+            string[] a1 = new String[] { "Åhsa", "Pelle", "Stina", "Svea", "Stefan" };
+            string[] a2 = new String[] {"Anna", "Arnold", "Anders", "Ambjörn", "Anna-Stina" };
+
+            string path = Environment.CurrentDirectory + "\\TextFile1.txt";
+
+            Console.WriteLine($"Path: {path}");
+           
+
+            if (File.Exists(path))
+            {
+
+                using (StreamWriter sw = new StreamWriter(path))
+                {
+
+                    for (int i = 0; i < (a1.Length); i++)
+                    {
+                        sw.WriteLine(a1[i]);
+                        Console.WriteLine($"a1 {a1[i]}");
+                    }
+                    sw.Close();           
+                    
+                }
+
+                using (StreamWriter sw2 = new StreamWriter(path, true))
+                {
+                    for (int i = 0; i < a2.Length; i++)
+                    {
+                        sw2.WriteLine(a2[i]);
+                        Console.WriteLine($"a2 {a2[i]}");
+                    }
+                    sw2.Close();
+
+                }
+
+            }
 
 
         }
-
-       
-
 
     }
 }
