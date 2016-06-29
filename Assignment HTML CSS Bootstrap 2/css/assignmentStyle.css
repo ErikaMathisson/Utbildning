@@ -1,248 +1,106 @@
 /* assignmentStyle.css */
-* {
-	margin:0px;
-	padding:0px;
-}
+
+/*Setting style for the main layout*/
+
 body {
 	font-family:sans-serif;
 	width:1024px;
-	text-align:center; 
-	margin-left:0px;
-	margin-right:0px;
-	margin-top:0px;	
+	margin-left:auto;
+	margin-right:auto;	
 }
-
+/* setting look for the navigationfield */
 .headerLook {
 	background-color:orange;
 	text-align:left;
 	border:black solid 1px;
-	
-	
+	margin:0px;
 }
 
-.headerClass {
-	
+.headerClass {	
 	display:inline-block;
 	padding:3px;
-	
-	
+	margin:0px;	
 }
 
 .navClass {
-	display:inline-block;
-	background-color:cyan;
-
-	
-	
+	display:inline-block;	
+	margin:0px;
 }
 
-.listClass {
+.navClass ul {
 	display:inline-block;
-	list-style-type: none;	
-	
+	list-style-type: none;			
+	margin:0px;
 }
 
-.listItemClass {
+.navClass ul li {
 	display:inline-block;
-
 	padding: 17px 16px; 
 	border:solid 1px black;
-	margin:0px;
-
-	
-	
-	
+	margin:0px;	
+	background-color:mediumslateblue;
 }
 
-
-.linkList {
-		text-decoration: none;
-		 overflow: hidden; 
-		
-	
-	
-}
-/*
-
-
-.headerLook {
-	background-color:orange;
-	text-align:left; 
-	vertical-align:middle; 
-	border:solid black 1px;
-}
-.headerClass {
-	
-	display:inline-block;
-	
-	
-	padding:0px;	
-	margin:0px;
-	display:inline-block;
-	border:solid black 1px;
-	background-color:orange;
-	padding:10px;
-	width:300px;
-	
-	
-	
-}
-.navClass {
-	background-color:cyan; 
-	
-	display:inline-block;
-	width:300px;
-/border:solid black 1px;
-padding:10px;
-
-}
-
-
-.listClass {
-	list-style-type: none;
-	display:inline-block;
-	
-	
-	
-
-padding:40px; 
-    margin: 0;
-    padding: 0; 
-  overflow: hidden; 
-  background-color: cyan;
-	
-	
-		border:solid black 1px; 
-}
-
-.listItemClass {
-    float: left;
-	border:solid black 1px; 
-	padding-left:10px;
-	padding-right:10px;
-
-	
-}  
-
-.linkList {
+.navClass ul li a {
 	text-decoration: none;
-	 
-	 border:solid black 1px; 
-	 
-	 
-	 
-    padding: 14px 16px; 
-	
-	display: inline-block;
-	
-    color: black;
-    text-align: center;
-   
-	
-	
-margin:0px;
-
-	
-}
-*/
-/*	
-    
-
-
-
-
-li a {
-    display: block;
-    color: #666;
-    text-align: center;
-  padding: 14px 16px;
-border:solid black 1px;
-
-      text-decoration: none;
-}
-*/
-
-/*
-
-
-.rightSide {
-	padding:10px;
-	width: 600;
-	display:inline-block;
-}
-
-
-.leftSide {
-	float:left;
-	
-	background-color:orange;
-}
-
-.middleSide {
-	display:inline-block;
-	width:33%;
-	background-color:cyan;
 	color:black;
+	margin:0px;		
 }
 
-
-.rightSide {
-	float:right;
-	width:33%;
-	background-color:orange;
-}
-*/
-/*
-.column-left{ float: left; width: 33%; }
-.column-right{ float: right; width: 33%; }
-.column-center{ display: inline-block; width: 33%; }
-
-
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
+.section {
+	background-color:#ffff66;
+	display:inline-block; 	
+	width:690px;  
+	border:black solid 1px;	
+	height: 100%
+	padding-bottom: 100px;	
 }
 
-li {
-    float: left;
+.section h2 {
+	padding:20px;
+	padding-bottom:0px;
 }
 
-*/
-/*
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+.pMain {
+	padding:20px; 
 }
 
-li a:hover {
-    background-color: #111;
-}
-*/
-
-/*
-ul{
-	display:inline;
-	text-align:top;
-	padding:0px;
-	margin:0px;
-	background-color:cyan;
-	list-style-type:none;
-	float:right;
-	margin-left:275px;
-	
+.articleLeft {
+	vertical-align:top;
+	width: 33%; 
 	float:left;
-	list-style-type:none;
-	background-color:cyan;
+	padding:20px;
 }
-*/
+
+.articleRight {	
+	vertical-align:top;
+	width: 250px; 
+	float:left;
+	margin-left:20px; 
+	padding:20px;
+	padding-bottom:100px;
+}
+
+.aside {
+	background-color:palegreen;
+	display:inline-block; 
+	vertical-align:top;	
+	border:black solid 1px;
+	width:290px;  
+	height:485.49px;
+	padding:20px;
+	margin-left:-5px;
+}
+
+
+img {
+	height:100px;
+	width: 200px;	
+}
+
 footer {
 	background-color:purple;
 	padding:10px;
+	border:black solid 1px;
+	text-align:center;
 }
