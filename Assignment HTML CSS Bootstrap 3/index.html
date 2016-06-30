@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Assignment bootstrap</title>	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrapT.min.css" type="text/css"> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>	
+		<style>
+				.carousel-inner > .item > img,
+				.carousel-inner > .item > a > img {
+				width: 70%;
+				margin: auto;
+			}
+	</style>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+					<img class="img-responsive" src="img/logo.jpg" alt="WebSiteName" height="auto">  
+					</div>
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#myCarousel">Pictures</a></li>
+						<li><a href="#submitForm">Submitform</a></li>						
+					</ul>
+				</div>			
+			</nav>	
+		</div>
+		<br/>		
+		<br/>
+		<div class="container">
+			<br/>
+			<h1 align="center">Welcome to this assignment!</h1>
+			<br/>		
+			<br/>
+			
+			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+				</ol>
+ 
+				<div class="carousel-inner">
+					<div class="item active">
+						<img src="img/pic4.jpg" alt="City">
+					</div>
+					<div class="item">
+						<img src="img/pic2.jpg" alt="EyesColor">						
+					</div>
+					<div class="item">
+						<img src="img/pic3.jpg" alt="EyesBlackWhite">
+					</div>
+				</div>
+ 
+			 	<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			</div> 
+		</div>
+		<br/>
+		<br/>		
+		
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-4">
+					<ul class="nav nav-pills nav-stacked" role="tablist">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="#myCarousel">Pictures</a></li>
+						<li><a href="#submitForm">Submitform</a></li>						
+					</ul>
+				</div>
+						
+				<div class="col-sm-4">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc rutrum eleifend urna vitae semper. Aenean quis tellus risus. 
+					Vestibulum et sodales justo. Pellentesque ultrices sapien lorem, vitae tempus leo faucibus vel. 
+					Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed vitae nisi et nisl varius luctus non sit amet enim. 
+					Nulla quis suscipit erat. Praesent non nibh fermentum velit consequat imperdiet vitae ut nunc. Sed euismod vehicula facilisis. Ut nec tellus augue. 
+					Nullam commodo semper velit, at pharetra metus porttitor eget. Mauris laoreet finibus sagittis. Cras tempor lacus vel egestas pellentesque. 
+					Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+				</div>
+				<div class="col-sm-4">
+					Morbi lacus nisl, accumsan eu mollis ut, efficitur et metus. Quisque quis consectetur lectus. Curabitur tincidunt mauris ex, faucibus aliquet mi efficitur vitae. 
+					Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
+					Integer sodales, nibh eu vehicula lobortis, enim risus rutrum libero, nec porttitor mi neque nec turpis. Cum sociis natoque penatibus et magnis dis parturient montes, 
+					nascetur ridiculus mus. Donec dignissim mi nisi. 
+					Quisque pulvinar, mi malesuada volutpat auctor, sapien magna suscipit tortor, vitae tempor est tellus ac leo. Cras efficitur tellus lorem, vitae consequat sapien auctor eget. 
+				</div>
+			</div>
+		</div>
+				
+		<br/>
+		<br/>
+		
+		<div class="container-fluid">
+			<div class="row">
+			<h2>Submit form</h2>
+				<form role="form" class="col-sm-8" id="submitForm">
+					<div>
+						<label for="name">Name:</label>
+						<input type="text" class="form-control" id="name">	
+					</div>	
+					<div>
+						<label for="email">Email address:</label>
+						<input type="email" class="form-control" id="email">
+					</div>
+					<div>
+						<label for="telephone">Telephone:</label>
+						<input type="tel" class="form-control" id="telephone">
+					</div>
+					<div>
+						<label for="message">Message:</label>
+						<textarea rows="5" class="form-control" id="message"></textarea>
+					</div>	
+					<br/>
+					<div>
+						<button type="submit" value="submit" class="btn btn-success">Submit</button>
+						<button type="reset" value="reset" class="btn btn-danger">Reset</button>
+					</div>
+							
+				</form>
+					
+				<div class="col-sm-4">				
+					<img class="img-responsive" src="img/content.jpg" alt="Content" height="auto" align="center-left">  
+				</div>
+			</div>
+		</div>
+		
+		<br/>
+		<br/>
+
+		<div class="container-fluid">		
+			<nav class="navbar navbar-default navbar-fixed-bottom">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="#">Home</a></li>
+						<li><a href="mailto:erika.mathisson@gmail.com" class="glyphicon glyphicon-copyright-mark" > Erika Mathisson</a></li>
+					</ul>
+				</div>			
+			</nav>
+		</div>
+
+	</body>
+
+</html>
