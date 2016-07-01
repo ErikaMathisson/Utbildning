@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="exercise.js"></script>
+</head>
+<body>
+<h2>Exercise 1</h2>
+<!-- print out the date and time -->
+<p id="demo"></p>
+<!-- input field for validating leap year -->
+<h2> Exersice 2</h2>
+<p> Please enter a year for leap year validation: </P>
+<input id="inputYear"> 
+<button type="button" onClick="leapYear()">Submit</button>
+<p id="outputYear"></p>
+<br/>
+<h2>Exercise 3</h2>
+<p>Please enter a digit between 1 and 10 </p>
+<input id="digit">
+<button type="button" onClick = "digitRandom()">Submit</button>
+<p id ="outputRandom"></p>
+
+
+
+
+
+<!-- script for calculating today's date and print to user, exercise 2 -->
+<script>
+	var date = new Date();
+	var day = date.getDay();
+	var dayList = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	var month = date.getMonth() + 1;
+	var dayInMonth = date.getDate();
+	var year = date.getFullYear();
+	var hour = date.getHours();
+	var minute = date.getMinutes();
+	var seconds = date.getSeconds();
+	
+	document.getElementById("demo").innerHTML = dayList[day] + ", " + dayInMonth + "/" 
+	+ month + "/" +year + " " +hour + ":" +minute+":" + seconds; 
+
+</script>
+
+
+
+</body>
+
+</html>
+
