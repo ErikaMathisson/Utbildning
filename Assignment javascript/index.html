@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Sokoban :-)</title>
+		<meta charset="UTF-8">	
+	</head>
+	<body>
+		
+		<p>Press any key for getting a value!</P>
+		<p id="key"></p>
+		
+		<button type="button" onClick="printGrid()">Play</button>
+		
+		<p id="width"></p>
+		<p id="height"></p>
+		<p id="mapGrid"></p>
+		
+		
+		
+		<script src ="js/SokobanBase.js"></script>
+		
+		<script>
+		
+			
+			function printGrid()
+			{
+			
+				
+				tileMap = tileMap01;
+				var width = tileMap.width;
+				var height = tileMap.height;
+				var grid = tileMap.mapGrid;
+			//	var row1 = [];
+				
+				document.getElementById("width").innerHTML = "Width " + tileMap.width; 
+				document.getElementById("height").innerHTML = "Height " + tileMap.height; 
+				
+		/*		for(var i = 0; i < width; i ++)
+				{
+					console.log(i);
+					row1[i] = grid[i];
+					console.log(row1[i]);
+					console.log(grid[i]);
+				
+					
+					
+					
+				
+				
+				
+				
+				
+				}
+				*/
+				
+		//		document.getElementById("mapGrid").innerHTML = "Mapgrid " + row1; 
+				
+				
+				
+				document.getElementById("mapGrid").innerHTML = "Mapgrid " + tileMap.mapGrid + " length: " +tileMap.mapGrid.width; 
+			
+			
+			
+			
+/*			
+			
+function getOffsetRect(elem) { 
+
+    var box = elem.getBoundingClientRect() 
+    var body = document.body 
+    var docElem = document.documentElement 
+    // (2) 
+    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop 
+    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft 
+    // (3) 
+    var clientTop = docElem.clientTop || body.clientTop || 0 
+    var clientLeft = docElem.clientLeft || body.clientLeft || 0 
+    // (4) 
+    var top  = box.top +  scrollTop - clientTop 
+    var left = box.left + scrollLeft - clientLeft 
+    return { top: Math.round(top), left: Math.round(left) } 
+} 
+
+			
+	*/		
+	
+	
+	/*
+	
+	
+	
+	<!DOCTYPE html>
+<html>
+<head>
+<style>
+#myDIV {
+    height: 250px;
+    width: 250px;
+    overflow: auto;
+}
+
+#content {
+    height: 800px;
+    width: 2000px;
+    background-color: coral;
+}
+</style>
+</head>
+<body>
+
+<p>Scroll inside the div element to display the number of pixels the content of div is scrolled horizontally and vertically.</p>
+
+<div id="myDIV" onscroll="myFunction()">
+  <div id="content">Scroll inside me!</div>
+</div>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+    var elmnt = document.getElementById("myDIV");
+    var x = elmnt.scrollLeft;
+    var y = elmnt.scrollTop;
+    document.getElementById ("demo").innerHTML = "Horizontally: " + x + "px<br>Vertically: " + y + "px";
+}
+</script>
+
+</body>
+</html>
+  */
+	
+	
+	
+	
+			
+			};
+		
+			
+		</script>
+		
+		
+		
+		
+		<script>
+		
+			document.onkeydown = function(e) {
+			switch (e.keyCode) {
+				case 37:
+					document.getElementById("key").innerHTML = "left key";
+					console.log(e);
+					break;
+				case 38:
+				//	alert("up key");
+				document.getElementById("key").innerHTML = "up key";
+					console.log(e);
+					break;
+				case 39:
+				//	alert("right key");
+					document.getElementById("key").innerHTML = "right key";
+					console.log(e);
+					break;
+				case 40:
+				//	alert("down key");
+					document.getElementById("key").innerHTML = "down key";
+					console.log(e);
+					break;
+			}
+		};
+		
+
+		</script>
+	</body>
+</html>
