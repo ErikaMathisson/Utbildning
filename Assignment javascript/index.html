@@ -1,173 +1,609 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Sokoban :-)</title>
-		<meta charset="UTF-8">	
-	</head>
-	<body>
-		
-		<p>Press any key for getting a value!</P>
-		<p id="key"></p>
-		
-		<button type="button" onClick="printGrid()">Play</button>
-		
-		<p id="width"></p>
-		<p id="height"></p>
-		<p id="mapGrid"></p>
-		
-		
-		
-		<script src ="js/SokobanBase.js"></script>
-		
-		<script>
-		
-			
-			function printGrid()
-			{
-			
-				
-				tileMap = tileMap01;
-				var width = tileMap.width;
-				var height = tileMap.height;
-				var grid = tileMap.mapGrid;
-			//	var row1 = [];
-				
-				document.getElementById("width").innerHTML = "Width " + tileMap.width; 
-				document.getElementById("height").innerHTML = "Height " + tileMap.height; 
-				
-		/*		for(var i = 0; i < width; i ++)
-				{
-					console.log(i);
-					row1[i] = grid[i];
-					console.log(row1[i]);
-					console.log(grid[i]);
-				
-					
-					
-					
-				
-				
-				
-				
-				
-				}
-				*/
-				
-		//		document.getElementById("mapGrid").innerHTML = "Mapgrid " + row1; 
-				
-				
-				
-				document.getElementById("mapGrid").innerHTML = "Mapgrid " + tileMap.mapGrid + " length: " +tileMap.mapGrid.width; 
-			
-			
-			
-			
-/*			
-			
-function getOffsetRect(elem) { 
-
-    var box = elem.getBoundingClientRect() 
-    var body = document.body 
-    var docElem = document.documentElement 
-    // (2) 
-    var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop 
-    var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft 
-    // (3) 
-    var clientTop = docElem.clientTop || body.clientTop || 0 
-    var clientLeft = docElem.clientLeft || body.clientLeft || 0 
-    // (4) 
-    var top  = box.top +  scrollTop - clientTop 
-    var left = box.left + scrollLeft - clientLeft 
-    return { top: Math.round(top), left: Math.round(left) } 
-} 
-
-			
-	*/		
-	
-	
-	/*
-	
-	
-	
-	<!DOCTYPE html>
-<html>
 <head>
-<style>
-#myDIV {
-    height: 250px;
-    width: 250px;
-    overflow: auto;
-}
-
-#content {
-    height: 800px;
-    width: 2000px;
-    background-color: coral;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Sokoban game :-)</title>
+  <link rel="stylesheet" href="css/style.css">
+ 
+ <!-- <link rel="stylesheet" href="css/style.css">  -->
 </head>
-<body>
+<!--
+<body onkeyup="handleKey(event)">
+	<h1>Sokoban</h1>
+	<div>
+		<h3>Steps: <span id="spnStepsCount">0</span></h3>
+	</div>
+	
+	<input type="text" id="txtUsername" placeholder="Your Name Here" />
+	<button onclick="printBoard()">Print Board</button>
+	
+	<table id="tblBoard"></table>
+	
+	-->
+<body onkeyup="handleKey(event)">
+	<h1>Sokoban game</h1>
+	<p>Press button to start a new game!</p>
+	<button type="button" onClick="printBoard()">Start a game</button>
+	
+	<table id="tblBoard"></table>
 
-<p>Scroll inside the div element to display the number of pixels the content of div is scrolled horizontally and vertically.</p>
-
-<div id="myDIV" onscroll="myFunction()">
-  <div id="content">Scroll inside me!</div>
-</div>
-
-<p id="demo"></p>
+	<script src ="js/SokobanBase.js"></script>	
 
 <script>
-function myFunction() {
-    var elmnt = document.getElementById("myDIV");
-    var x = elmnt.scrollLeft;
-    var y = elmnt.scrollTop;
-    document.getElementById ("demo").innerHTML = "Horizontally: " + x + "px<br>Vertically: " + y + "px";
+
+var Tiles = {
+    Wall: "tile-wall",
+    Space: "tile-space",
+    Goal: "tile-goal"
+};
+
+/*   Enum of CSS Classes for the moving elements   */
+var Entities = {
+    Character: "entity entity-player",
+    Block: "entity entity-block",
+    BlockDone: "entity entity-block-goal"
+};
+
+
+var WALL 	= "WALL";
+var FLOOR 	= "FLOOR";
+var TARGET 	= "TARGET";
+
+var SPACE = "SPACE";
+var CHARACTER = "CHARACTER";
+var BLOCK = "BLOCK";
+
+var GAMER 	= "GAMER";
+var BOX 	= "BOX";
+
+var gGamerPos = {i: 2, j:9};
+
+var gBoard = buildBoard();
+
+function  buildBoard() {
+
+/*	var currentTileMap = tileMap01;
+	var width = currentTileMap.width;
+	var height = currentTileMap.height;
+	*/
+	
+	var height = tileMap01.height;
+	var width = tileMap01.width;
+	
+	var board = new Array(height);
+	for(var i=0; i<board.length; i++)
+	{
+		board[i] = new Array(width);	
+	}
+/*	
+	// Create the Matrix
+	var board = new Array(10);
+	for (var i=0; i<board.length; i++) {
+		board[i] = new Array(12);
+	}
+
+	*/
+
+
+	
+	
+	// Put FLOOR everywhere and WALL at edges
+/*	for (var i=0; i<board.length; i++) {
+		for (var j=0; j<board[0].length; j++) {
+		
+			console.log(board[i][j]);
+			var cell = {type: FLOOR, gameElement: null};
+			// if at edge
+			if (i == 0 || i == board.length-1 || j == 0 || j == board[0].length-1) {
+				cell.type = WALL;
+				
+			}
+			board[i][j] = cell;
+		}
+	}
+	
+*/
+//	board = tileMap01.mapGrid;
+
+
+//	var board = tileMap01.mapGrid;
+
+	for (var i=0; i<board.length; i++) {
+		for (var j=0; j<board[i].length; j++) {
+		
+		//	console.log(board[i][j]);
+			
+		//	var tileClass = board[i][j];
+			var tileClass = tileMap01.mapGrid[i][j];
+		//	var cell = {Tiles: "Wall", gameElement: null};
+			var cell = {Tiles: null, Entities: null};
+								
+			if(tileClass == 'W')
+			{
+			//	console.log("wall");
+				cell.Tiles = Tiles.Wall;			
+			}
+			else if(tileClass == ' ')
+			{
+			//	console.log("space");	
+				cell.Tiles = Tiles.Space;
+			}
+			else if(tileClass == 'G')
+			{
+			//	console.log("goal");
+				cell.Tiles = Tiles.Goal;
+				
+			}
+			
+			else if(tileClass == 'B')
+			{
+				console.log("block");
+				cell.Entities = Entities.Block;
+				
+				//todo placera blocket
+				
+			}
+			else if(tileClass == 'P')
+			{
+				console.log("player");
+				cell.Entities = Entities.Character;
+				
+				//TODO placera spelaren
+			
+			
+			
+			
+			}
+			else 
+			{	
+				console.log("something went wrong");		
+			}
+								
+	/*		var cell = {type: FLOOR, gameElement: null};
+			// if at edge
+			if (i == 0 || i == board.length-1 || j == 0 || j == board[0].length-1) {
+				cell.type = WALL;
+				
+			}
+			board[i][j] = cell;
+			
+			*/
+			//console.log("Cell: " +cell);
+			board[i][j] = cell;
+			
+		//	console.log("board i j : " +board[i][j]);
+		}
+	}
+	
+	
+	
+	
+/*	
+	// Put some Targets
+	board[3][7].type = TARGET;
+	board[5][7].type = TARGET;
+	// Place the gamer
+	board[gGamerPos.i][gGamerPos.j].gameElement = GAMER;
+
+	// Place the Boxes
+	board[3][8].gameElement = BOX;
+	board[7][4].gameElement = BOX;
+	*/
+
+	console.log(board);
+	return board;
 }
+
+function printBoard() {
+
+	var tblBoard = document.getElementById('tblBoard');
+	var strHTML = ''; 
+//	console.log("rad 195");
+	for (var i=0; i<gBoard.length; i++) {
+		strHTML += "<tr>";
+// console.log("rad 198");
+//		for (var j=0; j<gBoard[0].length; j++) {
+
+		for (var j=0; j<gBoard[i].length; j++) {
+		
+//		console.log("rad 203");
+			var currCell = gBoard[i][j];
+//			console.log(currCell);
+//			console.log(currCell.Tiles);
+			
+			var cellClass;
+			
+			
+			
+			
+			if (currCell.Tiles == Tiles.Space) {
+				cellClass = "space";	
+			//	console.log("space");
+				
+			} else if (currCell.Tiles == Tiles.Wall) {
+				cellClass = "wall";
+			//	console.log("wall");
+		
+			} else if (currCell.Tiles == Tiles.Goal) {
+				cellClass = "target";
+			//	console.log("goal");
+			}
+			else if(currCell.Entities == Entities.Character)
+			{
+				cellClass = "character";
+			//	console.log("character");	
+				
+				gGamerPos = {i,j};
+			//	console.log(gGamerPos);
+				
+			
+			}
+			else if(currCell.Entities == Entities.Block)
+			{
+				cellClass = "block";
+			//	console.log("block");				
+			}
+			
+			strHTML += "<td class='cell " + cellClass + "'  onclick='handleClick("+i+","+j+")' >";
+
+			
+			
+			/*
+			
+			if (currCell.gameElement == GAMER) {
+				strHTML += "<img src='img/Character.gif'>";
+			} else if (currCell.gameElement == BOX) {
+					strHTML += "<img src='img/Block.gif'>";
+			}
+			
+			*/
+			
+			
+			
+			
+			
+			
+			/*
+			if (currCell.type == FLOOR) {
+				cellClass = "floor";	
+				
+			} else if (currCell.type == WALL) {
+				cellClass = "wall";
+			//	strHTML += "<img src='img/Wall.gif'>";
+			} else if (currCell.type == TARGET) {
+				cellClass = "target";
+			}
+			strHTML += "<td class='cell " + cellClass + "'  onclick='handleClick("+i+","+j+")' >";
+
+			if (currCell.gameElement == GAMER) {
+				strHTML += "<img src='img/Character.gif'>";
+			} else if (currCell.gameElement == BOX) {
+					strHTML += "<img src='img/Block.gif'>";
+			}
+			
+			
+			*/
+			
+			
+			
+			
+			strHTML += "</td>";
+		}
+		strHTML += "</tr>";
+	}
+
+	tblBoard.innerHTML = strHTML;
+	
+}
+
+function handleClick(i, j) {
+	var iDiff = i - gGamerPos.i;
+	var jDiff = j - gGamerPos.j;
+	var iAbsDiff = Math.abs(i - gGamerPos.i);
+	var jAbsDiff = Math.abs(j - gGamerPos.j);
+	
+	console.log("In handleClick");
+
+	// If the clicked Cell is one of the four allowed
+	if ((iAbsDiff == 1 && jAbsDiff == 0) || (jAbsDiff == 1 && iAbsDiff == 0)) {
+
+	//	if (gBoard[i][j].type != WALL) {
+	
+		console.log("gBoard[i][j]"  +gBoard[i][j].Tiles);
+	
+		if(gBoard[i][j] != Tiles.Wall)
+			console.log("Moving");
+			
+			var canMove = true;
+			
+		//	if (gBoard[i][j].gameElement == BOX) {
+		
+			if (gBoard[i][j] == Entities.Block) {
+			
+			console.log("Block");
+			
+
+				// In the next pos, if there is no WALL, and also no game element
+			//	if (gBoard[i+iDiff][j+jDiff].type != WALL && gBoard[i+iDiff][j+jDiff].gameElement == null) {
+			
+				if (gBoard[i+iDiff][j+jDiff] != Tiles.Wall && gBoard[i+iDiff][j+jDiff].Entities == null) { //??????
+			
+			
+					// MOVE THE BOX
+					gBoard[i][j].Entities = null;
+					
+				//	gBoard[i+iDiff][j+jDiff].gameElement = BOX;
+					
+					console.log("What entity?");
+					console.log(gBoard[i+iDiff][j+jDiff].Entities);
+				
+					gBoard[i+iDiff][j+jDiff].Entities = Entities.Block;
+					
+				} else {
+					// Cant move - there is a WALL behind BOX!
+					console.log("WALL Behind BOX");
+					canMove = false;
+				}
+			}
+			
+			if (canMove) {
+				// MOVING
+				gBoard[gGamerPos.i][gGamerPos.j].Entities = null;
+				gGamerPos.i = i;
+				gGamerPos.j = j;
+			
+
+
+		//	gBoard[gGamerPos.i][gGamerPos.j].gameElement = GAMER;
+			
+			gBoard[gGamerPos.i][gGamerPos.j].Entities = Entities.Character;
+			
+			
+	
+				// Update steps count
+		//		var spnStepsCount = document.getElementById('spnStepsCount');
+		//		spnStepsCount.innerHTML++;
+
+				printBoard();
+			//	checkVictory();
+							
+			}
+			
+		}
+		
+	} // else console.log("TOO FAR", iAbsDiff, jAbsDiff);
+	
+	
+// }
+/*
+function  checkVictory() {
+	var isVictory = true;
+	for (var i=0; i<gBoard.length; i++) {
+		for (var j=0; j<gBoard[0].length; j++) {
+			var currCell = gBoard[i][j];
+			if (currCell.type == TARGET && currCell.gameElement != BOX ) isVictory = false;
+		}
+	}	
+
+	if (isVictory) alert("Victorious!");
+	
+}
+*/
+
+function handleKey(event) {
+	//console.log(event.keyCode, event.keyIdentifier	 );
+
+	var i = gGamerPos.i;
+	console.log("position i: " +i);
+	var j = gGamerPos.j;
+	console.log("position j: " +j);
+	 
+	
+	switch (event.keyCode) {
+	case 37:
+		console.log("case 37 ! ");
+		handleClick(i, j-1);
+		break;
+	case 39:
+	console.log("case 39 ! ");
+		handleClick(i, j+1);
+		break;
+	case 38:
+	console.log("case 38 ! ");
+		handleClick(i-1, j);
+		break;
+	case 40:
+		console.log("case 40 ! ");
+		handleClick(i+1, j);
+		break;
+	}
+	
+}
+
+
+
+
+</script>	
+
+
+	
+
+<script>
+/*
+var WALL 	= "WALL";
+var FLOOR 	= "FLOOR";
+var TARGET 	= "TARGET";
+
+var GAMER 	= "GAMER";
+var BOX 	= "BOX";
+
+var gGamerPos = {i: 2, j:9};
+
+var gBoard = buildBoard();
+
+//var obj = {name: "Moshe", age: 23};
+//console.log(obj);
+
+
+function  buildBoard() {
+
+	// Create the Matrix
+	var board = new Array(10);
+	for (var i=0; i<board.length; i++) {
+		board[i] = new Array(12);
+	}
+
+	// Put FLOOR everywhere and WALL at edges
+	for (var i=0; i<board.length; i++) {
+		for (var j=0; j<board[0].length; j++) {
+			var cell = {type: FLOOR, gameElement: null};
+			// if at edge
+			if (i == 0 || i == board.length-1 || j == 0 || j == board[0].length-1) {
+				cell.type = WALL;
+				
+			}
+			board[i][j] = cell;
+		}
+	}
+	// Put some Targets
+	board[3][7].type = TARGET;
+	board[5][7].type = TARGET;
+	// Place the gamer
+	board[gGamerPos.i][gGamerPos.j].gameElement = GAMER;
+
+	// Place the Boxes
+	board[3][8].gameElement = BOX;
+	board[7][4].gameElement = BOX;
+
+	console.log(board);
+	return board;
+}
+
+function printBoard() {
+
+	var tblBoard = document.getElementById('tblBoard');
+	var strHTML = ''; 
+	for (var i=0; i<gBoard.length; i++) {
+		strHTML += "<tr>";
+		for (var j=0; j<gBoard[0].length; j++) {
+			var currCell = gBoard[i][j];
+			var cellClass;
+			if (currCell.type == FLOOR) {
+				cellClass = "floor";				
+			} else if (currCell.type == WALL) {
+				cellClass = "wall";
+			} else if (currCell.type == TARGET) {
+				cellClass = "target";
+			}
+			strHTML += "<td class='cell " + cellClass + "'  onclick='handleClick("+i+","+j+")' >";
+
+			if (currCell.gameElement == GAMER) {
+				strHTML += "<img src='imgs/gamer.png'>";
+			} else if (currCell.gameElement == BOX) {
+					strHTML += "<img src='imgs/box.png'>";
+			}
+			
+			strHTML += "</td>";
+		}
+		strHTML += "</tr>";
+	}
+
+	tblBoard.innerHTML = strHTML;
+}
+
+function handleClick(i, j) {
+	var iDiff = i - gGamerPos.i;
+	var jDiff = j - gGamerPos.j;
+	var iAbsDiff = Math.abs(i - gGamerPos.i);
+	var jAbsDiff = Math.abs(j - gGamerPos.j);
+
+	// If the clicked Cell is one of the four allowed
+	if ((iAbsDiff == 1 && jAbsDiff == 0) || (jAbsDiff == 1 && iAbsDiff == 0)) {
+
+		if (gBoard[i][j].type != WALL) {
+			//console.log("Moving");
+			
+			var canMove = true;
+			
+			if (gBoard[i][j].gameElement == BOX) {
+
+				// In the next pos, if there is no WALL, and also no game element
+				if (gBoard[i+iDiff][j+jDiff].type != WALL && gBoard[i+iDiff][j+jDiff].gameElement == null) {
+					// MOVE THE BOX
+					gBoard[i][j].gameElement = null;
+					gBoard[i+iDiff][j+jDiff].gameElement = BOX;
+				} else {
+					// Cant move - there is a WALL behind BOX!
+					console.log("WALL Behind BOX");
+					canMove = false;
+				}
+			}
+			
+			if (canMove) {
+				// MOVING
+				gBoard[gGamerPos.i][gGamerPos.j].gameElement = null;
+				gGamerPos.i = i;
+				gGamerPos.j = j;
+				gBoard[gGamerPos.i][gGamerPos.j].gameElement = GAMER;
+	
+				// Update steps count
+				var spnStepsCount = document.getElementById('spnStepsCount');
+				spnStepsCount.innerHTML++;
+
+				printBoard();
+				checkVictory();
+							
+			}
+			
+		}
+		
+	} // else console.log("TOO FAR", iAbsDiff, jAbsDiff);
+	
+	
+}
+
+function  checkVictory() {
+	var isVictory = true;
+	for (var i=0; i<gBoard.length; i++) {
+		for (var j=0; j<gBoard[0].length; j++) {
+			var currCell = gBoard[i][j];
+			if (currCell.type == TARGET && currCell.gameElement != BOX ) isVictory = false;
+		}
+	}	
+
+	if (isVictory) alert("Victorious!");
+	
+}
+
+
+function handleKey(event) {
+	//console.log(event.keyCode, event.keyIdentifier	 );
+
+	var i = gGamerPos.i;
+	var j = gGamerPos.j;
+	 
+	
+	switch (event.keyCode) {
+	case 37:
+		handleClick(i, j-1);
+		break;
+	case 39:
+		handleClick(i, j+1);
+		break;
+	case 38:
+		handleClick(i-1, j);
+		break;
+	case 40:
+		handleClick(i+1, j);
+		break;
+
+	}
+	
+}
+*/
 </script>
 
-</body>
-</html>
-  */
-	
-	
-	
-	
-			
-			};
-		
-			
-		</script>
-		
-		
-		
-		
-		<script>
-		
-			document.onkeydown = function(e) {
-			switch (e.keyCode) {
-				case 37:
-					document.getElementById("key").innerHTML = "left key";
-					console.log(e);
-					break;
-				case 38:
-				//	alert("up key");
-				document.getElementById("key").innerHTML = "up key";
-					console.log(e);
-					break;
-				case 39:
-				//	alert("right key");
-					document.getElementById("key").innerHTML = "right key";
-					console.log(e);
-					break;
-				case 40:
-				//	alert("down key");
-					document.getElementById("key").innerHTML = "down key";
-					console.log(e);
-					break;
-			}
-		};
-		
 
-		</script>
-	</body>
+<!--  <script src="js/scripts.js"></script> -->
+</body>
 </html>

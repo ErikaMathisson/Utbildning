@@ -1,0 +1,34 @@
+body {
+	background-color: lightgrey; 
+	color:black
+}
+
+.cell {
+	width:36px; 
+	height:36px;
+	margin:0px;
+	padding:0px;
+}
+
+.floor {
+	background-color: gray
+}
+
+.space {
+	background-color: orange
+}
+
+.wall {
+	background-image:url('../img/Wall.gif');
+}
+.target {
+	background-image:url('../img/Goal.gif');
+}
+
+.character {
+	background-image:url('../img/Character.gif');	
+}
+
+.block {
+	background-image:url('../img/Block.gif');	
+}
