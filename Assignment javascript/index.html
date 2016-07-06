@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Sokoban game :-)</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sokobanStyle.css">
  
  <!-- <link rel="stylesheet" href="css/style.css">  -->
 </head>
@@ -31,19 +31,8 @@
 
 <script>
 
-var Tiles = {
-    Wall: "tile-wall",
-    Space: "tile-space",
-    Goal: "tile-goal"
-};
 
-/*   Enum of CSS Classes for the moving elements   */
-var Entities = {
-    Character: "entity entity-player",
-    Block: "entity entity-block",
-    BlockDone: "entity entity-block-goal"
-};
-
+/*
 
 var WALL 	= "WALL";
 var FLOOR 	= "FLOOR";
@@ -56,6 +45,7 @@ var BLOCK = "BLOCK";
 var GAMER 	= "GAMER";
 var BOX 	= "BOX";
 
+*/
 var gGamerPos = {i: 2, j:9};
 
 var gBoard = buildBoard();
@@ -108,8 +98,10 @@ function  buildBoard() {
 
 //	var board = tileMap01.mapGrid;
 
-	for (var i=0; i<board.length; i++) {
-		for (var j=0; j<board[i].length; j++) {
+	for (var i=0; i<board.length; i++) 
+	{
+		for (var j=0; j<board[i].length; j++) 
+		{
 		
 		//	console.log(board[i][j]);
 			
@@ -139,6 +131,7 @@ function  buildBoard() {
 			{
 				console.log("block");
 				cell.Entities = Entities.Block;
+				cell.Tiles = Tiles.Space;
 				
 				//todo placera blocket
 				
@@ -147,6 +140,10 @@ function  buildBoard() {
 			{
 				console.log("player");
 				cell.Entities = Entities.Character;
+				cell.Tiles = Tiles.Space;
+				gGamerPos = {i,j};
+				
+			//	vGamerPos[][] = {i, j};
 				
 				//TODO placera spelaren
 			
@@ -199,12 +196,14 @@ function printBoard() {
 	var tblBoard = document.getElementById('tblBoard');
 	var strHTML = ''; 
 //	console.log("rad 195");
-	for (var i=0; i<gBoard.length; i++) {
+	for (var i=0; i<gBoard.length; i++) 
+	{
 		strHTML += "<tr>";
 // console.log("rad 198");
 //		for (var j=0; j<gBoard[0].length; j++) {
 
-		for (var j=0; j<gBoard[i].length; j++) {
+		for (var j=0; j<gBoard[i].length; j++) 
+		{
 		
 //		console.log("rad 203");
 			var currCell = gBoard[i][j];
@@ -216,15 +215,20 @@ function printBoard() {
 			
 			
 			
-			if (currCell.Tiles == Tiles.Space) {
+			if (currCell.Tiles == Tiles.Space) 
+			{
 				cellClass = "space";	
 			//	console.log("space");
 				
-			} else if (currCell.Tiles == Tiles.Wall) {
+			} 
+			else if (currCell.Tiles == Tiles.Wall) 
+			{
 				cellClass = "wall";
 			//	console.log("wall");
 		
-			} else if (currCell.Tiles == Tiles.Goal) {
+			} 
+			else if (currCell.Tiles == Tiles.Goal) 
+			{
 				cellClass = "target";
 			//	console.log("goal");
 			}
@@ -269,7 +273,7 @@ function printBoard() {
 				
 			} else if (currCell.type == WALL) {
 				cellClass = "wall";
-			//	strHTML += "<img src='img/Wall.gif'>";
+			
 			} else if (currCell.type == TARGET) {
 				cellClass = "target";
 			}
@@ -311,7 +315,7 @@ function handleClick(i, j) {
 	
 		console.log("gBoard[i][j]"  +gBoard[i][j].Tiles);
 	
-		if(gBoard[i][j] != Tiles.Wall)
+		if(gBoard[i][j] != Tiles.Wall){
 			console.log("Moving");
 			
 			var canMove = true;
@@ -326,7 +330,7 @@ function handleClick(i, j) {
 				// In the next pos, if there is no WALL, and also no game element
 			//	if (gBoard[i+iDiff][j+jDiff].type != WALL && gBoard[i+iDiff][j+jDiff].gameElement == null) {
 			
-				if (gBoard[i+iDiff][j+jDiff] != Tiles.Wall && gBoard[i+iDiff][j+jDiff].Entities == null) { //??????
+				if (gBoard[i+iDiff][j+jDiff] != Tiles.Wall && gBoard[i+iDiff][j+jDiff].Entities == null) { 
 			
 			
 					// MOVE THE BOX
@@ -400,18 +404,22 @@ function handleKey(event) {
 	 
 	
 	switch (event.keyCode) {
+	//going left
 	case 37:
 		console.log("case 37 ! ");
 		handleClick(i, j-1);
 		break;
+	//going right
 	case 39:
 	console.log("case 39 ! ");
 		handleClick(i, j+1);
 		break;
+	//going up
 	case 38:
 	console.log("case 38 ! ");
 		handleClick(i-1, j);
 		break;
+	//going down
 	case 40:
 		console.log("case 40 ! ");
 		handleClick(i+1, j);
