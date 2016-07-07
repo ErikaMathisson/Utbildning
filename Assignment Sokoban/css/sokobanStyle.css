@@ -3,7 +3,7 @@ body {
 	color:black
 }
 
-.cell {
+.blockSize {
 	width:36px; 
 	height:36px;
 	margin:0px;
@@ -21,7 +21,7 @@ body {
 .wall {
 	background-image:url('../img/Wall.gif');
 }
-.target {
+.goal {
 	background-image:url('../img/Goal.gif');
 }
 
@@ -31,4 +31,8 @@ body {
 
 .block {
 	background-image:url('../img/Block.gif');	
+}
+
+.blockDone {
+	background-image:url('../img/BlockDone.gif');		
 }
