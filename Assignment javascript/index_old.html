@@ -1,58 +1,19 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Sokoban :-)</title>
-		<meta charset="UTF-8">	
-	</head>
-	<body>
-		
-		<p>Press any key for getting a value!</P>
-		<p id="key"></p>
-		
-		<button type="button" onClick="printGrid()">Play</button>
-		
-		<p id="width"></p>
-		<p id="height"></p>
-		<p id="mapGrid"></p>
-		
-		<script src ="js/SokobanBase.js"></script>
-		<script src="js/SokobanPlay.js"></script>
+<head>
+	<title>Sokoban game :-)</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/sokobanStyle.css" type="text/css">
+	<script src="js/SokobanBase.js"></script>
+	<script src="js/SokobanPlay.js"></script> 
+</head>
+<body>
 
+	<h1>Welcome to Sokoban!</h1>
+	<table id="soko"></table>
+	
+	<h1 id="winner"></h1>
+	<br/>
 
-		
-		
-		
-		
-		
-		<script>
-		
-				
-		
-		document.onkeydown = function(e) {
-	switch (e.keyCode) {
-		case 37:
-			document.getElementById("key").innerHTML = "left key";
-			console.log(e);
-			break;
-		case 38:
-		//	alert("up key");
-		document.getElementById("key").innerHTML = "up key";
-			console.log(e);
-			break;
-		case 39:
-		//	alert("right key");
-			document.getElementById("key").innerHTML = "right key";
-			console.log(e);
-			break;
-		case 40:
-		//	alert("down key");
-			document.getElementById("key").innerHTML = "down key";
-			console.log(e);
-			break;
-	}
-}
-
-		</script>
-		
-	</body>
+</body>
 </html>
