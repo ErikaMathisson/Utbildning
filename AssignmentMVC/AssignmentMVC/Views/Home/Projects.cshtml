@@ -1,0 +1,16 @@
+﻿@model AssignmentMVC.Models.Projects
+<br/>
+<h1>@ViewBag.Title</h1>
+<h3>@ViewBag.Message</h3>
+
+<ul>
+
+    @foreach (var item in Model.proj)
+    {
+        <li><h5> @item  </h5></li>
+
+    }
+   
+</ul>
+
+
