@@ -1,0 +1,117 @@
+﻿<!--another way-->
+<!--at model WebApplication2.Models.Auth -->
+
+
+
+
+
+
+<br/>
+<br/>
+<!-- where to send data to: action, controller, post/get-->
+<!-- only use get for search -->
+
+<!--type password in age only for show -->
+
+<!--When using post use capatcha -->
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Label("Username: ")
+    @Html.TextBox("Username", "Name", new { @class = "form-control" })
+
+
+    <!--another way-->
+    <!-- at html.TextBoxFor(x => x.Username, new { at class = "form-control" , required = true })-->
+
+    @Html.Label("Password: ")
+    @Html.TextBox("Password", null, new {@class ="form-control", @type = "password"})
+    <br/>
+    <input type="submit" value="Send Data" class="btn btn-sm btn-success"/>
+
+}
+
+
+<!-- where to send data to: action, controller, post/get-->
+<!-- only use get for search -->
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    @Html.TextBox("Name")
+    @Html.TextBox("Age")
+    <input type="submit" value="Send Data" />
+
+}
+
+<!--When using post use capatcha -->
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Label("Name: ")
+    @Html.TextBox("Name")
+    @Html.Label("Age: ")
+    @Html.TextBox("Age")
+    <input type="submit" value="Send Data" />
+
+}
+
+
+<!-- where to send data to: action, controller, post/get-->
+<!-- only use get for search -->
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    @Html.TextBox("Name")
+    @Html.TextBox("Age")
+    <input type="submit" value="Send Data" />
+
+}
+
+<!--When using post use capatcha -->
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    @Html.Label("Name: ")
+    @Html.TextBox("Name")
+    @Html.Label("Age: ")
+    @Html.TextBox("Age")
+    <input type="submit" value="Send Data" />
+
+}
+
+
+
+<!--yet another way-->
+
+<form action="/Home/Index" method="post">
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="Username" name="Username" onchange="Check(this)" placeholder="Enter your username..." class="form-control" />
+
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="Password" name="Password" onchange="Check(this)" placeholder="Enter your password..." class="form-control" />
+    </div>
+
+    <input id="Login" type="submit" value="Login" class="btn btn-sm btn-success" disabled />
+    <input type="submit" value="Reset" class="btn btn-sm btn-info" />
+
+</form>
+
+<script>
+
+    function Check(val) {
+        var username = document.getElementById("Username");
+        var password = document.getElementById("Password");
+        var login = document.getElementById("Login");
+
+        if (username.value.length > 3 && password.value.length > 6)
+        {
+           
+            Login.disabled = false;
+
+
+        }
+
+    }
+
+</script>

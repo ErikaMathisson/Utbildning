@@ -42,18 +42,31 @@ namespace AssignmentMVC.Controllers
             return View(model);
         }
 
-        public ActionResult CheckFever()
+   /*     public ActionResult CheckFever()
         {
             ViewBag.Title = "Check Fever";
             ViewBag.Message = "Enter your temperature";
             return View();
         }
 
+    */
+    /*
         public ActionResult FeverCheck()
         {
+            ViewBag.Message = "Enter a temperature";
            
             return View();
         }
+
+        public ActionResult Create(string feverTemperature)
+        {
+
+            ViewBag.Message = "Your temperature is: " + feverTemperature;
+
+            return View("FeverCheck");
+
+        }
+    */
 
     }
 }

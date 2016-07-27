@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace AssignmentMVC
+namespace WebApplication2
 {
     public class RouteConfig
     {
@@ -14,14 +14,10 @@ namespace AssignmentMVC
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name:"Fever",
-                url: "FeverCheck",
-                defaults: new { Controller = "FeverCheck", action = "FeverCheck", name = UrlParameter.Optional });
-
-            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional } );
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }
