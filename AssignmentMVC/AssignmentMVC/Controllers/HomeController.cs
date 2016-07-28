@@ -9,14 +9,23 @@ namespace AssignmentMVC.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
+        /// <summary>
+        ///  GET: Home
+        ///  action for showing the home page 
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Index()
         {
             ViewBag.Title = "Home";
-            ViewBag.Message = "This is a page for MVH assignment";
+            ViewBag.Message = "This is a page for MVC assignment";
             return View();
         }
-
+              
+        /// <summary>
+        /// action for showing the about page, just printing some information not a whole CV...
+        /// using session for printing the information
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult About()
         {
             ViewBag.Title = "About";
@@ -27,6 +36,10 @@ namespace AssignmentMVC.Controllers
             return View();
         }
 
+        /// <summary>
+        /// action for showing contact information, using model ContactInfo 
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Contact()
         {
             ViewBag.Title = "Contact information";
@@ -34,39 +47,16 @@ namespace AssignmentMVC.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// action for showing finished projects and assignments, using model Projects
+        /// </summary>
+        /// <returns>ActionResult</returns>
         public ActionResult Projects()
         {
             ViewBag.Title = "Projects";
-            ViewBag.Message = "Finished assignments so far";
+            ViewBag.Message = "Finished assignments so far...";
             var model = new AssignmentMVC.Models.Projects();
             return View(model);
         }
-
-   /*     public ActionResult CheckFever()
-        {
-            ViewBag.Title = "Check Fever";
-            ViewBag.Message = "Enter your temperature";
-            return View();
-        }
-
-    */
-    /*
-        public ActionResult FeverCheck()
-        {
-            ViewBag.Message = "Enter a temperature";
-           
-            return View();
-        }
-
-        public ActionResult Create(string feverTemperature)
-        {
-
-            ViewBag.Message = "Your temperature is: " + feverTemperature;
-
-            return View("FeverCheck");
-
-        }
-    */
-
     }
 }

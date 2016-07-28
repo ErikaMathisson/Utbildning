@@ -14,6 +14,11 @@ namespace AssignmentMVC
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "GuessingGame",
+                url: "GuessingGame",
+                defaults: new { Controller = "GuessingGame", action = "GuessingGame", name = UrlParameter.Optional } );
+
+            routes.MapRoute(
                 name:"Fever",
                 url: "FeverCheck",
                 defaults: new { Controller = "FeverCheck", action = "FeverCheck", name = UrlParameter.Optional });

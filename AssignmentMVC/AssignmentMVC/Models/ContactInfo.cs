@@ -7,6 +7,9 @@ namespace AssignmentMVC.Models
 {
     public class ContactInfo
     {
+        /// <summary>
+        /// contact information for showing on Contact view. Hard coded information.
+        /// </summary>
         public string FirstName = "Erika";
         public string LastName = "Mathisson";
         public string Adress = "Bommerstorpsvägen 19";

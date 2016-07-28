@@ -7,8 +7,14 @@ namespace AssignmentMVC.Models
 {
     public class Projects
     {
+        /// <summary>
+        /// list of projects and assignments
+        /// </summary>
         public List<string> proj { get; set; }
 
+        /// <summary>
+        /// Constructor for projects adding the finished assignments and projects.
+        /// </summary>
         public Projects()
         {
             proj = new List<string>();
