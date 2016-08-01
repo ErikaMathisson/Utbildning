@@ -130,6 +130,13 @@
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
+    <None Include="scripts\jquery.validate-vsdoc.js" />
+    <Content Include="scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="scripts\jquery.validate.js" />
+    <Content Include="scripts\jquery.validate.min.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -142,12 +149,14 @@
     <Compile Include="Controllers\FeverCheckController.cs" />
     <Compile Include="Controllers\GuessingGameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ContactInfo.cs" />
     <Compile Include="Models\Fever.cs" />
     <Compile Include="Models\Guessing.cs" />
+    <Compile Include="Models\People.cs" />
     <Compile Include="Models\Projects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -165,6 +174,7 @@
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\FeverCheck\FeverCheck.cshtml" />
     <Content Include="Views\GuessingGame\GuessingGame.cshtml" />
+    <Content Include="Views\People\ShowPeople.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

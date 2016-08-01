@@ -1,0 +1,30 @@
+﻿@model List<AssignmentMVC.Models.People>
+
+
+
+
+<h3>List of peoples: </h3>
+<ul>
+
+    @foreach (var item in Model)
+    {
+        <li><h5> @item.Name, @item.PhoneNumber, @item.City </h5></li>
+    }
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

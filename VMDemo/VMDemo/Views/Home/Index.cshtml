@@ -1,0 +1,61 @@
+﻿<!-- model Tuple<VMDemo.Models.Person, VMDemo.Models.Test> -->
+
+@model VMDemo.Models.Person
+
+<div>
+    <h4>Person</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SSN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SSN)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+<!--
+    
+<form action="/Home/Index" method="post">
+
+    <input name="name" type="form-control"/>
+
+    ....
+    ..
+
+
+    <input type="submit" value="send data"/>
+
+
+
+
+
+    </form>
+
+
+    -->
+
