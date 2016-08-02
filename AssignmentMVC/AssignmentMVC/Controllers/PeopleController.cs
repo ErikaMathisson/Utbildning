@@ -9,24 +9,71 @@ namespace AssignmentMVC.Controllers
 {
     public class PeopleController : Controller
     {
+
         // GET: People
         public ActionResult ShowPeople()
         {
-            List<People> peoples = new List<People>();
-            
-            peoples.Add(new People { Name = "Erika", PhoneNumber = 0708430473, City = "Ronneby" });
-            peoples.Add(new People { Name = "Stina", PhoneNumber = 045523145, City = "Karlskrona" });
-            peoples.Add(new People { Name = "Calle", PhoneNumber = 0454322412, City = "Karlshamn" });
-            peoples.Add(new People { Name = "Pelle", PhoneNumber = 045412345, City = "Olofström" });
-            peoples.Add(new People { Name = "Anna", PhoneNumber = 045698765, City = "Sölvesborg" });
-                  
-           return View(peoples);
+            People people = new People();
+            var peoples = people.Peoples;
+
+            if (people.Peoples == null)
+            {
+                peoples = people.AddPeople();
+            }
+
+            return View(peoples);
         }
 
         [HttpPost]
-        public ActionResult ShowPeople(string Name)
+        public ActionResult SearchPeople(List<AssignmentMVC.Models.People> peoples, string Search)
         {
+
+            List<People> searchResult = new List<People>();
+
+
+            if (peoples != null)
+            {
+                foreach (var item in peoples)
+                {
+                    if (item.City.Contains(Search) || item.Name.Contains(Search) || item.PhoneNumber.Contains(Search))
+                    {
+                        searchResult.Add(item);
+
+                    }
+                    
+                   
+                }
+
+            }
+
+            
+            if (searchResult.Count == 0)
+            {
+                ViewBag.Message = "No entries found";
+                
+            }
+
+            peoples = searchResult;
+            return View("ShowPeople", peoples);
+         //   return RedirectToAction("ShowPeople", peoples);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult Delete(People delP)
+        {
+
+            if (delP != null)
+            {
+
+                ViewBag.Message = "Deleting";
+
+            }
+
+
             return View();
+
         }
 
 
@@ -41,7 +88,7 @@ namespace AssignmentMVC.Controllers
 /*
  * 
  * 
- * 
+ * @Html.EditorFor(model => model, new { htmlAttributes = new { @class = "form-control" }, }) 
  * 
  * 
  * 
@@ -86,4 +133,210 @@ namespace AssignmentMVC.Controllers
 
 
 
+
+    
+
+<h3>List of peoples: </h3>
+<ul>
+
+    @foreach (var item in Model)
+    {
+        <li><h5> @item.Name, @item.PhoneNumber, @item.City </h5></li>
+    }
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+            @foreach (var item in Model)
+            {
+                <tbody>
+
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.City</td>
+                    </tr>
+                </tbody>
+            }
+
+
+    
+
+               @foreach (var item in Model)
+            {
+                <tbody>
+
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.City</td>
+                    </tr>
+                </tbody>
+            }
+
+
+
+
+
+
+
+@model List<AssignmentMVC.Models.People>
+
+<h1>People</h1>
+
+<h4>List of peoples: </h4>
+
+<h4>@ViewBag.Message</h4>
+
+@using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
+{
+
+<div class="container">
+    <table class="table">
+
+        <thead>
+
+            <tr>
+                <th>Name</th>
+                <th>Phone number</th>
+                <th>City</th>
+            </tr>
+
+        </thead>
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.City</td>
+                </tr>
+            </tbody>
+        }
+
+    </table>
+
+</div>
+
+
+    
+
+    @Html.Label("Enter a search string");
+    @Html.TextBox("Search", Model, new { @class = "form-control", @type = "text" })
+    <br />
+    <input type="submit" value="Search" class="btn btn-sm btn-success" />
+
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@model List<AssignmentMVC.Models.People>
+
+<h1>People</h1>
+
+<h4>List of peoples: </h4>
+
+<h4>@ViewBag.Message</h4>
+
+@using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
+{
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone number</th>
+                    <th>City</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                          
+                            @Html.DisplayFor(model => model[i].Name)
+                            
+                          <!--  Html.TextBoxFor(m => m[i].Name) -->
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model[i].PhoneNumber)
+                         <!--   Html.TextBoxFor(m => m[i].PhoneNumber)  -->
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model[i].City)
+                            
+                      <!--      Html.TextBoxFor(m => m[i].City)  -->
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    @Html.Label("Enter a search string")
+    
+    @Html.TextBox("Search", null, new { @class = "form-control", @type = "text" })
+    
+    
+    
+    <br />
+
+    <input type="submit" value="Search" class="btn btn-sm btn-success" />
+
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+
+
+
+
+
+
+
     */
+
+
+

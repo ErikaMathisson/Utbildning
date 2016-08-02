@@ -175,6 +175,7 @@
     <Content Include="Views\FeverCheck\FeverCheck.cshtml" />
     <Content Include="Views\GuessingGame\GuessingGame.cshtml" />
     <Content Include="Views\People\ShowPeople.cshtml" />
+    <Content Include="Views\People\SearchPeople.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
