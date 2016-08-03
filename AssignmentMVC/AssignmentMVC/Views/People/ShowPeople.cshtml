@@ -1,14 +1,17 @@
 ﻿
 @model List<AssignmentMVC.Models.People>
-
+@{
+    var CurrentList = Model;
+}
 <h1>People</h1>
 
 <h4>List of peoples: </h4>
 
 <h4>@ViewBag.Message</h4>
 
-@using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
-{
+@* @using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
+    {
+*@
     <div class="container">
         <table class="table">
             <thead>
@@ -35,6 +38,28 @@
                             @Html.TextBoxFor(m => m[i].City, new { @readonly = "readonly" })
                         </td>
 
+                        <td>
+
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                               <!--     <input type="submit" value="Delete"/> |-->
+
+                            @*        @Html.ActionLink("People", "ShowPeople", "People") *@
+                                   @Html.ActionLink("Delete", "Delete", "People", new {id = i }, null  )
+                                </div>
+                            }
+                           
+                                   
+                                
+
+                        </td>
+
+
+
+
                     </tr>
                 }
 
@@ -42,17 +67,50 @@
         </table>
     </div>
 
-    @Html.Label("Enter a search string")
+<h4>Search:</h4>
+
+@using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
+{
+    <input name="Search" class="form-control" />
+    <br />
+    <input type="submit" value="Search" class="btn btn-sm btn-info" />
+}
+
+<br/>
+<h4>Add person:</h4>
+
+@using (Html.BeginForm("AddPeople", "People", FormMethod.Post))
+{
+    <p> Enter name:</p>
+    <input name="name" class="form-control" />
+    <br />
+    <p> Enter phonenumber:</p>
+    <input name="phoneNumber" class="form-control" />
+    <br />
+    <p> Enter city:</p>
+    <input name="city" class="form-control" />
+    <br />
+
+    <input type="submit" value="Add" class="btn btn-sm btn-info" />
+}
+
+
+
+
+
+
+
+@*     @Html.Label("Enter a search string")
 
     @Html.TextBox("Search", null, new { @class = "form-control", @type = "text" })
 
-
-
+*@
+<!--
     <br />
 
     <input type="submit" value="Search" class="btn btn-sm btn-success" />
-
-}
+    -->
+@* } *@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

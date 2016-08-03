@@ -8,43 +8,43 @@ namespace AssignmentMVC.Models
 {
     public class People
     {
-
+        /// <summary>
+        /// parameter for the name
+        /// </summary>
+        [Required]
         public string Name { get; set; }
 
+        /// <summary>
+        /// parameter for the phonenumber
+        /// </summary>
+        [Required]
         public string PhoneNumber { get; set; }
 
-        public string City { get; set; }
-
+        /// <summary>
+        /// parameter for the city
+        /// </summary>
         [Required]
-        public string Search { get; set; }
-
-        public List<People> Peoples { get; set; }
-
+        public string City { get; set; }
         
+        /// <summary>
+        /// empty contructor
+        /// </summary>               
         public People()
         {
-                     
+                                 
         }
 
-        public List<People> AddPeople()
+        /// <summary>
+        /// Constructor for setting the People objects parameters
+        /// </summary>
+        /// <param name="Name">name of the people</param>
+        /// <param name="PhoneNumber">phonenumber to the people</param>
+        /// <param name="City">city of the people</param>
+        public People(string Name, string PhoneNumber, string City)
         {
-            if(this.Peoples == null)
-            {
-                this.Peoples = new List<People>();
-            }
-           
-
-            Peoples.Add(new People { Name = "Erika", PhoneNumber = "0708430473", City = "Ronneby" });
-            Peoples.Add(new People { Name = "Stina", PhoneNumber = "045523145", City = "Karlskrona" });
-            Peoples.Add(new People { Name = "Calle", PhoneNumber = "0454322412", City = "Karlshamn" });
-            Peoples.Add(new People { Name = "Pelle", PhoneNumber = "045412345", City = "Olofström" });
-            Peoples.Add(new People { Name = "Anna", PhoneNumber = "045698765", City = "Sölvesborg" });
-
-            return Peoples;
-            
+            this.Name = Name;
+            this.PhoneNumber = PhoneNumber;
+            this.City = City;
         }
-
-
-
     }
 }
