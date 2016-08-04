@@ -9,63 +9,47 @@
 
 <h4>@ViewBag.Message</h4>
 
-@* @using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
-    {
-*@
-    <div class="container">
-        <table class="table">
-            <thead>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone number</th>
+                <th>City</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
                 <tr>
-                    <th>Name</th>
-                    <th>Phone number</th>
-                    <th>City</th>
+                    <td>
+                        @Html.TextBoxFor(m => m[i].Name, new { @readonly = "readonly" })
+                    </td>
+                    <td>
+
+                        @Html.TextBoxFor(m => m[i].PhoneNumber, new { @readonly = "readonly" })
+
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m[i].City, new { @readonly = "readonly" })
+                    </td>
+
+                    <td>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions no-color">
+                                @Html.ActionLink("Delete", "Delete", "People", new { id = i }, null)
+                            </div>
+                        }
+                    </td>
                 </tr>
-
-            </thead>
-
-            <tbody>
-                @for (int i = 0; i < Model.Count; i++)
-                {
-                    <tr>
-                        <td>
-
-                            @Html.TextBoxFor(m => m[i].Name, new { @readonly = "readonly" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(m => m[i].PhoneNumber, new { @readonly = "readonly" })
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(m => m[i].City, new { @readonly = "readonly" })
-                        </td>
-
-                        <td>
-
-                            @using (Html.BeginForm())
-                            {
-                                @Html.AntiForgeryToken()
-
-                                <div class="form-actions no-color">
-                               <!--     <input type="submit" value="Delete"/> |-->
-
-                            @*        @Html.ActionLink("People", "ShowPeople", "People") *@
-                                   @Html.ActionLink("Delete", "Delete", "People", new {id = i }, null  )
-                                </div>
-                            }
-                           
-                                   
-                                
-
-                        </td>
-
-
-
-
-                    </tr>
-                }
-
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
+</div>
 
 <h4>Search:</h4>
 
@@ -76,9 +60,8 @@
     <input type="submit" value="Search" class="btn btn-sm btn-info" />
 }
 
-<br/>
+<br />
 <h4>Add person:</h4>
-
 @using (Html.BeginForm("AddPeople", "People", FormMethod.Post))
 {
     <p> Enter name:</p>
@@ -90,27 +73,8 @@
     <p> Enter city:</p>
     <input name="city" class="form-control" />
     <br />
-
     <input type="submit" value="Add" class="btn btn-sm btn-info" />
 }
-
-
-
-
-
-
-
-@*     @Html.Label("Enter a search string")
-
-    @Html.TextBox("Search", null, new { @class = "form-control", @type = "text" })
-
-*@
-<!--
-    <br />
-
-    <input type="submit" value="Search" class="btn btn-sm btn-success" />
-    -->
-@* } *@
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>

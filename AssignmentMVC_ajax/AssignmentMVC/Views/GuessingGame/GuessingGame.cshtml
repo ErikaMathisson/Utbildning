@@ -1,0 +1,46 @@
+﻿<h1>@ViewBag.Title</h1>
+<h4>@ViewBag.Message</h4>
+
+<!-- Check if the user entered correct number or not, based on that determine what form to use -->
+@if (ViewBag.Winner != "yes")
+{
+    using (Html.BeginForm("GuessingGame", "GuessingGame", FormMethod.Post))
+    {
+        @Html.Label("Number: ")
+        @Html.TextBox("Guess", null, new { @class = "form-control", @type = "number" })
+        <br />
+        <input type="submit" value="Send Data" class="btn btn-sm btn-success" />
+    }
+}
+
+else
+{
+    using (Html.BeginForm("GuessingGame", "GuessingGame", FormMethod.Get))
+    {
+        @Html.Label("Number: ")
+        @Html.TextBox("Guess", null, new { @class = "form-control", @type = "number" })
+        <br />
+        <input type="submit" value="Send Data" class="btn btn-sm btn-success" />
+    }
+}
+
+<!-- list of guesses so far, fetched from the session -->
+@{
+    var guesses = Session["guesses"] as List<int>;
+}
+
+<!-- check if any guesses where made, in that case print them -->
+@if (guesses != null)
+{
+    <h5>Your guesses are: </h5>
+     <ol>
+       
+        @foreach (var item in guesses)
+        {
+            <li><h5> @item </h5></li>
+        }
+
+    </ol>
+}
+
+

@@ -1,0 +1,15 @@
+﻿
+
+<h1>@ViewBag.Title</h1>
+<h4>@ViewBag.Message</h4>
+<h5>@ViewBag.SickMessage</h5>
+
+@using (Html.BeginForm("CheckTemperature", "FeverCheck", FormMethod.Get))
+{
+
+    @Html.Label("Temperature: ");
+
+    @Html.TextBox("Temperature", null, new { @class = "form-control", @type = "number", @placeholder = "Enter temperature in integer" })
+    <br />
+    <input type="submit" value="Check Temperature" class="btn btn-sm btn-success"/>
+}

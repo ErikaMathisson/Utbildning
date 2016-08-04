@@ -1,0 +1,62 @@
+﻿@model AssignmentMVC.Models.People
+
+<h5> @ViewBag.MessagePartial  </h5> 
+
+    <li id="editTarget" class="list-group-item col-sm-6"> @Model.Name ; @Model.PhoneNumber ; @Model.City </li>
+    <li class="list-group-item">
+
+        @Ajax.ActionLink(linkText: "Delete",
+ actionName: "Delete",
+ controllerName: "People",
+ routeValues: new { search = Model.Name },
+ ajaxOptions: new AjaxOptions
+ {
+     UpdateTargetId = "test",
+     InsertionMode = InsertionMode.Replace
+ })
+
+
+        @*@Html.ActionLink("Delete", "Delete", "People", new { search = Model.Name }, null)*@
+
+
+    </li>
+    <li>
+        @*@using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
+        {
+            <input type="submit" value="Edit" class="btn btn-sm btn-info" />
+        }*@
+
+        @*@Ajax.ActionLink("Edit", "action", "controller", new AjaxOptions() {
+       UpdateTargetId = "divToUpdate"}, new { @class = "btn" }) })*@
+
+
+    </li>
+
+<li>
+    <div id="edit">
+        @using (Ajax.BeginForm("Edit", "People",
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    InsertionMode = InsertionMode.Replace,
+                                    UpdateTargetId = "target"
+                                }))
+        {
+            <input type="submit" value="Edit" class="btn btn-sm btn-info" />
+
+            if(ViewBag.Edit == "yes")
+            { 
+
+            @Html.TextBoxFor(m=>Model.Name, new {  })                  
+
+                @Html.TextBoxFor(m=>Model.PhoneNumber, new {  })
+           
+                        @Html.TextBoxFor(m => Model.City, new { })
+
+            }
+
+
+        }
+</div>
+
+</li>

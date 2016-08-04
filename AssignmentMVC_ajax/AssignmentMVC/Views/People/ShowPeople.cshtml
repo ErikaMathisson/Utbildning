@@ -1,0 +1,69 @@
+﻿
+@model List<AssignmentMVC.Models.People>
+@{
+    var CurrentList = Model;
+}
+<h1>People</h1>
+
+<h4>List of peoples: </h4>
+
+<h4>@ViewBag.Message</h4>
+
+<div class="container" id="test">
+    @foreach (var item in Model)
+    {        
+            <ul class="list-group list-inline">
+                @{
+                    Html.RenderAction("RenderPeople", "People", new { p = item });
+                }
+             </ul>   
+     }
+
+</div>
+
+<h4>Search:</h4>
+
+<div id="target">
+    @using (Ajax.BeginForm("SearchPeople", "People",
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        InsertionMode = InsertionMode.Replace,
+                        UpdateTargetId = "target"
+                    }))
+    {
+        <input name="Search" class="form-control" />
+        <br />
+        <input type="submit" value="Search" class="btn btn-sm btn-info" />
+    }
+</div>
+
+
+<div id="ajaxtarget"></div>
+
+<br />
+<h4>Add person:</h4>
+
+@using (Html.BeginForm("AddPeople", "People", FormMethod.Post))
+{
+    <p> Enter name:</p>
+    <input name="name" class="form-control" />
+    <br />
+    <p> Enter phonenumber:</p>
+    <input name="phoneNumber" class="form-control" />
+    <br />
+    <p> Enter city:</p>
+    <input name="city" class="form-control" />
+    <br />
+
+    <input type="submit" value="Add" class="btn btn-sm btn-info" />
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+
