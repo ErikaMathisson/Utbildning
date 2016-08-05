@@ -65,20 +65,23 @@ namespace AssignmentMVC.Controllers
         //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
         public ActionResult Edit([Bind(Include = "Id, Name, PhoneNumber, City")]People p)
         {
-        //    var people = new People();
+            var people = new People();
+
+          
+            
             if (ModelState.IsValid)
             {
 
-                var people = Peoples = Peoples.Find(x => x.Id == p.Id).;
-
+                people = Peoples.Find(x => x.Id == p.Id);
+                return PartialView("_people", p);
 
             }
             else
             {
-
+                return PartialView("_people", p);
             }
 
-            return PartialView("_people", p);
+           
         }
 
         [HttpPost]
