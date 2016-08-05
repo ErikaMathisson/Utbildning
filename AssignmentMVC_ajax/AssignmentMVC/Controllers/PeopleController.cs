@@ -67,21 +67,18 @@ namespace AssignmentMVC.Controllers
         {
             var people = new People();
 
-          
-            
+            people = Peoples.Find(x => x.Id == p.Id);
+
             if (ModelState.IsValid)
             {
-
-                people = Peoples.Find(x => x.Id == p.Id);
+             
                 return PartialView("_people", p);
-
             }
             else
             {
-                return PartialView("_people", p);
+                return PartialView("_people", people);
             }
-
-           
+          
         }
 
         [HttpPost]
@@ -93,7 +90,14 @@ namespace AssignmentMVC.Controllers
             return PartialView("_EditPerson", people);
         }
 
+        [HttpPost]
+        //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
+        public ActionResult GetPerson(int id = 0)
+        {
+            var people = Peoples.FirstOrDefault(x => x.Id == id);
 
+            return PartialView("_EditPerson", people);
+        }
 
 
 

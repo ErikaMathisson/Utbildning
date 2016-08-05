@@ -1,12 +1,12 @@
 ﻿@model AssignmentMVC.Models.People
 
-<div id="Person-@Model.Id">
+    <div id="Person-@Model.Id">
 
-    <div class="col-xs-4"> @Model.Name </div>
-    <div class="col-xs-2"> @Model.PhoneNumber </div>
-    <div class="col-xs-2"> @Model.City </div>
-    <div class="col-xs-2">
-        @using (Ajax.BeginForm("EditPerson", "People", new { id = Model.Id },
+        <div class="col-xs-4"> @Model.Name </div>
+        <div class="col-xs-2"> @Model.PhoneNumber </div>
+        <div class="col-xs-2"> @Model.City </div>
+        <div class="col-xs-2">
+            @using (Ajax.BeginForm("EditPerson", "People", new { id = Model.Id },
                     new AjaxOptions
                     {
                         HttpMethod = "POST",
@@ -14,16 +14,16 @@
                         InsertionMode = InsertionMode.Replace
 
                     }))
-        {
-            <input type="submit" value="Edit" class="btn btn-sm btn-info" />
-        }
+            {
+                <input type="submit" value="Edit" class="btn btn-sm btn-info" />
+            }
 
-    </div>
+        </div>
 
 
 
-    <div class="col-xs-2">
-        @Ajax.ActionLink(linkText: "Delete",
+        <div class="col-xs-2">
+            @Ajax.ActionLink(linkText: "Delete",
      actionName: "Delete",
      controllerName: "People",
      routeValues: new { search = Model.Name },
@@ -31,20 +31,25 @@
      {
          UpdateTargetId = "showPartial",
          InsertionMode = InsertionMode.Replace
-     }    )
+     })
 
-        @*@using (Ajax.ActionLink("Delete", "Delete", "People",
-            new { search = Model.Name },
-            new AjaxOptions
-            {
-                UpdateTargetId = "showPartial",
-                InsertionMode = InsertionMode.Replace
-            }))*@
+            @*@using (Ajax.ActionLink("Delete", "Delete", "People",
+                new { search = Model.Name },
+                new AjaxOptions
+                {
+                    UpdateTargetId = "showPartial",
+                    InsertionMode = InsertionMode.Replace
+                }))*@
 
-              </div>
-    
+        </div>
+
     </div>
-   
+
+
+
+
+
+
 
 
 
