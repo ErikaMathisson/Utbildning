@@ -1,44 +1,25 @@
-﻿
-@model List<AssignmentMVC.Models.People>
+﻿@model List<AssignmentMVC.Models.People>
 @{
     var CurrentList = Model;
 }
 
+<div class="container" id="showPartial">
 
 
-    <h1>People</h1>
-
-    <h4>List of peoples: </h4>
-
-    <h4>@ViewBag.Message</h4>
-
-<div class="container" id="test">
-
-
-    @*@foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <ul class="list-group list-inline">
             @{
                 Html.RenderAction("RenderPeople", "People", new { p = item });
             }
         </ul>
-                }*@
-
-
-    @{
-        Html.RenderAction("ShowPeoplePartial", "People");
-    }
+                }
 
 
 
-
-
-
-
-
-    @{
+    @*@{
         Html.RenderAction("Search", "People");
-    }
+    }*@
 
 
 
@@ -69,7 +50,7 @@
 
 
 
-    <br />
+    @*<br />
     <h4>Add person:</h4>
 
     @using (Html.BeginForm("AddPeople", "People", FormMethod.Post))
@@ -85,16 +66,8 @@
         <br />
 
         <input type="submit" value="Add" class="btn btn-sm btn-info" />
-    }
+    }*@
 
 
 </div>
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/scripts/bootstrap.min.js"></script>
-<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
-
-
 

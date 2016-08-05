@@ -1,0 +1,18 @@
+﻿<div id="search">
+    <h4>Search:</h4>
+
+    @using (Ajax.BeginForm("SearchPeople", "People",
+                                                        new AjaxOptions
+                                                        {
+                                                            HttpMethod = "POST",
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "showPartial"
+                                                        }))
+    {
+        <input name="Search" class="form-control" />
+        <br />
+        <input type="submit" value="Search" class="btn btn-sm btn-info" />
+    }
+
+
+</div>

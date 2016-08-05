@@ -45,6 +45,16 @@ namespace AssignmentMVC.Controllers
         }
 
 
+        public ActionResult Search()
+        {
+            return PartialView("_search");
+        }
+
+        public ActionResult ShowPeoplePartial()
+        {
+            return PartialView("_showPeople", Peoples);
+        }
+
 
         public ActionResult Edit(People p)
         {
@@ -88,8 +98,9 @@ namespace AssignmentMVC.Controllers
 
             // render the view with the list of found elements
 
+            return PartialView("_showPeople", searchResult);
          
-            return View("ShowPeople", searchResult);
+        //    return View("ShowPeople", searchResult);
         }
 
         /// <summary>
@@ -151,7 +162,8 @@ namespace AssignmentMVC.Controllers
                 ViewBag.Message = "No information in the list....";
             }
             //return the list of peoples to the view
-            return View("ShowPeople", Peoples);
+            return PartialView("_showPeople", Peoples);
+         //   return View("ShowPeople", Peoples);
         }
 
         /// <summary>
