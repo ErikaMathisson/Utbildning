@@ -15,11 +15,11 @@ namespace AssignmentMVC.Controllers
         /// </summary>
         List<People> Peoples = new List<People>
         {
-            new People { Name ="Erika", PhoneNumber = "0708430473", City = "Ronneby"},
-            new People { Name = "Stina", PhoneNumber = "045523145", City = "Karlskrona"},
-            new People { Name = "Calle", PhoneNumber = "0454322412", City = "Karlshamn" },
-            new People { Name = "Pelle", PhoneNumber = "045412345", City = "Olofström" },
-            new People { Name = "Anna", PhoneNumber = "045698765", City = "Sölvesborg" }
+            new People { Id = 1, Name ="Erika", PhoneNumber = "0708430473", City = "Ronneby"},
+            new People { Id = 2, Name = "Stina", PhoneNumber = "045523145", City = "Karlskrona"},
+            new People { Id = 3, Name = "Calle", PhoneNumber = "0454322412", City = "Karlshamn" },
+            new People { Id = 4, Name = "Pelle", PhoneNumber = "045412345", City = "Olofström" },
+            new People { Id = 5, Name = "Anna", PhoneNumber = "045698765", City = "Sölvesborg" }
         };
 
         // GET: People
@@ -31,8 +31,6 @@ namespace AssignmentMVC.Controllers
         {
             return View(Peoples);
         }
-
-
 
         /// <summary>
         /// action for rendering a partialview
@@ -50,17 +48,50 @@ namespace AssignmentMVC.Controllers
             return PartialView("_search");
         }
 
+        public ActionResult Add()
+        {
+            return PartialView("_add");
+        }
+
         public ActionResult ShowPeoplePartial()
         {
             return PartialView("_showPeople", Peoples);
         }
 
 
-        public ActionResult Edit(People p)
+        //todo edit
+
+        [HttpPost]
+        //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
+        public ActionResult Edit([Bind(Include = "Id, Name, PhoneNumber, City")]People p)
         {
-            ViewBag.Edit = "yes";
+        //    var people = new People();
+            if (ModelState.IsValid)
+            {
+
+                var people = Peoples = Peoples.Find(x => x.Id == p.Id).;
+
+
+            }
+            else
+            {
+
+            }
+
             return PartialView("_people", p);
         }
+
+        [HttpPost]
+        //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
+        public ActionResult EditPerson(int id = 0)
+        {
+            var people = Peoples.FirstOrDefault(x => x.Id == id);
+
+            return PartialView("_EditPerson", people);
+        }
+
+
+
 
 
 
@@ -99,8 +130,8 @@ namespace AssignmentMVC.Controllers
             // render the view with the list of found elements
 
             return PartialView("_showPeople", searchResult);
-         
-        //    return View("ShowPeople", searchResult);
+
+            //    return View("ShowPeople", searchResult);
         }
 
         /// <summary>
@@ -125,7 +156,9 @@ namespace AssignmentMVC.Controllers
                 ViewBag.Message = "You need to enter information in order to add a new person";
             }
             //render the view with the list of peoples
-            return View("ShowPeople", Peoples);
+            //    return View("ShowPeople", Peoples);
+
+            return PartialView("_showPeople", Peoples);
         }
 
         /// <summary>
@@ -163,7 +196,7 @@ namespace AssignmentMVC.Controllers
             }
             //return the list of peoples to the view
             return PartialView("_showPeople", Peoples);
-         //   return View("ShowPeople", Peoples);
+            //   return View("ShowPeople", Peoples);
         }
 
         /// <summary>
@@ -172,15 +205,15 @@ namespace AssignmentMVC.Controllers
         /// <returns></returns>
 
 
-        // from ws, partialView
-        public ActionResult Person()
-        {
-            //for a delay before shown, due to ajax
-            Thread.Sleep(3000);
+        //// from ws, partialView
+        //public ActionResult Person()
+        //{
+        //    //for a delay before shown, due to ajax
+        //    Thread.Sleep(3000);
 
-            return PartialView("_person", Peoples);
+        //    return PartialView("_person", Peoples);
 
-        }
+        //}
 
 
     }

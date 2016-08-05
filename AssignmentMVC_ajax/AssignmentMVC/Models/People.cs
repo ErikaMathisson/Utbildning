@@ -25,7 +25,9 @@ namespace AssignmentMVC.Models
         /// </summary>
         [Required]
         public string City { get; set; }
-        
+
+        public int Id { get; set; }
+
         /// <summary>
         /// empty contructor
         /// </summary>               
@@ -40,7 +42,7 @@ namespace AssignmentMVC.Models
         /// <param name="Name">name of the people</param>
         /// <param name="PhoneNumber">phonenumber to the people</param>
         /// <param name="City">city of the people</param>
-        public People(string Name, string PhoneNumber, string City)
+        public People(int id, string Name, string PhoneNumber, string City)
         {
             this.Name = Name;
             this.PhoneNumber = PhoneNumber;

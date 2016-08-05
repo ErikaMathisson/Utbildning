@@ -1,62 +1,125 @@
 ﻿@model AssignmentMVC.Models.People
 
-<h5> @ViewBag.MessagePartial  </h5> 
+<div id="Person-@Model.Id">
 
-    <li id="editTarget" class="list-group-item col-sm-6"> @Model.Name ; @Model.PhoneNumber ; @Model.City </li>
-    <li class="list-group-item">
+    <div class="col-xs-4"> @Model.Name </div>
+    <div class="col-xs-2"> @Model.PhoneNumber </div>
+    <div class="col-xs-2"> @Model.City </div>
+    <div class="col-xs-2">
+        @using (Ajax.BeginForm("EditPerson", "People", new { id = Model.Id },
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        UpdateTargetId = "Person-" + Model.Id,
+                        InsertionMode = InsertionMode.Replace
 
+                    }))
+        {
+            <input type="submit" value="Edit" class="btn btn-sm btn-info" />
+        }
+
+    </div>
+
+
+
+    <div class="col-xs-2">
         @Ajax.ActionLink(linkText: "Delete",
- actionName: "Delete",
- controllerName: "People",
- routeValues: new { search = Model.Name },
- ajaxOptions: new AjaxOptions
- {
-     UpdateTargetId = "showPartial",
-     InsertionMode = InsertionMode.Replace
- })
+     actionName: "Delete",
+     controllerName: "People",
+     routeValues: new { search = Model.Name },
+     ajaxOptions: new AjaxOptions
+     {
+         UpdateTargetId = "showPartial",
+         InsertionMode = InsertionMode.Replace
+     }    )
+
+        @*@using (Ajax.ActionLink("Delete", "Delete", "People",
+            new { search = Model.Name },
+            new AjaxOptions
+            {
+                UpdateTargetId = "showPartial",
+                InsertionMode = InsertionMode.Replace
+            }))*@
+
+              </div>
+    
+    </div>
+   
 
 
-        @*@Html.ActionLink("Delete", "Delete", "People", new { search = Model.Name }, null)*@
+
+@*@using(Ajax.ActionLink(linkText: "Delete",
+     actionName: "Delete",
+     controllerName: "People",
+     routeValues: new { search = Model.Name },
+     ajaxOptions: new AjaxOptions
+     {
+         UpdateTargetId = "showPartial",
+         InsertionMode = InsertionMode.Replace
+     })
+)*@
 
 
-    </li>
-    <li>
-        @*@using (Html.BeginForm("SearchPeople", "People", FormMethod.Post))
+
+
+@*<h5> @ViewBag.MessagePartial  </h5>
+
+      <li id="editTarget" class="list-group-item col-sm-8">
+
+    @using (Ajax.BeginForm("Edit", "People",
+
+                                                        new { Name = Model.Name, PhoneNumber = Model.PhoneNumber, City = Model.City },
+                                                        new AjaxOptions
+                                                        {
+                                                            HttpMethod = "POST",
+                                                            InsertionMode = InsertionMode.Replace,
+                                                            UpdateTargetId = "editTarget"
+                                                        }))
+    {
+
+        if (ViewBag.Edit == "yes")
         {
-            <input type="submit" value="Edit" class="btn btn-sm btn-info" />
-        }*@
+     <!--       <li id="test1" class="list-group-item">  -->
+                @Html.TextBoxFor(m => Model.Name, new { })
+                @Html.TextBoxFor(m => Model.PhoneNumber, new { })
+                @Html.TextBoxFor(m => Model.City, new { })
 
-        @*@Ajax.ActionLink("Edit", "action", "controller", new AjaxOptions() {
-       UpdateTargetId = "divToUpdate"}, new { @class = "btn" }) })*@
+
+     <!-- </li>  -->
 
 
-    </li>
+    <input type="submit" value="Submit" class="btn btn-sm btn-info" />
 
-<li>
-    <div id="edit">
-        @using (Ajax.BeginForm("Edit", "People",
-                                new AjaxOptions
-                                {
-                                    HttpMethod = "POST",
-                                    InsertionMode = InsertionMode.Replace,
-                                    UpdateTargetId = "target"
-                                }))
+        }
+        else
         {
-            <input type="submit" value="Edit" class="btn btn-sm btn-info" />
+       <!--     <li id="test2" class="list-group-item"> -->
+                @Model.Name ; @Model.PhoneNumber ; @Model.City
 
-            if(ViewBag.Edit == "yes")
-            { 
+     <!--       </li>  -->
+                <input type="submit" value="Edit" class="btn btn-sm btn-info" />
 
-            @Html.TextBoxFor(m=>Model.Name, new {  })                  
-
-                @Html.TextBoxFor(m=>Model.PhoneNumber, new {  })
-           
-                        @Html.TextBoxFor(m => Model.City, new { })
-
-            }
 
 
         }
-</div>
 
-</li>
+
+    }
+
+    <!--
+    <li id="test3" class="list-group-item">
+
+          -->
+
+        @Ajax.ActionLink(linkText: "Delete",
+     actionName: "Delete",
+     controllerName: "People",
+     routeValues: new { search = Model.Name },
+     ajaxOptions: new AjaxOptions
+     {
+         UpdateTargetId = "showPartial",
+         InsertionMode = InsertionMode.Replace
+     })
+
+    </li>*@
+

@@ -1,0 +1,49 @@
+﻿@model AssignmentMVC.Models.People
+
+<div id="Person-@Model.Id">
+
+    @using (Ajax.BeginForm("Edit", "People", new { id = Model.Id },
+                                            new AjaxOptions
+                                            {
+                                                HttpMethod = "POST",
+                                                UpdateTargetId = "Person-" + Model.Id,
+                                                InsertionMode = InsertionMode.Replace
+                                            }))
+    {
+        <div>
+            @Html.TextBoxFor(x => Model.Id, new { @type = "hidden" })
+        </div>
+
+        <div class="col-xs-4">
+            @Html.TextBoxFor(m => Model.Name, new { })
+        </div>
+        <div class="col-xs-2">
+            @Html.TextBoxFor(m => Model.PhoneNumber, new { })
+
+        </div>
+        <div class="col-xs-2">
+            @Html.TextBoxFor(m => Model.City, new { })
+        </div>
+
+        <div class="col-xs-2">
+
+
+
+            <input type="submit" value="Save changes" class="btn btn-sm btn-success" />
+        </div>
+    }
+
+    <div class="col-xs-2">
+
+        @using (Ajax.BeginForm("GetPerson", new { id = Model.Id },
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "Person-" + Model.Id,
+                            InsertionMode = InsertionMode.Replace
+                        }))
+        {
+            <input type="submit" value="Cancel" class="btn btn-sm btn-warning" />
+        }
+        </div>
+</div>

@@ -8,66 +8,9 @@
 
     @foreach (var item in Model)
     {
-        <ul class="list-group list-inline">
-            @{
                 Html.RenderAction("RenderPeople", "People", new { p = item });
-            }
-        </ul>
-                }
-
-
-
-    @*@{
-        Html.RenderAction("Search", "People");
-    }*@
-
-
-
-
-    @*<h4>Search:</h4>
-
-        @using (Ajax.BeginForm("SearchPeople", "People",
-                                        new AjaxOptions
-                                        {
-                                            HttpMethod = "POST",
-                                            InsertionMode = InsertionMode.Replace,
-                                            UpdateTargetId = "test"
-                                        }))
-        {
-            <input name="Search" class="form-control" />
-            <br />
-            <input type="submit" value="Search" class="btn btn-sm btn-info" />
-        }*@
-
-
-
-
-
-
-
-
-
-
-
-
-    @*<br />
-    <h4>Add person:</h4>
-
-    @using (Html.BeginForm("AddPeople", "People", FormMethod.Post))
-    {
-        <p> Enter name:</p>
-        <input name="name" class="form-control" />
-        <br />
-        <p> Enter phonenumber:</p>
-        <input name="phoneNumber" class="form-control" />
-        <br />
-        <p> Enter city:</p>
-        <input name="city" class="form-control" />
-        <br />
-
-        <input type="submit" value="Add" class="btn btn-sm btn-info" />
-    }*@
-
+  
+   }
 
 </div>
 
