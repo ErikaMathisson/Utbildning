@@ -5,11 +5,9 @@
 
 <div class="container" id="showPartial">
 
-
     @foreach (var item in Model)
     {
-                Html.RenderAction("RenderPeople", "People", new { p = item });
-  
+                Html.RenderAction("RenderPeople", "People", new { p = item }); 
    }
 
 </div>

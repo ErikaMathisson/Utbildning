@@ -4,11 +4,9 @@
     var CurrentList = Model;
 }
 
-    <h1>People</h1>
-
-    <h4>List of peoples: </h4>
-
-    <h4>@ViewBag.Message</h4>
+<h1>People</h1>
+<h4>List of peoples: </h4>
+<h4>@ViewBag.Message</h4>
 
 <div class="container" id="show">
     
@@ -16,8 +14,7 @@
         Html.RenderAction("ShowPeoplePartial", "People");
     }
 
-
-    </div>
+</div>
 
 <div id="search">
 
@@ -25,7 +22,7 @@
         Html.RenderAction("Search", "People");
     }
 
-    </div>
+ </div>
 
 <div id="add">
     @{
@@ -33,9 +30,8 @@
     }
 
 </div>
-    <br />
-  
-
+<br/>
+ 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

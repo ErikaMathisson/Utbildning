@@ -177,7 +177,7 @@
     <Content Include="Views\Shared\_search.cshtml" />
     <Content Include="Views\Shared\_showPeople.cshtml" />
     <Content Include="Views\Shared\_add.cshtml" />
-    <Content Include="Views\Shared\_EditPerson.cshtml" />
+    <Content Include="Views\Shared\_EditPeople.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

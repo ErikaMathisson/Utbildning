@@ -42,66 +42,66 @@ namespace AssignmentMVC.Controllers
             return PartialView("_people", p);
         }
 
-
+        /// <summary>
+        /// action for render the partial view for a search
+        /// </summary>
+        /// <returns>partialview</returns>
         public ActionResult Search()
         {
             return PartialView("_search");
         }
 
+        /// <summary>
+        /// action for rendering a partial view for adding a people
+        /// </summary>
+        /// <returns>partialview</returns>
         public ActionResult Add()
         {
             return PartialView("_add");
         }
 
+        /// <summary>
+        /// action for showing partial view for a list of peoples
+        /// </summary>
+        /// <returns>partialview</returns>
         public ActionResult ShowPeoplePartial()
         {
             return PartialView("_showPeople", Peoples);
         }
-
-
-        //todo edit
-
+           
+        /// <summary>
+        /// action for editing a people
+        /// </summary>
+        /// <param name="p">people whom should be edited</param>
+        /// <returns>partialview</returns>
         [HttpPost]
-        //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
         public ActionResult Edit([Bind(Include = "Id, Name, PhoneNumber, City")]People p)
         {
+            // checks if people exist and if all required fields are filled in return the new othherwise return the non-edited
             var people = new People();
-
             people = Peoples.Find(x => x.Id == p.Id);
-
             if (ModelState.IsValid)
-            {
-             
+            {           
                 return PartialView("_people", p);
             }
             else
             {
                 return PartialView("_people", people);
-            }
-          
+            }          
         }
 
+        /// <summary>
+        /// action for getting correct people depending on id and render a partialview with the result
+        /// </summary>
+        /// <param name="id">id of people</param>
+        /// <returns>partialview</returns>
         [HttpPost]
-        //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
-        public ActionResult EditPerson(int id = 0)
+        public ActionResult EditPeople(int id = 0)
         {
             var people = Peoples.FirstOrDefault(x => x.Id == id);
-
-            return PartialView("_EditPerson", people);
+            return PartialView("_EditPeople", people);
         }
-
-        [HttpPost]
-        //     public ActionResult Edit([Bind(Include = "Name, PhoneNumber, City")]People p)
-        public ActionResult GetPerson(int id = 0)
-        {
-            var people = Peoples.FirstOrDefault(x => x.Id == id);
-
-            return PartialView("_EditPerson", people);
-        }
-
-
-
-
+        
         /// <summary>
         /// action for searching for peoples in the list of static peoples
         /// </summary>
@@ -155,7 +155,8 @@ namespace AssignmentMVC.Controllers
             if (name.Length != 0 && phoneNumber.Length != 0 && city.Length != 0)
             {
                 // add the new people to the list of peoples
-                Peoples.Add(new People { Name = name, PhoneNumber = phoneNumber, City = city });
+                int id = Peoples.Count +1;
+                Peoples.Add(new People { Id = id, Name = name, PhoneNumber = phoneNumber, City = city });
             }
             else
             {
@@ -205,24 +206,7 @@ namespace AssignmentMVC.Controllers
             return PartialView("_showPeople", Peoples);
             //   return View("ShowPeople", Peoples);
         }
-
-        /// <summary>
-        /// ///////////////////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-
-
-        //// from ws, partialView
-        //public ActionResult Person()
-        //{
-        //    //for a delay before shown, due to ajax
-        //    Thread.Sleep(3000);
-
-        //    return PartialView("_person", Peoples);
-
-        //}
-
-
+        
     }
 }
 

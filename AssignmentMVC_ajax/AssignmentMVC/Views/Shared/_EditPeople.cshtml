@@ -26,16 +26,13 @@
         </div>
 
         <div class="col-xs-2">
-
-
-
             <input type="submit" value="Save changes" class="btn btn-sm btn-success" />
         </div>
     }
 
     <div class="col-xs-2">
 
-        @using (Ajax.BeginForm("ShowPeoplePartial", 
+        @using (Ajax.BeginForm("Edit", "People", new { id = Model.Id },
                         new AjaxOptions
                         {
                             HttpMethod = "POST",
