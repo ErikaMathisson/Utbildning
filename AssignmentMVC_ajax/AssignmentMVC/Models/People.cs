@@ -44,6 +44,7 @@ namespace AssignmentMVC.Models
         /// <param name="City">city of the people</param>
         public People(int id, string Name, string PhoneNumber, string City)
         {
+            this.Id = id;
             this.Name = Name;
             this.PhoneNumber = PhoneNumber;
             this.City = City;

@@ -204,7 +204,6 @@ namespace AssignmentMVC.Controllers
             }
             //return the list of peoples to the view
             return PartialView("_showPeople", Peoples);
-            //   return View("ShowPeople", Peoples);
         }
         
     }

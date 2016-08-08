@@ -1,7 +1,6 @@
 ﻿@model AssignmentMVC.Models.People
 
 <div id="Person-@Model.Id">
-
     @using (Ajax.BeginForm("Edit", "People", new { id = Model.Id },
                                             new AjaxOptions
                                             {
