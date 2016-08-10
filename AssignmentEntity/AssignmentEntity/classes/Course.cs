@@ -12,6 +12,7 @@ namespace AssignmentEntity.classes
         {
             this.Assignments = new List<Assignment>();
             this.Students = new List<Student>();
+           
         }
         [Key]
         public int Id { get; set; }

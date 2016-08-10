@@ -65,6 +65,14 @@
     <Compile Include="Migrations\201608091255255_updatedDataAnnotations.Designer.cs">
       <DependentUpon>201608091255255_updatedDataAnnotations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608100649303_addedObjectToConstructor.cs" />
+    <Compile Include="Migrations\201608100649303_addedObjectToConstructor.Designer.cs">
+      <DependentUpon>201608100649303_addedObjectToConstructor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608100823320_updatedConstructor.cs" />
+    <Compile Include="Migrations\201608100823320_updatedConstructor.Designer.cs">
+      <DependentUpon>201608100823320_updatedConstructor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +87,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608091255255_updatedDataAnnotations.resx">
       <DependentUpon>201608091255255_updatedDataAnnotations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608100649303_addedObjectToConstructor.resx">
+      <DependentUpon>201608100649303_addedObjectToConstructor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608100823320_updatedConstructor.resx">
+      <DependentUpon>201608100823320_updatedConstructor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
