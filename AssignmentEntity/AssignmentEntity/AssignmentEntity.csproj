@@ -55,6 +55,7 @@
     <Compile Include="classes\Assignment.cs" />
     <Compile Include="classes\AssignmentContext.cs" />
     <Compile Include="classes\Course.cs" />
+    <Compile Include="classes\DBFunctions.cs" />
     <Compile Include="classes\Student.cs" />
     <Compile Include="classes\Teacher.cs" />
     <Compile Include="Migrations\201608091128389_init.cs" />
