@@ -37,7 +37,7 @@
 --'Pulp Fiction', 'Quentin Tarantino', '1994', '4'
 --)
 
---Excercise 3------------------------------------------------ 
+----Excercise 3------------------------------------------------ 
 
 --INSERT INTO Orders (OrderDate, CustomerId)
 --SELECT '2015-01-01', Customers.Id
@@ -96,6 +96,31 @@
 
 --SELECT Title
 --FROM Movies ORDER BY CAST(Price AS INT)ASC;
+
+---- d. Get Firstname, Lastname, DeliveryAddress, DeliveryZip, DeliveryCity for all customers who bought The Wolf of Wall Street. 
+
+--SELECT c.Firstname, c.Lastname, c.DeliveryAddress, c.DeliveryZip, c.DeliveryCity
+--FROM Customers c, Orders o
+--INNER JOIN OrderRows r ON r.MovieId = 3 AND r.OrderId = o.Id
+--WHERE o.CustomerId = c.Id; 
+
+----  Exercise 6 -------------------------------
+
+---- o Add a new column, CellNo to the Customers table. The column should contain the customer’s cellphone number. 
+----- (The old column, PhoneNo currently holds cellphone numbers only. ) 
+
+--ALTER TABLE [dbo].[Customers]
+-- ADD CellNo varchar(15);
+
+----  o Write a query to copy the information from PhoneNo to CellNo. 
+
+--UPDATE Customers 
+--SET CellNo = PhoneNo;
+
+---- o Write a query to empty the PhoneNo column(Sets it to an empty string) 
+
+--UPDATE Customers
+--SET PhoneNo = '';
 
 
 

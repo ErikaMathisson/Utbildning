@@ -1,6 +1,11 @@
-﻿--DROP DATABASE [SQLDatabase];
--- CREATE DATABASE [SQLDatabase];
+﻿
+-- DROP TABLE [dbo].[OrderRows];
+-- DROP TABLE [dbo].[Orders];
+--DROP TABLE [dbo].[Movies];
 --DROP TABLE [dbo].[Customers];
+--DROP DATABASE [SQLDatabase];
+-- CREATE DATABASE [SQLDatabase];
+
 --CREATE TABLE [dbo].[Customers]
 --(
 --	[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1), 
@@ -16,7 +21,6 @@
 --    [PhoneNo] NCHAR(10) NOT NULL
 --)
 
---DROP TABLE [dbo].[Movies];
 --CREATE TABLE [dbo].[Movies](
 --[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 --[Title] VARCHAR(50) NOT NULL,
@@ -25,14 +29,12 @@
 --[Price] NCHAR(10) NOT NULL
 --)
 
--- DROP TABLE [dbo].[Orders];
 --CREATE TABLE [dbo].[Orders](
 --[Id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),
 --[OrderDate] NCHAR(10) NOT NULL,
 --[CustomerId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Customers]([Id])
 --)
 
--- DROP TABLE [dbo].[OrderRows];
 --CREATE TABLE [dbo].[OrderRows](
 --[Id] INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 --[OrderId] INT NOT NULL FOREIGN KEY REFERENCES [dbo].[Orders]([Id]),
