@@ -8,7 +8,7 @@ namespace AssignmentMVC.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext() : base("Defaultconnection")
+        public ApplicationDbContext() : base("Identityconnection")
         {
 
         }
