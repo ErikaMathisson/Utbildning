@@ -1,4 +1,4 @@
-﻿@model AssignmentMVC.Models.ApplicationUser
+﻿@model AssignmentMVC.ViewModels.ApplicationUserViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -6,24 +6,25 @@
 <h1>@ViewBag.Title</h1>
 <h4>@ViewBag.Message</h4>
 
+    @using (Html.BeginForm("AddUser", "Account", FormMethod.Post))
+    {
+        @Html.LabelFor(m => m.UserName)
+        <input name="UserName" class="form-control" />
+        @Html.LabelFor(m => m.Email) 
+        <input name="Email" class="form-control" />
+        @Html.LabelFor(m => m.Password)
+        <input type="password" name="Password" class="form-control" />
+        @Html.LabelFor(m => m.ConfirmPassword)
+        <input type="password" name="ConfirmPassword" class="form-control" />
+        <br />
+        <input type="submit" value="Register" class="btn btn-sm btn-default" />
+        <br/>
 
-@using (Html.BeginForm("AddUser", "Account", FormMethod.Post))
-{
-    <p> Enter username:</p>
-    <input name="UserName" class="form-control" />
-    <p> Enter email:</p>
-    <input name="Email" class="form-control" />
-    <p> Enter password:</p>
-    <input name="Password" class="form-control" />
-    <p> Enter confirm password:</p>
-    <input name="ConfirmPassword" class="form-control" />
-    <br/>
-   
-    <input type="submit" value="Register" class="btn btn-sm btn-default" />
-}
+        @Html.ValidationSummary();
+    }
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
 

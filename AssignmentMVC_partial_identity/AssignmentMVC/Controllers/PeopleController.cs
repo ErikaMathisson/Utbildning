@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace AssignmentMVC.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {
         /// <summary>

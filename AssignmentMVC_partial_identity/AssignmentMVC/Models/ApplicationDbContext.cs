@@ -12,5 +12,10 @@ namespace AssignmentMVC.Models
         {
 
         }
+
+        public static ApplicationDbContext CreateConnection()
+        {
+            return new ApplicationDbContext();
+        }
     }
 }
