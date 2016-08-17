@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.Owin.Security;
 
 namespace AssignmentMVC.App_start
 {
@@ -50,6 +51,33 @@ namespace AssignmentMVC.App_start
             um.MaxFailedAccessAttemptsBeforeLockout = 5;
             um.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(10);        
             return um;
+        }
+
+        //katana implementing owin
+        public class AppSignIn : SignInManager<ApplicationUser, string>
+        {
+            public AppSignIn(AppUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
+            {
+            }
+
+            public static AppSignIn CreateSignInInstance(IdentityFactoryOptions<AppSignIn> options, IOwinContext context)
+            {
+                return new AppSignIn(context.GetUserManager<AppUserManager>(), context.Authentication);
+            }
+
+        }
+    }
+
+    public class AppRole : RoleManager<IdentityRole>
+    {
+        public AppRole(IRoleStore<IdentityRole, string> store) : base(store)
+        {
+        }
+
+        public static AppRole CreateRoleInstance(IdentityFactoryOptions<AppRole> options, IOwinContext context)
+        {
+            var rs = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
+            return new AppRole(rs);
         }
     }
 }

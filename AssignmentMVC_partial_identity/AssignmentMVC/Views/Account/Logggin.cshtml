@@ -1,0 +1,19 @@
+﻿
+
+@if (Request.IsAuthenticated)
+{ }
+
+
+@if (User.Identity.IsAuthenticated)
+{
+
+    <meta http-equiv="refresh" content="0; /Home/Index"/>
+
+}
+
+<form action="/Home/Login" method="post"></form>
+
+.... osv
+
+
+

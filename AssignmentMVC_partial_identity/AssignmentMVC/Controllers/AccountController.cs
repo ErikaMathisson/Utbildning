@@ -1,18 +1,32 @@
-﻿using AssignmentMVC.Models;
+﻿using AssignmentMVC.App_start;
+using AssignmentMVC.Models;
 using AssignmentMVC.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static AssignmentMVC.App_start.AppUserManager;
 
 namespace AssignmentMVC.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+
+
+        //
+
+
+
+
+
+
+
 
       //  ApplicationSignInManager 
         //public AccountController() 
@@ -28,12 +42,48 @@ namespace AssignmentMVC.Controllers
         {
         }
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+        //public AccountController(UserManager<ApplicationUser> userManager)
+        //{
+        //    this.UserManager = userManager;
+        //}
+
+        public AccountController(AppRole role, AppUserManager userManager, AppSignIn signIn)
         {
-            this.UserManager = userManager;
+            _role = role;
+            _signIn = signIn;
+            _userManager = userManager;
+
         }
 
-        public UserManager<ApplicationUser> UserManager { get; private set; }
+        private AppRole _role;
+
+        public AppRole RoleManager
+        {
+            //?? check if object is null
+            get { return _role ?? HttpContext.GetOwinContext().Get<AppRole>(); }
+            set { _role = value; }
+        }
+
+        private AppUserManager _userManager;
+
+        public AppUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.GetOwinContext().Get<AppUserManager>(); }
+            set { _userManager = value; }
+        }
+
+        private AppSignIn _signIn;
+
+        public AppSignIn SignIn
+        {
+            get { return _signIn ?? HttpContext.GetOwinContext().Get<AppSignIn>(); }
+            set { _signIn = value; }
+        }
+
+
+
+
+        //    public UserManager<ApplicationUser> UserManager { get; private set; }
 
 
         // GET: Account
@@ -51,10 +101,126 @@ namespace AssignmentMVC.Controllers
 
         [AllowAnonymous]
         [HttpPost]
+        public async Task<ActionResult> Reg([Bind(Include ="Email, UserName, PassWord")]RegUserViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = vm.UserName,
+                    Email = vm.Email
+
+                };
+
+                var admin = await UserManager.FindByEmailAsync("admin@admin.se");
+
+                if (admin == null)
+                {
+                    await RoleManager.CreateAsync(new IdentityRole("Admin"));
+                    await RoleManager.CreateAsync(new IdentityRole("User"));
+                    var regStatus = await UserManager.CreateAsync(user, vm.Password);
+
+                    var uAdmin = await UserManager.FindByEmailAsync("admin@admin.se");
+                    await UserManager.AddToRoleAsync(uAdmin.Id, "Admin");
+                    return RedirectToAction("Login");
+
+                }
+
+
+
+                var regStatusUser = await UserManager.CreateAsync(user, vm.Password);
+
+                if (regStatusUser.Succeeded)
+                {
+                    var registeredUser = await UserManager.FindByEmailAsync(vm.Email);
+                    await UserManager.AddToRoleAsync(registeredUser.Id, "User");
+                    return RedirectToAction("Login");
+
+                }
+            }
+
+            return View();
+        }
+
+
+
+        public ActionResult Logggin()
+        {
+            return View();
+        }
+
+        // login in with email doesn't work with method passwordsigninasync... change
+        public async Task<ActionResult> Logggin([Bind(Include = "UserEmail, PassWord")]LogInViewModel2 vm, string ReturnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByEmailAsync(vm.UserEmail);
+                if (user == null)
+                {
+                    user = await UserManager.FindByNameAsync(vm.UserEmail);
+
+                }
+
+                if (user != null)
+                {
+                    var signInStatus = await SignIn.PasswordSignInAsync(vm.UserEmail, vm.Password, false, true);
+
+                    switch (signInStatus)
+                    {
+                        case SignInStatus.Success:
+                            if (!string.IsNullOrWhiteSpace(ReturnUrl))
+                            {
+                                return Redirect(ReturnUrl);
+
+                            }
+                            return RedirectToAction("Index");
+                                                 
+                        //case SignInStatus.LockedOut:
+                        //    break;
+                        //case SignInStatus.RequiresVerification:
+                        //    break;
+                        case SignInStatus.Failure:
+                            ViewBag.Errors = "Incorrect username or password";
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+
+
+            }
+
+            return View();
+
+
+
+        }
+
+
+
+
+
+        public ActionResult Logout()
+        {
+            SignIn.AuthenticationManager.SignOut();
+            return RedirectToAction("Index");
+
+        }
+
+
+
+
+
+
+        [AllowAnonymous]
+        [HttpPost]
         public ActionResult AddUser(ApplicationUserViewModel model)
         {
             if (ModelState.IsValid)
             {
+
+
                 var context = new ApplicationDbContext();
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
