@@ -8,13 +8,13 @@
 
     @using (Html.BeginForm("AddUser", "Account", FormMethod.Post))
     {
-        @Html.LabelFor(m => m.UserName)
+        @Html.LabelFor(model => model.UserName)
         <input name="UserName" class="form-control" />
-        @Html.LabelFor(m => m.Email) 
+        @Html.LabelFor(model => model.Email) 
         <input name="Email" class="form-control" />
-        @Html.LabelFor(m => m.Password)
+        @Html.LabelFor(model => model.Password)
         <input type="password" name="Password" class="form-control" />
-        @Html.LabelFor(m => m.ConfirmPassword)
+        @Html.LabelFor(model => model.ConfirmPassword)
         <input type="password" name="ConfirmPassword" class="form-control" />
         <br />
         <input type="submit" value="Register" class="btn btn-sm btn-default" />

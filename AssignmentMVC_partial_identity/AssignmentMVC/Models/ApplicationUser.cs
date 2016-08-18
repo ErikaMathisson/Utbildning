@@ -12,6 +12,7 @@ namespace AssignmentMVC.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public City city { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(
@@ -32,7 +33,6 @@ namespace AssignmentMVC.Models
 
         //[Required]
         //public string ConfirmPassword { get; set; }
-
 
 
 

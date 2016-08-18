@@ -16,11 +16,11 @@ namespace AssignmentMVC.Controllers
         /// </summary>
         List<People> Peoples = new List<People>
         {
-            new People { Name ="Erika", PhoneNumber = "0708430473", City = "Ronneby"},
-            new People { Name = "Stina", PhoneNumber = "045523145", City = "Karlskrona"},
-            new People { Name = "Calle", PhoneNumber = "0454322412", City = "Karlshamn" },
-            new People { Name = "Pelle", PhoneNumber = "045412345", City = "Olofström" },
-            new People { Name = "Anna", PhoneNumber = "045698765", City = "Sölvesborg" }
+            //new People { Name ="Erika", PhoneNumber = "0708430473", City = "Ronneby"},
+            //new People { Name = "Stina", PhoneNumber = "045523145", City = "Karlskrona"},
+            //new People { Name = "Calle", PhoneNumber = "0454322412", City = "Karlshamn" },
+            //new People { Name = "Pelle", PhoneNumber = "045412345", City = "Olofström" },
+            //new People { Name = "Anna", PhoneNumber = "045698765", City = "Sölvesborg" }
         };
 
         // GET: People
@@ -30,6 +30,9 @@ namespace AssignmentMVC.Controllers
         /// <returns>view</returns>
         public ActionResult ShowPeople()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var Peoples = db.Users.ToList();
+
             return View(Peoples);
         }
 

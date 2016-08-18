@@ -12,12 +12,7 @@ namespace AssignmentMVC
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-       /*     routes.MapRoute(
-                name: "DeletePeople",
-                url: "People",
-                defaults: new { Controller = "People", action = "Delete", name = UrlParameter.Optional });
-*/
+                  
             routes.MapRoute(
                 name: "GuessingGame",
                 url: "GuessingGame",

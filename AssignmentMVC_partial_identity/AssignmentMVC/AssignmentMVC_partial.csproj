@@ -203,9 +203,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608181313429_init.cs" />
+    <Compile Include="Migrations\201608181313429_init.Designer.cs">
+      <DependentUpon>201608181313429_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608181357146_updatedTables.cs" />
+    <Compile Include="Migrations\201608181357146_updatedTables.Designer.cs">
+      <DependentUpon>201608181357146_updatedTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\ContactInfo.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Fever.cs" />
     <Compile Include="Models\Guessing.cs" />
     <Compile Include="Models\People.cs" />
@@ -231,7 +242,7 @@
     <Content Include="Views\People\SearchPeople.cshtml" />
     <Content Include="Views\Shared\_people.cshtml" />
     <Content Include="Views\Account\RegisterUser.cshtml" />
-    <Content Include="Views\Account\LogInUser.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_logIn.cshtml" />
     <Content Include="Views\Account\Reg.cshtml" />
     <Content Include="Views\Account\Logggin.cshtml" />
@@ -244,6 +255,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608181313429_init.resx">
+      <DependentUpon>201608181313429_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608181357146_updatedTables.resx">
+      <DependentUpon>201608181357146_updatedTables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

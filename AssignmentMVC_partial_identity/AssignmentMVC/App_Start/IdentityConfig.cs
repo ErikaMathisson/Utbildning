@@ -17,6 +17,8 @@ namespace AssignmentMVC.App_start
         {
         }
 
+        //function for creating an instance of a usermanager without creating a new instance every time 
+        //also setting properties for the password
         public static AppUserManager CreateUserManagerInstance(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
         {
             var um = new AppUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
@@ -26,7 +28,7 @@ namespace AssignmentMVC.App_start
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
-
+            //setting criteria for password
             um.PasswordValidator = new PasswordValidator
             {
                 RequireDigit = false,
@@ -56,10 +58,11 @@ namespace AssignmentMVC.App_start
         //katana implementing owin
         public class AppSignIn : SignInManager<ApplicationUser, string>
         {
-            public AppSignIn(AppUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager)
+            public AppSignIn(AppUserManager userManager, IAuthenticationManager authenticationManager)
+                : base(userManager, authenticationManager)
             {
             }
-
+            //creating an instance of sign in so that it doesn't need to be instanciating every time
             public static AppSignIn CreateSignInInstance(IdentityFactoryOptions<AppSignIn> options, IOwinContext context)
             {
                 return new AppSignIn(context.GetUserManager<AppUserManager>(), context.Authentication);
@@ -68,12 +71,14 @@ namespace AssignmentMVC.App_start
         }
     }
 
+    // class for application roles
     public class AppRole : RoleManager<IdentityRole>
     {
         public AppRole(IRoleStore<IdentityRole, string> store) : base(store)
         {
         }
 
+        //creating an instance of a role store so that it's not needed to be instanciated every time
         public static AppRole CreateRoleInstance(IdentityFactoryOptions<AppRole> options, IOwinContext context)
         {
             var rs = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());

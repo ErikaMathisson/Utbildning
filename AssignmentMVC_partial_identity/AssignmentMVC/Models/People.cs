@@ -8,6 +8,8 @@ namespace AssignmentMVC.Models
 {
     public class People
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// parameter for the name
         /// </summary>
@@ -25,13 +27,13 @@ namespace AssignmentMVC.Models
         /// </summary>
         [Required]
         public string City { get; set; }
-        
+
         /// <summary>
         /// empty contructor
         /// </summary>               
         public People()
         {
-                                 
+
         }
 
         /// <summary>

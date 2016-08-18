@@ -1,11 +1,17 @@
-﻿@model AssignmentMVC.Models.People
+﻿@*@model AssignmentMVC.Models.People*@
+
+@model AssignmentMVC.Models.ApplicationUser
 
 <h5> @ViewBag.MessagePartial  </h5> 
 
     <li class="list-group-item col-sm-6"> @Model.Name ; @Model.PhoneNumber ; @Model.City </li>
-    <li class="list-group-item"> 
+    <li class="list-group-item">
         @Html.ActionLink("Delete", "Delete", "People", new { search = Model.Name }, null)
     </li>
+
+
+
+   
 
 
 
