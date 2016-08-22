@@ -25,7 +25,24 @@ namespace AssignmentMVC.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password: ")]
         [Compare("Password")]
-        public string ConfirmPassword { get; set; } 
+        public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Admin?")]
+        public bool Admin { get; set; }
+
+        //[Display(Name = "Country:")]
+        //public int Country { get; set; }
+
+        //[Display(Name = "City:")]
+        //public int City { get; set; }
+
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
 
     }
 }

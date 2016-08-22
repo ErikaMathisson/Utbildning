@@ -1,27 +1,65 @@
-﻿using AssignmentMVC.Models;
+﻿using AssignmentMVC.App_start;
+using AssignmentMVC.Models;
+using AssignmentMVC.ViewModels;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static AssignmentMVC.App_start.AppUserManager;
 
 namespace AssignmentMVC.Controllers
 {
     [Authorize]
     public class PeopleController : Controller
     {
-        /// <summary>
-        /// creating a static list for the peoples and adding with peoples and it's attributes
-        /// </summary>
-        List<People> Peoples = new List<People>
+
+        public PeopleController()
         {
-            //new People { Name ="Erika", PhoneNumber = "0708430473", City = "Ronneby"},
-            //new People { Name = "Stina", PhoneNumber = "045523145", City = "Karlskrona"},
-            //new People { Name = "Calle", PhoneNumber = "0454322412", City = "Karlshamn" },
-            //new People { Name = "Pelle", PhoneNumber = "045412345", City = "Olofström" },
-            //new People { Name = "Anna", PhoneNumber = "045698765", City = "Sölvesborg" }
-        };
+        }
+
+        /// <summary>
+        /// setting parameters
+        /// </summary>
+        /// <param name="role">role for adding to a user</param>
+        /// <param name="userManager">usermanager for a user</param>
+        /// <param name="signIn">signin manager</param>
+        public PeopleController(AppRole role, AppUserManager userManager, AppSignIn signIn)
+        {
+            _role = role;
+            _signIn = signIn;
+            _userManager = userManager;
+        }
+
+        //property for rolemanager and get and set method
+        private AppRole _role;
+        public AppRole RoleManager
+        {
+            //?? check if object is null in that case get role from OwinContext
+            get { return _role ?? HttpContext.GetOwinContext().Get<AppRole>(); }
+            set { _role = value; }
+        }
+
+        //property for usermanager and get and set method
+        private AppUserManager _userManager;
+        public AppUserManager UserManager
+        {
+            // check if object is null in that case get usermanager from OwinContext            
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AppUserManager>(); }
+            set { _userManager = value; }
+        }
+
+        // property for signInManager and get and set method
+        private AppSignIn _signIn;
+        public AppSignIn SignIn
+        {
+            // check if object is null in that case get signinmanager from owincontext
+            get { return _signIn ?? HttpContext.GetOwinContext().Get<AppSignIn>(); }
+            set { _signIn = value; }
+        }
 
         // GET: People
         /// <summary>
@@ -30,9 +68,18 @@ namespace AssignmentMVC.Controllers
         /// <returns>view</returns>
         public ActionResult ShowPeople()
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            var Peoples = db.Users.ToList();
+            //fetch peoples with attributes as UsersViewModel            
+            var Peoples = UserManager.Users.ToList().Select(x => new UsersViewModel
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                City = x.City,
+                Country = x.Country,
+                Email = x.Email,
+                Id = x.Id
+            }).ToList();
 
+            //return the list to the view
             return View(Peoples);
         }
 
@@ -41,7 +88,7 @@ namespace AssignmentMVC.Controllers
         /// </summary>
         /// <param name="p">model to be sent to partialview</param>
         /// <returns></returns>
-        public ActionResult RenderPeople(People p)
+        public ActionResult RenderPeople(UsersViewModel p)
         {
             return PartialView("_people", p);
         }
@@ -55,7 +102,17 @@ namespace AssignmentMVC.Controllers
         public ActionResult SearchPeople(string Search)
         {
             // creating a new list of peoples for the search result
-            List<People> searchResult = new List<People>();
+            List<UsersViewModel> searchResult = new List<UsersViewModel>();
+            //fetch peoples
+            var Peoples = UserManager.Users.ToList().Select(x => new UsersViewModel
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.Email,
+                City = x.City,
+                Country = x.Country,
+                Id = x.Id
+            }).ToList();
 
             //make sure the list of peoples, Peoples, have elements in it before doing the search 
             if (Peoples != null)
@@ -63,11 +120,15 @@ namespace AssignmentMVC.Controllers
                 //loop through the elements in the Peoples list
                 foreach (var item in Peoples)
                 {
-                    // check if the city or name contains the search string from the user
-                    if (item.City.Contains(Search) || item.Name.Contains(Search))
+                    //check if firstname and lastname exist before doing a search
+                    if (item.FirstName != null && item.LastName != null)
                     {
-                        // if an element is found add it to the new list of peoples
-                        searchResult.Add(item);
+                        // check if name contains the search string from the user
+                        if (item.FirstName.Contains(Search) || item.LastName.Contains(Search))
+                        {
+                            // if an element is found add it to the new list of peoples
+                            searchResult.Add(item);
+                        }
                     }
                 }
             }
@@ -81,68 +142,151 @@ namespace AssignmentMVC.Controllers
             // render the view with the list of found elements
             return View("ShowPeople", searchResult);
         }
+      
+        /// <summary>
+        /// action for adding a user to the database 
+        /// </summary>
+        /// <param name="model">the user who should be added</param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<ActionResult> AddUser(UsersViewModel model, string UserName, string Password)
+        {
+            // if all information added ok
+            if (ModelState.IsValid)
+            {
+                // create a new user
+                var user = new ApplicationUser
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    UserName = UserName,
+                    Email = model.Email
+                };
+
+                //try and save the user to database
+                var result = await UserManager.CreateAsync(user, Password);
+
+                //the user was not saved ok               
+                if (!result.Succeeded)
+                {
+                    // retrieve information about what went wrong and add the message to the view
+                    string message = "";
+                    if (result.Errors != null)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            message = message + error.ToString() + " ";
+                        }
+                    }
+                    ViewBag.Message = message;
+                }
+                else
+                {
+                    var registeredUser = await UserManager.FindByNameAsync(UserName);
+                    // check if the role for the user should be admin or user and assign to the added user
+
+                    await UserManager.AddToRoleAsync(registeredUser.Id, "User");
+
+                    //the user is registered and saved ok to database, log in automatically
+                    //LogInViewModel vm = new LogInViewModel();
+                    //vm.UserName = UserName;
+                    //vm.Password = model.Password;
+                    //await Login(vm);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            // information entered not ok, reload the view RegisterUser
+            return View("RegisterUser", model);
+        }
+        
 
         /// <summary>
-        /// add a people to the list of peoples
+        /// Deletes a user based on email and redirects to home page
         /// </summary>
-        /// <param name="name">name entered by the user</param>
-        /// <param name="phoneNumber">phonenumber entered by the user</param>
-        /// <param name="city">city entered by the user</param>
-        /// <returns>view with list of peoples</returns>
-        [HttpPost]
-        public ActionResult AddPeople(string name, string phoneNumber, string city)
+        /// <param name="search">email from user</param>
+        /// <returns></returns>
+        public async Task<ActionResult> Delete(string search)
         {
-            //make sure the user entered information in all required fields
-            if (name.Length != 0 && phoneNumber.Length != 0 && city.Length != 0)
+            // finds a user based on email
+            var user = await UserManager.FindByEmailAsync(search);
+
+            //try and delete the user to database
+            var result = await UserManager.DeleteAsync(user);
+
+            //the user was not deleted ok               
+            if (!result.Succeeded)
             {
-                // add the new people to the list of peoples
-                Peoples.Add(new People { Name = name, PhoneNumber = phoneNumber, City = city });
+                // retrieve information about what went wrong and add the message to the view
+                string message = "";
+                if (result.Errors != null)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        message = message + error.ToString() + " ";
+                    }
+                }
+                ViewBag.Message = message;
             }
-            else
-            {
-                // the user didn't enter the required information, send information back about this
-                ViewBag.Message = "You need to enter information in order to add a new person";
-            }
-            //render the view with the list of peoples
-            return View("ShowPeople", Peoples);
+            //redirect to homepage
+            return RedirectToAction("Index", "Home");
+        }
+        
+        /// <summary>
+        /// show a list of countries for the user
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddCountry()
+        {
+            // new database connection
+            ApplicationDbContext db = new ApplicationDbContext();
+            //collect a list of countries 
+            List<Country> countries = db.Countries.Include("Cities").ToList();
+            return View(countries);
         }
 
         /// <summary>
-        /// action for removing a people in the list of peoples
+        /// action for adding a country
         /// </summary>
-        /// <param name="id">name of people who should be removed</param>
-        /// <returns>view with updated peoplelist</returns>
-        public ActionResult Delete(string search)
+        /// <param name="CountryName">name of the country</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddCountry(string CountryName, string CityName)
         {
-            //make sure the list isn't null
-            if (Peoples != null)
+            // create a new database
+            ApplicationDbContext db = new ApplicationDbContext();
+            //check if the model is ok
+            if (ModelState.IsValid)
             {
-                //counter for what element to remove
-                int i = 0;
-                //loop through the list of peoples
-                foreach (var item in Peoples)
+                //create a new country and try to add it to database
+                Country country = new Country();
+                country.CountryName = CountryName;
+
+                City city = new City();
+                city.CityName = CityName;
+               
+                try
                 {
-                    //check if the people is in the list
-                    if (item.Name == search)
-                    {
-                        //remove the people from the list
-                        Peoples.RemoveAt(i);
-                        //display message for the user that people is removed
-                        ViewBag.Message = "People removed";
-                        //skip the rest of looping in the list
-                        break;
-                    }
-                    //increment counter
-                    i++;
+                    db.Countries.Add(country);
+                    var id = db.Countries.FirstOrDefault(x => x.CountryName == CountryName);
+                    city.Countries.Id = id.Id;
+                    db.Cities.Add(city);
+                    db.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return View();
                 }
             }
             else
             {
-                ViewBag.Message = "No information in the list....";
+                // send out error message to user
+                ViewBag.Message = "Information not added";
             }
-            //return the list of peoples to the view
-            return View("ShowPeople", Peoples);
+            //return a list of countries to user
+            List<Country> countries = db.Countries.Include("Cities").ToList();
+            return View(countries);
         }
-        
+
     }
 }

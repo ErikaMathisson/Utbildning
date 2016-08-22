@@ -9,22 +9,36 @@
     @using (Html.BeginForm("AddUser", "Account", FormMethod.Post))
     {
         @Html.LabelFor(model => model.UserName)
-        <input name="UserName" class="form-control" />
-        @Html.LabelFor(model => model.Email) 
-        <input name="Email" class="form-control" />
-        @Html.LabelFor(model => model.Password)
-        <input type="password" name="Password" class="form-control" />
-        @Html.LabelFor(model => model.ConfirmPassword)
-        <input type="password" name="ConfirmPassword" class="form-control" />
-        <br />
-        <input type="submit" value="Register" class="btn btn-sm btn-default" />
-        <br/>
+        <input name="UserName" class="form-control"/>
+        @Html.LabelFor(model => model.FirstName)
+        <input name="FirstName" class="form-control" />
+        @Html.LabelFor(model => model.LastName)
+        <input name="LastName" class="form-control" />
 
-        @Html.ValidationSummary();
-    }
+            @Html.LabelFor(model => model.Password)
+            <input type="password" name="Password" class="form-control" />
+            @Html.LabelFor(model => model.ConfirmPassword)
+            <input type="password" name="ConfirmPassword" class="form-control" />
+            @Html.LabelFor(model => model.Email)
+            <input name="Email" class="form-control" />
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/scripts/bootstrap.min.js"></script>
+            @Html.LabelFor(m => m.Admin)
+            <input type="checkbox" name="Admin" value="True" />
+
+            <br />
+            <input type="submit" value="Register" class="btn btn-sm btn-default" />
+            <br />
+
+            @Html.ValidationSummary();
+            }
+
+
+
+
+
+
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+            <script src="~/scripts/bootstrap.min.js"></script>
 

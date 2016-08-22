@@ -8,6 +8,7 @@ namespace AssignmentMVC.Models
 {
     public class People
     {
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
@@ -27,6 +28,8 @@ namespace AssignmentMVC.Models
         /// </summary>
         [Required]
         public string City { get; set; }
+
+
 
         /// <summary>
         /// empty contructor

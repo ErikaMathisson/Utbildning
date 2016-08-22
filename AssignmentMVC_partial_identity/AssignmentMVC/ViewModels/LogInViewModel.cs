@@ -16,5 +16,7 @@ namespace AssignmentMVC.ViewModels
         [Display(Name = "Password: ")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+       
     }
 }

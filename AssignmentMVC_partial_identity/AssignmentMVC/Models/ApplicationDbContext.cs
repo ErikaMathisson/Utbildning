@@ -9,7 +9,7 @@ namespace AssignmentMVC.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext() : base("Identityconnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("Identityconnection")
         {
 
         }
@@ -21,7 +21,9 @@ namespace AssignmentMVC.Models
 
         public DbSet<City> Cities { get; set; }
 
-        public DbSet<Country> Countries { get; set; }    
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<People> Peoples { get; set; }
 
     }
 }

@@ -1,0 +1,118 @@
+﻿@model List<AssignmentMVC.Models.Country>
+@if (User.IsInRole("Admin"))
+{
+
+    @*@using (Ajax.BeginForm("AddPeople", "People",
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "showPartial"
+        }
+        ))*@
+    @*{
+            <p> Enter name:</p>
+            <input name="name" class="form-control" />
+            <br />
+            <p> Enter phonenumber:</p>
+            <input name="phoneNumber" class="form-control" />
+            <br />
+            <p> Enter city:</p>
+            <input name="city" class="form-control" />
+            <br />
+
+            <input type="submit" value="Add" class="btn btn-sm btn-info" />
+
+        }*@
+
+
+    <h1>Countries and cities</h1>
+
+    <h4>List of countries and cities: </h4>
+
+    <h4>@ViewBag.Message</h4>
+
+    <div class="container">
+        <!-- <ul class="list-group list-inline">  -->
+        <ul class="list-group">
+            @if (Model.Count != 0)
+            {
+                foreach (var item in Model)
+                {
+                    if (item.Cities.Count != 0)
+                    {
+                        <li class="list-group-item col-sm-6"> @item.CountryName ; @item.Cities </li>
+                    }
+                    if (item.Cities.Count == 0)
+                    {
+                        <li class="list-group-item col-sm-6"> @item.CountryName </li>
+                    }
+                }
+
+
+
+            }
+           
+        </ul>
+    </div>
+
+    <br />
+    <h4>Add country:</h4>
+
+    using (Html.BeginForm("AddCountry", "People", FormMethod.Post))
+    {
+        <p> Enter country name:</p>
+        <input name="CountryName" class="form-control" />
+        <br />
+        <p> Enter city name:</p>
+        <input name="CityName" class="form-control" />
+        <br />
+        <input type="submit" value="Add country" class="btn btn-sm btn-info" />
+    }
+
+    @*<br />
+    <h4>Add city:</h4>*@
+
+    @*using (Html.BeginForm("Addcity", "People", FormMethod.Post))
+    {
+        
+
+        if (User.Identity.IsAuthenticated)
+        {
+
+            <div class="form-group">
+                <input name="Country" class="form-control" />
+                @Html.Action("AddCountry")
+
+            </div>
+
+        }
+
+
+        <div class="form-group">
+
+            <input name="City" class="form-control" />
+
+        </div>
+
+
+
+
+
+
+
+    }*@
+
+
+
+
+
+
+}
+
+
+
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/scripts/bootstrap.min.js"></script>

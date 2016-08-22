@@ -207,9 +207,13 @@
     <Compile Include="Migrations\201608181313429_init.Designer.cs">
       <DependentUpon>201608181313429_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201608181357146_updatedTables.cs" />
-    <Compile Include="Migrations\201608181357146_updatedTables.Designer.cs">
-      <DependentUpon>201608181357146_updatedTables.cs</DependentUpon>
+    <Compile Include="Migrations\201608220651354_updatedAgain.cs" />
+    <Compile Include="Migrations\201608220651354_updatedAgain.Designer.cs">
+      <DependentUpon>201608220651354_updatedAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608220740020_updatedCity.cs" />
+    <Compile Include="Migrations\201608220740020_updatedCity.Designer.cs">
+      <DependentUpon>201608220740020_updatedCity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -243,9 +247,10 @@
     <Content Include="Views\Shared\_people.cshtml" />
     <Content Include="Views\Account\RegisterUser.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Shared\_logIn.cshtml" />
+    <Content Include="Views\Shared\_logInBar.cshtml" />
     <Content Include="Views\Account\Reg.cshtml" />
     <Content Include="Views\Account\Logggin.cshtml" />
+    <Content Include="Views\People\AddCountry.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -260,8 +265,11 @@
     <EmbeddedResource Include="Migrations\201608181313429_init.resx">
       <DependentUpon>201608181313429_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608181357146_updatedTables.resx">
-      <DependentUpon>201608181357146_updatedTables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201608220651354_updatedAgain.resx">
+      <DependentUpon>201608220651354_updatedAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608220740020_updatedCity.resx">
+      <DependentUpon>201608220740020_updatedCity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

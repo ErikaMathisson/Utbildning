@@ -11,8 +11,7 @@ using System.Web;
 namespace AssignmentMVC.Models
 {
     public class ApplicationUser : IdentityUser
-    {
-        public City city { get; set; }
+    {      
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(
@@ -21,7 +20,7 @@ namespace AssignmentMVC.Models
             return userIdentity;
         }
 
-       // public string FullName { get; set; }
+        // public string FullName { get; set; }
 
         //public string UserName { get; set; }
 
@@ -33,6 +32,18 @@ namespace AssignmentMVC.Models
 
         //[Required]
         //public string ConfirmPassword { get; set; }
+
+        public string City { get; set; }
+
+        public string Country { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+    //    public City city { get; set; }
+
+
 
 
 

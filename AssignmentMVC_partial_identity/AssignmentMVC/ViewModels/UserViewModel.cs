@@ -5,31 +5,20 @@ using System.Web;
 
 namespace AssignmentMVC.ViewModels
 {
-    public class RegUserViewModel
+    public class UsersViewModel
     {
-
+        public string Id { get; set; }
         public string Email { get; set; }
 
-        public string UserName { get; set; }
+        public string FirstName { get; set; }
 
-        public string Password { get; set; }
+        public string LastName { get; set; }
 
-    }
+        public string Country { get; set; }
 
-    public class EditUserViewModel
-    {
-        public string Email { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-    }
-
-
-    public class LogInViewModel2
-    {
-        public string UserEmail { get; set; }
-
-        public string Password { get; set; }
+        public string City { get; set; }
 
 
     }
+
 }

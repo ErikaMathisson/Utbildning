@@ -1,6 +1,7 @@
 ﻿
 @*@model List<AssignmentMVC.Models.People>*@
-@model List<AssignmentMVC.Models.ApplicationUser>
+@*@model List<AssignmentMVC.Models.ApplicationUser>*@
+@model  List<AssignmentMVC.ViewModels.UsersViewModel>
 
 @{
     var CurrentList = Model;
@@ -14,11 +15,14 @@
 <div class="container">
     @foreach (var item in Model)
     {
+        if (item.FirstName != null)
+        {
         <ul class="list-group list-inline">
             @{
                 Html.RenderAction("RenderPeople", "People", new { p = item });
             }
         </ul>
+        }
     }
 
 </div>
@@ -35,19 +39,31 @@
 <br />
 <h4>Add person:</h4>
 
-@using (Html.BeginForm("AddPeople", "People", FormMethod.Post))
+@using (Html.BeginForm("AddUser", "People", FormMethod.Post))
 {
-    <p> Enter name:</p>
-    <input name="name" class="form-control" />
-    <br />
-    <p> Enter phonenumber:</p>
-    <input name="phoneNumber" class="form-control" />
-    <br />
+    <p> Enter username:</p>
+    <input name="UserName" class="form-control" />
+    <p> Enter firstname:</p>
+    <input name="FirstName" class="form-control" /> 
+    <p> Enter lastname:</p>
+    <input name="LastName" class="form-control" />
+    <p> Enter email:</p>
+    <input name="email" class="form-control" />
+    <p> Enter country:</p>
+    <input name="country" class="form-control" />
     <p> Enter city:</p>
     <input name="city" class="form-control" />
-    <br />
-
+    <p> Enter password:</p>
+    <input name="Password" class="form-control" />
+    <p> Enter confirm password:</p>
+    <input name="ConfirmPassword" class="form-control" />   
     <input type="submit" value="Add" class="btn btn-sm btn-info" />
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <br/>
+    @Html.ActionLink("Add country or city", "AddCountry", "People")
 }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
