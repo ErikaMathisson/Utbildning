@@ -1,0 +1,17 @@
+﻿@model IEnumerable<AssignmentMVC.Controllers.PeopleController>
+
+<select name="CityId" id="Cities">
+
+    @if (Model.Any())
+    {
+        foreach (var city in Model)
+        {
+            <option value="@city.Id">@city.cityname</option>
+
+        }
+
+    }
+
+</select>
+
+

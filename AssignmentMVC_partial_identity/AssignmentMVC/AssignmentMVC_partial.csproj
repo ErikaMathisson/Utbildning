@@ -251,6 +251,7 @@
     <Content Include="Views\Account\Reg.cshtml" />
     <Content Include="Views\Account\Logggin.cshtml" />
     <Content Include="Views\People\AddCountry.cshtml" />
+    <Content Include="Views\People\GetCities.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -17,6 +17,46 @@ namespace AssignmentMVC.Controllers
     public class PeopleController : Controller
     {
 
+        //public static List<Country> countries = new List<Country>
+        //{
+        //    new Country { Id = 1, CountryName = "USA" },
+        //    new Country { Id = 2, CountryName = "Sverige" },
+        //    new Country { Id = 3, CountryName = "Norway" }
+        //};
+
+        //public static List<City> Cities = new List<City>
+        //    {
+        //        new City { Id = 1, CityName ="Washington" },
+        //        new City { Id = 2, CityName ="Los Angeles" },
+        //        new City { Id = 3, CityName ="San Fransisco" },
+
+
+
+        //    };
+
+
+
+
+
+
+
+
+        //public ActionResult GetCities(int id = 1)
+        //{
+        //    if (id>0)
+        //    {
+        //        var tempCities = Cities.Where(x => x.countries.Id = id);
+        //        return PartialView(tempCities);
+
+        //    }
+
+        // //   var cities = Cities.where(x => x.Country.id == id);
+
+        //    return PartialView();
+
+        //}
+
+
         public PeopleController()
         {
         }
@@ -142,7 +182,7 @@ namespace AssignmentMVC.Controllers
             // render the view with the list of found elements
             return View("ShowPeople", searchResult);
         }
-      
+
         /// <summary>
         /// action for adding a user to the database 
         /// </summary>
@@ -199,7 +239,7 @@ namespace AssignmentMVC.Controllers
             // information entered not ok, reload the view RegisterUser
             return View("RegisterUser", model);
         }
-        
+
 
         /// <summary>
         /// Deletes a user based on email and redirects to home page
@@ -231,7 +271,7 @@ namespace AssignmentMVC.Controllers
             //redirect to homepage
             return RedirectToAction("Index", "Home");
         }
-        
+
         /// <summary>
         /// show a list of countries for the user
         /// </summary>
@@ -262,21 +302,26 @@ namespace AssignmentMVC.Controllers
                 Country country = new Country();
                 country.CountryName = CountryName;
 
-                City city = new City();
-                city.CityName = CityName;
-               
+
+
+                if (CityName != null)
+                {
+                    City city = new City();
+                    city.CityName = CityName;
+
+                    //    country.Cities.Add(city);
+                }
+
                 try
                 {
                     db.Countries.Add(country);
-                    var id = db.Countries.FirstOrDefault(x => x.CountryName == CountryName);
-                    city.Countries.Id = id.Id;
-                    db.Cities.Add(city);
                     db.SaveChanges();
                 }
                 catch (Exception)
                 {
                     return View();
                 }
+
             }
             else
             {
