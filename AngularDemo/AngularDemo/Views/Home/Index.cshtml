@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div my:directive>
+
+
+</div>
+
+
+
+
+
+
+@*<div ng-controller="MainController" class="col-xs-12">
+    <div ng-repeat="film in films" class="col-xs-6 col-lg-3">
+        <label>{{film.name}}</label>
+        <img ng-src="/Angular/Img{{film.image}}" alt="{{film.name}}" class="img-responsive col-xs-2 col-lg-4" />
+
+    </div>
+
+</div>*@
+
+<div ng-controller="MainController" class="col-xs-12">
+    <div ng-repeat="film in films" class="col-xs-6 col-lg-3">
+       <div id="{{film.name}}" my_directive>
+
+
+       </div>
+
+    </div>
+
+</div>
+
+{{4+5}}
