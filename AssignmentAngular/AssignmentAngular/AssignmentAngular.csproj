@@ -117,6 +117,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\Js\app.js" />
+    <Content Include="Angular\Js\products.js" />
+    <Content Include="Angular\Templates\Index.html" />
+    <Content Include="Angular\Templates\product-description.html" />
+    <Content Include="Angular\Templates\product-gallery.html" />
+    <Content Include="Angular\Templates\product-reviews.html" />
+    <Content Include="Angular\Templates\product-specs.html" />
+    <Content Include="Angular\Templates\product-tabs.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -177,6 +185,7 @@
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-aria.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
+    <Content Include="Angular\Js\store-products.json" />
     <None Include="scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="scripts\i18n\angular-locale_aa-er.js" />
@@ -957,6 +966,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Angular\Image\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>

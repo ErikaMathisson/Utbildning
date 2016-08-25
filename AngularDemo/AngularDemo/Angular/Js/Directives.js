@@ -12,7 +12,7 @@
 
     
             },
-            templateUrl: "/Angular/Templates/DisplayFilmDirective.html?" + new Date().getTime()
+            templateUrl: "~/Angular/Templates/DisplayFilmDirective.html?" + new Date().getTime()
             //template: " <label>{{film.name}}</label>" +
             //    " <img ng-src=\"/Angular/Img{{film.image}}\" alt=\"{{film.name}}\" class=\"img-responsive col-xs-2 col-lg-4\" />"
                  

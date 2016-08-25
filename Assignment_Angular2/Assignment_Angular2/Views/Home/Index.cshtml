@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    {{4+5}}
+</p>
+
+<div home-page></div>
+
+<div ng-controller="ListPersonController as list">
+    <div ng-hide="people.editMode" ng-repeat="people in list.peoples">
+        <h2> {{people.firstName}} </h2>
+        <p> {{people.lastName}}</p>
+        <p>{{people.email}}</p>
+        <p>{{people.phoneNumber}}</p>
+        <p>{{people.country}}</p>
+        <img ng-src="~/Angular/img/{{people.img}}" alt="Alternate Text" />
+        <button ng-show="people.canEdit">Edit</button>
+        <br />
+        <section ng-controller="PanelController as panel">
+            <ul class="nav nav-pills">
+                <li ng-class="{active: panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)">Details</a></li>
+                <li ng-class="{active: panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Edit</a></li>
+                <li ng-class="{active: panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Delete</a></li>
+            </ul>
+
+            {{tab}}
+
+            <div class="panel" ng-show="panel.isSelected(1)">
+                <h4>Details</h4>
+                <p>{{people.firstName + people.lastName}}</p>
+            </div>
+            <div class="panel" ng-show="panel.isSelected(2)">
+                <h4>Edit</h4>
+                <blockquote>
+                    <h2> {{people.firstName}} </h2>
+                    <p> {{people.lastName}}</p>
+                    <p>{{people.email}}</p>
+                    <p>{{people.phoneNumber}}</p>
+                    <p>{{people.country}}</p>
+
+
+
+                    <p>{{people.email}}</p>
+
+                </blockquote>
+
+                <form name="editForm" ng-controller="EditController as EditCtrl"
+                      ng-submit="editForm.$valid && EditCtrl.editPerson(people)" action="/" method="post" novalidate>
+                    <label>Enter firstname:</label>
+                    <input ng-model="EditCtrl.edit.firstName" type="text" name="firstName" value="{{people.firstName}}" required />
+                    <label>Enter lastname:</label>
+                    <input ng-model="EditCtrl.edit.lastName" type="text" name="lastName" value="" required />
+                    <label>Enter email:</label>
+                    <input ng-model="EditCtrl.edit.email" type="email" name="email" value="" required />
+                    <label>Enter phonenumber:</label>
+                    <input ng-model="EditCtrl.edit.phoneNumber" type="text" name="phoneNumber" value="" required />
+                    <label>Enter country:</label>
+                    <input ng-model="EditCtrl.edit.country" type="text" name="country" value="" required />
+                    <div>editForm is: {{editForm.$valid}}</div>
+                    <input type="submit" name="name" value="submit" class="btn btn-default" />
+
+
+
+
+                </form>
+
+
+
+
+
+            </div>
+            <div class="panel" ng-show="panel.isSelected(3)">
+                <h4>Delete</h4>
+                <p>{{people.country}}</p>
+            </div>
+
+        </section>
+
+    </div>
+
+
+</div>
+
+
