@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+////// ws
+
+
+<div ng-class="{'col-xs-12' : vm.details, 'col-xs-6': !vm.details}  row" ng-controller="MainController as vm">
+    <div ng-hide="vm.newPerson">
+        <input ng-model="search" placeholder="Search..." />
+
+        <div class="col-xs-12 row" id="mainView">
+            <div class="col-xs-2" style="font-size:large; color:#555;">Id</div>
+            <div class="col-xs-2" style="font-size:large; color:#555;">Name</div>
+            <div class="col-xs-2" style="font-size:large; color:#555;">Country</div>
+            <div class="col-xs-2" style="font-size:large; color:#555;">Age</div>
+            <div class="col-xs-2" style="font-size:large; color:#555;">Edit</div>
+            <div class="col-xs-2" style="font-size:large; color:#555;">Delete</div>
+
+        </div>
+
+        <div class="col-xs-12 row">
+
+            <div ng-repeat="people in vm.peopleList |filter:search track by $index">
+                <div class="col-xs-2">{{person.Id}}</div>
+                <div class="col-xs-2">{{person.Name}}</div>
+                <div class="col-xs-2">{{person.Country}}</div>
+                <div class="col-xs-2">{{person.Age}}</div>
+
+                <div class="col-xs-2"><a class="btn btn-sm btn-success" ng-click="vm.changeDetailsFunc(true, person)">Edit</a></div>
+                <div class="col-xs-2"><a class="btn btn-sm btn-danger">Delete</a></div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-sm btn-success" ng-click="vm.changeFormValue(true)" ng-hide="vm.newPerson" ng-disabled="">Add person</a>
+
+</div>
+
+
+
+<div ng-controller="AddPersonController as vm">
+
+    <div ng-show="vm.newPerson">
+        <form ng-submit="vm.AddPerson()" name="personForm" novalidate>
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input ng-model="vm.person.name" class="form-control" ng-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Country</label>
+                <input ng-model="vm.person.country" class="form-control" ng-required="true" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Age</label>
+                <input ng-model="vm.person.age" class="form-control" ng-required="true" />
+            </div>
+
+
+            <input type="submit" value="Add Person" ng-disabled="personForm$invalid" class="btn btn-sm btn-success" />
+            <input type="button" value="Cancel" ng-click="vm.changeFormValue(false)" class="btn btn-sm btn-info" />
+        </form>
+
+
+    </div>
+
+</div>
+
+<div>
+
+
+
+</div>
+
+
+
+
+
+
+@section scripts{
+
+    <script src="~/Angular/Js/"></script>
+
+
+}
+
+//////////////////////////// ews

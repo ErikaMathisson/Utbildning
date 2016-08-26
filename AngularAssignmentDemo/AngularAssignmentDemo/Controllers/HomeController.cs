@@ -1,11 +1,12 @@
-﻿using Assignment_Angular2.Models;
+﻿using AngularAssignmentDemo.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Assignment_Angular2.Controllers
+
+namespace AngularAssignmentDemo.Controllers
 {
     public class HomeController : Controller
     {
@@ -42,7 +43,7 @@ namespace Assignment_Angular2.Controllers
             //    return Json((people.count > 0 ? people : null), JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult AddPerson([Bind(Include ="Name, Country, Age, Email")]Person p)
+        public JsonResult AddPerson([Bind(Include = "Name, Country, Age, Email")]Person p)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +57,7 @@ namespace Assignment_Angular2.Controllers
                 db.People.Add(p);
                 return Json("Success");
             }
-                     
+
 
             return Json("Empty");
         }
