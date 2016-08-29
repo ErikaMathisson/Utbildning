@@ -23,23 +23,23 @@ namespace Assignment_Angular2.Controllers
             List<Person> people = new List<Person>();
             Person p1 = new Person();
 
-            p1.firstName = "Kalle";
-            p1.lastName = "svensson";
-            p1.email = "test@test.se";
-            p1.phoneNumber = "0948494994";
+            p1.Name = "Kalle Svensson";
+            p1.Email = "test@test.se";
+            p1.PhoneNumber = "0948494994";
+            p1.Country = "Sverige";
             people.Add(p1);
 
             Person p2 = new Person();
 
-            p2.firstName = "Pelle";
-            p2.lastName = "andersson";
-            p2.email = "test2@test.se";
-            p2.phoneNumber = "94398398";
+            p2.Name = "Pelle Andersson";
+            p2.Email = "test2@test.se";
+            p2.PhoneNumber = "94398398";
+            p2.Country = "Norge";
             people.Add(p2);
 
             return Json(people, JsonRequestBehavior.AllowGet);
 
-            //    return Json((people.count > 0 ? people : null), JsonRequestBehavior.AllowGet);
+          //  return Json((people.count > 0 ? people : null), JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public JsonResult AddPerson([Bind(Include ="Name, Country, Age, Email")]Person p)

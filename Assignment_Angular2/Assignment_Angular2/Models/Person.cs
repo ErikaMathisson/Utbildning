@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,17 +9,21 @@ namespace Assignment_Angular2.Models
     public class Person
     {
         //add dataannotations
-        public string id { get; set; }
+        [Key]
+        public string Id { get; set; }
 
-        public string firstName { get; set; }
-
-        public string lastName { get; set; }
-
+        [Required]
+        public string Name { get; set; }
+        
+        [Required]
+        [EmailAddress]      
         public string email { get; set; }
 
-        public string phoneNumber { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
 
-        public string imageName { get; set; }
+        [Required]
+        public string Country { get; set; }
 
     }
 }
