@@ -2,133 +2,162 @@
 
     var app = angular.module('app', []);
 
-    //app.factory('ContactService', function ($http) {
-    //    //var vm = {};
-    //    //vm.people = [];
-    //    var people = [];
-    //    $http.get('/Home/GetPeople').then(function (response) {
-    //        //    vm.people = response.data;
-    //        people = response.data;
-    //        console.log(people);
+
+    //app.factory("ContactService", function ($http) {
+    //    var vm = this;
+    //    vm.people = [];
+    //     $http.get('/Home/GetPeople').then(function (response) {
+    //        vm.people = response.data;
+    //        console.log(vm.people);
+
 
     //    });
-
-
-    // //   var people = ["Peter", "Daniel", "Nina"];
-    // //   console.log(people);
-
-    //    return {
-    //        all: function () {
-    //            console.log(people);
-    //            return people;
-    //        },
-    //        first: function () {
-    //            return people[0];
-    //        }
-    //    };
-
-    //    //simply returns the contacts list
-    //    //vm.list = function () {
-    //    //    console.log(vm.people);
-    //    //        return vm.people;
-    //    //    };
-
-    //    //  vm.newPerson = false;
-
-
-
+    //    //     vm.newPerson = false;
+    //    console.log(vm);
+    //    console.log(vm.people);
+    //    return vm;
 
     //});
 
 
 
-    //  var app = angular.module("MyApp", []);
-
-    //  app.factory("UserService", function () {
-    //      var users = ["Peter", "Daniel", "Nina"];
-
-    //      return {
-    //          all: function () {
-    //              return users;
-    //          },
-    //          first: function () {
-    //              return users[0];
-    //          }
-    //      };
-    //  });
-
-    //app.controller("MyCtrl", function ($scope, UserService) {
-    //    $scope.users = UserService.all();
-    //});
-
-
-
-    //  app.controller("AnotherCtrl", ["$scope", "UserService",
-    //function ($scope, UserService) {
-    //    $scope.firstUser = UserService.first();
-    //}
-    //  ]);
-
-
-
-    ////////////////////////////////////********************************
-
-
-    //    //var vm = {};
-    //    //vm.people = [];
-    //    var people = [];
-    //    $http.get('/Home/GetPeople').then(function (response) {
-    //        //    vm.people = response.data;
-    //        people = response.data;
-    //        console.log(people);
-
-    //    });
-
-
-
-    //app.factory('ContactService', function ($http) {
-
-    //*   app.service('ContactService', function () {
-    app.service('ContactService', function($http){
-        //to create unique contact id
-        var uid = 1;
-
-        //contacts array to hold list of all contacts
-        //var people = [{
-        //    id: 0,
-        //    'name': 'Viral',
-        //    'email': 'hello@gmail.com',
-        //    'phone': '123-2343-44',
-        //    'country': 'Sverige'
-        //}];
-
-       
-
-        //var people = [];
-
-        //$http.get('/Home/GetPeople').then(function (response) {
-        //    people = response.data;
-        //    console.log(people);
-
-        //    console.log(people[0].country);
-                 
-
-        //        });
-
-
-        //console.log(people);
 
 
 
 
-        //   save method create a new contact if not already exists
-        //   else update the existing object
-        this.save = function (person) {
+    app.factory('ContactService', function ($http) {
+        return {
+
+
+            people: [],
+
+            //   getData: function () {
+            getData: function () {
+                var people = this.people;
+                return $http.get('/Home/GetPeople').then(function (response) {
+
+                    people = response.data;
+                    console.log(response.data);
+
+                    //    people.push({data});
+
+                    console.log(people);
+
+                    //    console.log(response.data);
+                    //      return response.data;
+                    return people;
+                });
+            }
+        };
+    });
+
+
+
+
+
+
+
+    app.controller('AddPersonController', function ($scope, $http, ContactService) {
+
+        console.log("Addpersoncontroller");
+        var vm = this;
+        vm.people = ContactService.people;
+        console.log(vm.people);
+
+
+
+        //var app = angular.module('myApp', []);
+        //app.controller('myCtrl', function ($scope, $http) {
+        //    $http.get("welcome.htm")
+        //    .then(function (response) {
+        //        $scope.myWelcome = response.data;
+        //    });
+        //});
+
+
+
+
+        ////   app.controller('GetPeople', ['$http', function ($http) {
+        //app.controller('ListPersonController', ['$http', function ($http) {
+
+        //    var app = this;
+        //    app.peoples = [];
+
+        //    $http.get('/Home/GetPeople').success(function (data) {
+        //        app.peoples = data;
+
+        //    });
+        //}
+
+        //]);
+
+        var person = $scope.newperson;
+
+        this.savePerson = function (person) {
+            person = $scope.newperson;
+            console.log(person);
             if (person.id == null) {
+                console.log("add Person");
+                //  savePerson = function () {
+                console.log("add Person2");
+                $http.post("/Home/AddPerson", person).then(function (response) {
+                    console.log(response.data);
+                    if (response.data.id != null) {
+                        console.log("add Person3");
+
+                        //      person.id = ContactService.people.length + 1;
+
+                        console.log(response.data.id);
+                        console.log(ContactService.people);
+                        console.log(person);
+                        person = response.data;
+                        console.log(person);
+                        //ContactService.people
+                        //ContactService.people().then(function (data) {
+                        //    console.log(data);
+                        //    $scope.people = data;
+                        //    console.log($scope.people);
+                        //});
+
+                        //        $scope.people = ContactService.people;
+
+
+                        console.log(ContactService.people);
+
+
+
+                        ContactService.people.push(person);
+                        console.log(ContactService.people);
+                        //    ContactService.newPerson = false;
+                        newperson = {};
+
+                    }
+                    else if (response.data === "EmailExist") {
+                        //     vm.error = "Use another emal, already exists in database.";
+
+                    } else if (response.data === "Empty") {
+
+                        //     vm.error = "No data has been submitted, enter required information";
+                    }
+
+
+                });
+                //   };
+
+
+
+
+
+
+
+
+
                 //if this is new contact, add it in contacts array
-                person.id = uid++;
-                people.push(person);
+                //        person.id = uid++;
+                //        people.push(person);
             } else {
+
+                console.log("person exist");
                 //for existing contact, find this contact using id
                 //and update it.
                 for (i in people) {
@@ -140,88 +169,87 @@
 
         };
 
-        //simply search contacts list for given id
-        //and returns the contact object if found
-        this.get = function (id) {
-            for (i in people) {
-                if (people[i].id == id) {
-                    return people[i];
-                }
-            }
+        //vm.AddPerson = function () {
+        //    $http.post("/Home/AddPerson", vm.person).then(function (response) {
+        //        if (response.data === "Success") {
+        //            vm.person.Id = Repository.people.length + 1;
+        //            Repository.people.push(vm.person);
+        //            Repository.newPerson = false;
+        //            vm.person = {};
 
-        };
+        //        }
+        //        else if (response.data === "EmailExist") {
+        //            vm.error = "Use another emal, already exists in database.";
 
-        //iterate through contacts list and delete 
-        //contact if found
-        this.delete = function (id) {
-            for (i in people) {
-                if (people[i].id == id) {
-                    people.splice(i, 1);
-                }
-            }
-        };
+        //        } else if (response.data === "Empty") {
 
-        //simply returns the contacts list
-        this.list = function () {
-
-            var vm = {};
-            vm.people = [];
-
-            $http.get('/Home/GetPeople').then(function (response) {
-                vm.people = response.data;
-                console.log(vm.people);
-
-                //console.log(people[0].country);
-                //console.log(people);
-                //return people;
+        //            vm.error = "No data has been submitted, enter required information";
+        //        }
 
 
-            });
-            return vm.people;
-           
-        };
+        //    });
+        //};
+
+
+
+
+
     });
 
 
-    app.controller('ContactController', function ($scope, ContactService) {
-
-        $scope.people = ContactService.list();
-        console.log(ContactService.list());
-
-        console.log($scope.people)
-
-        $scope.savePerson = function () {
-            ContactService.save($scope.newperson);
-            $scope.newperson = {};
-        }
 
 
-        $scope.delete = function (id) {
+    app.controller('ContactController', function ($scope, $http, ContactService) {
 
-            ContactService.delete(id);
-            if ($scope.newperson.id == id) $scope.newperson = {};
-        }
+        console.log("ContactController");
+        var vm = this;
+        vm.people = [];
 
+        //   $scope.people = vm.people;
+        console.log(vm.people);
 
-        $scope.edit = function (id) {
-            $scope.newperson = angular.copy(ContactService.get(id));
-        }
-    })
+        ContactService.getData().then(function (data) {
 
-    ////////////////////////////////////////////////////////////
+            console.log(data);
+            $scope.people = data;
+            console.log($scope.people);
+        });
+        
+        //$scope.savePerson = function () {
+        //    console.log($scope.newperson);
+        //    ContactService.save($scope.newperson);
+        //    $scope.newperson = {};
+        //}
 
-    
-
-
-
-
-
-
-
-
-
-
-
+    });
 
 
 })();
+
+
+
+
+
+
+//vm.people = [{
+//    name: 'Kalle Persson',
+//    email: 'kalle.persson@test.se',
+//    phone: '070-1111111',
+//    country: 'Sverige'
+
+//},
+//   {
+//       name: 'Stina Karlsson',
+//       email: 'stina.karlsson@test.se',
+//       phone: '070-2111111',
+//       country: 'Norge'
+//   },
+
+//    {
+//        name: 'Anna Larsson',
+//        email: 'anna.larsson@test.se',
+//        phone: '070-3111111',
+//        country: 'Danmark'
+
+//    }
+//];

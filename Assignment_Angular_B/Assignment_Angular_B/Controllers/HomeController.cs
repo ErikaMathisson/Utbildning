@@ -58,7 +58,10 @@ namespace Assignment_Angular_B.Controllers
                 {
                     db.People.Add(p);
                     db.SaveChanges();
-                    return Json("Success");
+                    return Json(p);
+
+
+                 //   return Json("Success");
                 }
                 catch (Exception)
                 {
