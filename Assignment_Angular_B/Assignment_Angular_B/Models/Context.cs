@@ -12,7 +12,6 @@ namespace Assignment_Angular_B.Models
         {
             this.Database.CreateIfNotExists();
         }
-
-        public DbSet<Person> People { get; set; }
+        public DbSet<Person> people { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace Assignment_Angular_B.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201608301140221_init"; }
+            get { return "201609010725553_init"; }
         }
         
         string IMigrationMetadata.Source

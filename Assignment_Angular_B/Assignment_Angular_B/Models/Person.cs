@@ -17,6 +17,7 @@ namespace Assignment_Angular_B.Models
         public string name { get; set; }
 
         [Required]
+        [MinLength(6)]
         [EmailAddress]
         public string email { get; set; }
 

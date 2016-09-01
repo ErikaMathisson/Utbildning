@@ -14,11 +14,11 @@ namespace Assignment_Angular_B.Controllers
         {
             return View();
         }
-        
+
         public JsonResult GetPeople()
         {
             Context db = new Context();
-            List<Person> people = db.People.ToList();
+            List<Person> people = db.people.ToList();
 
             //List<Person> people = new List<Person>();
             //Person p1 = new Person();
@@ -38,7 +38,20 @@ namespace Assignment_Angular_B.Controllers
             //people.Add(p2);
 
             //   return Json(people, JsonRequestBehavior.AllowGet);
-            return Json((people.Count > 0 ? people : null), JsonRequestBehavior.AllowGet);
+
+            //if (people.Count > 0)
+            //{
+            //    return Json(people, JsonRequestBehavior.AllowGet);
+
+            //}
+            //else
+            //{
+            //    return Json(null, JsonRequestBehavior.AllowGet);
+            //}
+
+            return Json(people, JsonRequestBehavior.AllowGet);
+
+            //   return Json((people.Count > 0 ? people : null), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -48,7 +61,7 @@ namespace Assignment_Angular_B.Controllers
             {
 
                 Context db = new Context();
-                var check = db.People.FirstOrDefault(x => x.email == p.email);
+                var check = db.people.FirstOrDefault(x => x.email == p.email);
                 if (check != null)
                 {
                     return Json("EmailExists");
@@ -56,12 +69,12 @@ namespace Assignment_Angular_B.Controllers
 
                 try
                 {
-                    db.People.Add(p);
+                    db.people.Add(p);
                     db.SaveChanges();
-                    return Json(p);
+                    //       return Json(p);
 
 
-                 //   return Json("Success");
+                    return Json("Success");
                 }
                 catch (Exception)
                 {
@@ -79,14 +92,14 @@ namespace Assignment_Angular_B.Controllers
             {
 
                 Context db = new Context();
-                var check = db.People.FirstOrDefault(x => x.email == p.email);
+                var check = db.people.FirstOrDefault(x => x.email == p.email);
                 if (check != null)
                 {
                     return Json("EmailExists");
                 }
                 try
                 {
-                    db.People.Add(p);
+                    db.people.Add(p);
                     db.SaveChanges();
                     return Json("Success");
                 }
