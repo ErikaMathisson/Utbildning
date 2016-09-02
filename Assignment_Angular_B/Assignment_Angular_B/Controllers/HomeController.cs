@@ -71,37 +71,45 @@ namespace Assignment_Angular_B.Controllers
                 {
                     db.people.Add(p);
                     db.SaveChanges();
-                    //       return Json(p);
+                    return Json(p);
 
 
-                    return Json("Success");
+                 //   return Json("Success");
                 }
                 catch (Exception)
                 {
                     return Json("Empty");
-                    throw;
+                 //   throw;
                 }
             }
-            return Json("Empty");
+            return Json("NonValid");
         }
 
 
-        public JsonResult EditPerson([Bind(Include = "name, email, phone, country")]Person p)
+        public JsonResult EditPerson([Bind(Include = "id, name, email, phone, country")]Person p)
         {
             if (ModelState.IsValid)
             {
 
                 Context db = new Context();
                 var check = db.people.FirstOrDefault(x => x.email == p.email);
-                if (check != null)
+
+                if (check != null && check.id != p.id)
                 {
                     return Json("EmailExists");
+
                 }
+
+          //      var idCheck = db.people.FirstOrDefault(x => x.id == p.id);
+                //if (check != null)
+                //{
+                //    return Json("EmailExists");
+                //}
                 try
                 {
                     db.people.Add(p);
                     db.SaveChanges();
-                    return Json("Success");
+                    return Json(p);
                 }
                 catch (Exception)
                 {
@@ -110,8 +118,45 @@ namespace Assignment_Angular_B.Controllers
                 }
 
             }
-            return Json("Empty");
+            return Json("NonValid");
         }
+
+
+        public JsonResult DeletePerson([Bind(Include = "id, name, email, phone, country")]Person p)
+        {
+            if (ModelState.IsValid)
+            {
+
+                Context db = new Context();
+                var check = db.people.FirstOrDefault(x => x.email == p.email);
+
+                if (check != null && check.id != p.id)
+                {
+                    return Json("EmailExists");
+
+                }
+
+                //      var idCheck = db.people.FirstOrDefault(x => x.id == p.id);
+                //if (check != null)
+                //{
+                //    return Json("EmailExists");
+                //}
+                try
+                {
+                    db.people.Add(p);
+                    db.SaveChanges();
+                    return Json(p);
+                }
+                catch (Exception)
+                {
+                    return Json("Empty");
+                    throw;
+                }
+
+            }
+            return Json("NonValid");
+        }
+
 
 
 

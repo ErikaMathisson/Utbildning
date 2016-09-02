@@ -5,12 +5,12 @@
 
 <h2>Index</h2>
 
-<div ng-controller="ContactController as list">
-    <form ng-controller="AddPersonController as add"> 
+<div ng-controller="MainController as list">
+    <form ng-controller="AddPersonController as add" novalidate> 
         <label>Name:</label>
         <input type="text" name="name" ng-model="newperson.name" />
         <label>Email:</label>
-        <input type="email" name="email" ng-model="newperson.email" />
+        <input type="text" name="email" ng-model="newperson.email" />
         <label>Phonenumber:</label>
         <input type="text" name="phone" ng-model="newperson.phone" />
         <label>Country:</label>
@@ -41,9 +41,9 @@
             <div class="col-xs-2">{{person.phone}}</div>
             <div class="col-xs-2">{{person.country}}</div>
 
-            <div class="col-xs-4">
-                <a href="#" ng-click="edit(person.id)">edit</a> |
-                <a href="#" ng-click="delete(person.id)">delete</a>
+            <div class="col-xs-4" ng-controller="DeletePersonController as del">
+                <a href="#" ng-click="list.edit(person.id)">edit</a> |
+                <a href="#" ng-click="del.delete(person.id)">delete</a>
             </div>
 
         </div>
