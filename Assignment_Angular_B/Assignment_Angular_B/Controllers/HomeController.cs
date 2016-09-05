@@ -10,155 +10,140 @@ namespace Assignment_Angular_B.Controllers
     public class HomeController : Controller
     {
         // GET: Home
+        /// <summary>
+        /// Action for showing Index view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Action for getting all people in database
+        /// </summary>
+        /// <returns>All people in database</returns>
         public JsonResult GetPeople()
         {
+            // new database instance
             Context db = new Context();
+            // list of people retreived from the database
             List<Person> people = db.people.ToList();
-
-            //List<Person> people = new List<Person>();
-            //Person p1 = new Person();
-
-            //p1.Name = "Kalle Svensson";
-            //p1.Email = "test@test.se";
-            //p1.PhoneNumber = "0948494994";
-            //p1.Country = "Sverige";
-            //people.Add(p1);
-
-            //Person p2 = new Person();
-
-            //p2.Name = "Pelle Andersson";
-            //p2.Email = "test2@test.se";
-            //p2.PhoneNumber = "94398398";
-            //p2.Country = "Norge";
-            //people.Add(p2);
-
-            //   return Json(people, JsonRequestBehavior.AllowGet);
-
-            //if (people.Count > 0)
-            //{
-            //    return Json(people, JsonRequestBehavior.AllowGet);
-
-            //}
-            //else
-            //{
-            //    return Json(null, JsonRequestBehavior.AllowGet);
-            //}
-
+            // return peoples, allowing the method to be HttpGet
             return Json(people, JsonRequestBehavior.AllowGet);
-
-            //   return Json((people.Count > 0 ? people : null), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Action for adding a person to database
+        /// </summary>
+        /// <param name="p">person who should be added</param>
+        /// <returns>added person or error message</returns>
         [HttpPost]
         public JsonResult AddPerson([Bind(Include = "name, email, phone, country")]Person p)
         {
+            // check if model is valid, for instance all required information is entered
             if (ModelState.IsValid)
             {
-
+                // create a new database instance
                 Context db = new Context();
+                // check if entered email already exist in database
                 var check = db.people.FirstOrDefault(x => x.email == p.email);
+                // email already exist in database return error code
                 if (check != null)
                 {
                     return Json("EmailExists");
                 }
-
+                // try to add person p to database and save the changes
                 try
                 {
                     db.people.Add(p);
                     db.SaveChanges();
-                    return Json(p);
-
-
-                 //   return Json("Success");
+                    //return the newly added person 
+                    return Json(p);                    
                 }
                 catch (Exception)
                 {
-                    return Json("Empty");
-                 //   throw;
+                    //something went wrong return error code 
+                    return Json("Empty");                    
                 }
             }
+            // not all required information was entered ok, return error code
             return Json("NonValid");
         }
 
-
+        /// <summary>
+        /// Action for editing a person
+        /// </summary>
+        /// <param name="p">the person whom should be edited</param>
+        /// <returns>newly edited person or error code</returns>
         public JsonResult EditPerson([Bind(Include = "id, name, email, phone, country")]Person p)
         {
+            //check if model is valid
             if (ModelState.IsValid)
             {
-
+                // create a new database connection
                 Context db = new Context();
-                var check = db.people.FirstOrDefault(x => x.email == p.email);
-
-                if (check != null && check.id != p.id)
+                //try to fetch a person via email address
+                var person = db.people.FirstOrDefault(x => x.email == p.email);
+                // email already exist and it doesn't belong to the person who should be edited, return error code
+                if (person != null && person.id != p.id)
                 {
                     return Json("EmailExists");
-
                 }
-
-          //      var idCheck = db.people.FirstOrDefault(x => x.id == p.id);
-                //if (check != null)
-                //{
-                //    return Json("EmailExists");
-                //}
+                
+                //try to add the changes on the person to the database               
                 try
                 {
-                    db.people.Add(p);
+                    person.name = p.name;
+                    person.email = p.email;
+                    person.country = p.country;
+                    person.phone = p.phone;              
                     db.SaveChanges();
-                    return Json(p);
+                    //return the newly edited person
+                    return Json(person);
                 }
                 catch (Exception)
                 {
-                    return Json("Empty");
-                    throw;
+                    // something went wrong, error code returned
+                    return Json("Empty");                   
                 }
-
             }
+            // the model isn't valid return error code
             return Json("NonValid");
         }
 
-
+        /// <summary>
+        /// Action for deleting a person
+        /// </summary>
+        /// <param name="p">person whom should be deleted</param>
+        /// <returns>Information/error code</returns>
         public JsonResult DeletePerson([Bind(Include = "id, name, email, phone, country")]Person p)
         {
+            // check if it's a valid person whom should be removed
             if (ModelState.IsValid)
             {
-
+                // create a database connection
                 Context db = new Context();
+                // try to fetch a person from the database with entered email
                 var check = db.people.FirstOrDefault(x => x.email == p.email);
-
-                if (check != null && check.id != p.id)
+                // person exist in database, try and remove the person
+                if (check != null)
                 {
-                    return Json("EmailExists");
-
+                    try
+                    {
+                        db.people.Remove(check);
+                        db.SaveChanges();
+                        return Json(p);
+                    }
+                    catch (Exception)
+                    {
+                        //Something went wrong, return error code
+                        return Json("Error");
+                    }
                 }
-
-                //      var idCheck = db.people.FirstOrDefault(x => x.id == p.id);
-                //if (check != null)
-                //{
-                //    return Json("EmailExists");
-                //}
-                try
-                {
-                    db.people.Add(p);
-                    db.SaveChanges();
-                    return Json(p);
-                }
-                catch (Exception)
-                {
-                    return Json("Empty");
-                    throw;
-                }
-
             }
-            return Json("NonValid");
+            // something was not right with information, return error code
+            return Json("Error");
         }
-
-
-
-
     }
 }
