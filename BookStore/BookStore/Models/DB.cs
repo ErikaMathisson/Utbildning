@@ -25,5 +25,12 @@ namespace BookStore.Models
         {
             return new DB();
         }
+
+        //For creating table Book
+        public DbSet<Book> Books { get; set; }
+        //For creating table Order
+        public DbSet<Order> Orders { get; set; }
+        //For creating table OrderRows
+        public DbSet<OrderRow> OrderRows { get; set; }
     }
 }
