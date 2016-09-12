@@ -1,7 +1,54 @@
 ﻿<!-- register.html -->
-<div class="jumbotron text-center">
-    <h1>Register Page</h1>
 
-    <p>{{ message }}</p>
+<h1>Register Page</h1>
+
+<p>{{ message }}</p>
+
+<div ng-controller="registerController">
+    <form class="form-horizontal" ng-submit="/" name="registerForm" method="post" novalidate>
+        <div class="form-group">
+            <label class="control-label col-xs-2">User name: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="userName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">First name: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="firstName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Last name: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="lastName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Password: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="password" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Confirm password: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="confirmPassword" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Email: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="email" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Address: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="address" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">City: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="city" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Zip code: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="zipCode" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Phone number: </label>
+            <input ng-model="" class="form-control" ng-required="true" name="phoneNumber" />
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    </form>
 </div>
+
 

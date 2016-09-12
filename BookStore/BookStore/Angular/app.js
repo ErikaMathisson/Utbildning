@@ -29,6 +29,7 @@
         $scope.message = 'This is the main page';
     });
 
+    //controller for handling registration
     app.controller('registerController', function ($scope) {
         $scope.message = 'This is the register page!';
     });

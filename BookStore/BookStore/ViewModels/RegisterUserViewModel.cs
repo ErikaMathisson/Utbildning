@@ -72,5 +72,7 @@ namespace BookStore.ViewModels
         [Display(Name ="Phone number: ")]
         public string PhoneNumber { get; set; }
 
+        public bool isAdmin { get; set; }
+
     }
 }
