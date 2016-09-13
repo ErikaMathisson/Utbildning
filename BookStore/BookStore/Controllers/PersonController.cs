@@ -23,7 +23,7 @@ namespace BookStore.Controllers
 
         }
 
-        
+
         /// <summary>
         /// setting parameters
         /// </summary>
@@ -79,9 +79,25 @@ namespace BookStore.Controllers
         [HttpPost]
         public async System.Threading.Tasks.Task<JsonResult> RegisterPerson([Bind(Include = "UserName, FirstName, LastName, PassWord, ConfirmPassword, Email, Address, ZipCode, City, PhoneNumber")] RegisterUserViewModel user)
         {
-            // if all information added ok
+            // check if all information added ok
             if (ModelState.IsValid)
             {
+                // check if entered email already exist, email should be unique
+                var checkEmail = await UserManager.FindByEmailAsync(user.Email);
+                // email already exist in database return error code
+                if (checkEmail != null)
+                {
+                    return Json("EmailExists");
+                }
+
+                //check if entered UserName already exist, UserName should be unique
+                var userNameCheck = await UserManager.FindByNameAsync(user.UserName);
+                // userName already exist in database return error code
+                if (userNameCheck != null)
+                {
+                    return Json("UserNameExists");
+                }
+
                 // create a new user
                 var person = new User
                 {
@@ -101,7 +117,7 @@ namespace BookStore.Controllers
                 //the user was not saved ok               
                 if (!result.Succeeded)
                 {
-                    // retrieve information about what went wrong and add the message to the view
+                    // retrieve information about what went wrong and send message to page
                     string message = "";
                     if (result.Errors != null)
                     {
@@ -110,55 +126,45 @@ namespace BookStore.Controllers
                             message = message + error.ToString() + " ";
                         }
                     }
-                    ViewBag.Message = message;
+                    return Json(message);
                 }
                 else
                 {
+                    // fetch the registered user and assign a role
                     var registeredUser = await UserManager.FindByNameAsync(user.UserName);
 
-
-                    /////////
-
-                   
-
+                    // fetch all people that exist in database
                     var Peoples = UserManager.Users.ToList();
-
-
-
-
-                    ////  create a rolemananager
-                    //var roleManager = new RoleManager<IdentityRole>(
-                    //    new RoleStore<IdentityRole>(context));
-                    ////check if the role Admin exist, if it doesn't create it
-                    //if (!roleManager.RoleExists("Admin"))
-                    //{
-                    //    roleManager.Create(new IdentityRole("Admin"));
-                    //}
-                    ////check if the role User exist, if it doesn't create it
-                    //if (!roleManager.RoleExists("User"))
-                    //{
-                    //    roleManager.Create(new IdentityRole("User"));
-                    //}
-
-                    //base.Seed(context);
-
-
-
-
-
-
-
-
-
-                    // check if the role for the user should be admin or user and assign to the added user
-                    //if (model.Admin == true)
-                    //{
-                    //    await UserManager.AddToRoleAsync(registeredUser.Id, "Admin");
-                    //}
-                    //else
-                    //{
-                    //    await UserManager.AddToRoleAsync(registeredUser.Id, "User");
-                    //}
+                    // if only one person exist in the database this person should be assigned the role admin
+                    if (Peoples.Count == 1)
+                    {
+                        // check if the role Admin exist in database, if it doesn't create it
+                        if (!RoleManager.RoleExists("Admin"))
+                        {
+                            RoleManager.Create(new IdentityRole("Admin"));
+                        }
+                        // check if the role User exist in database, if it doesn't create it
+                        if (!RoleManager.RoleExists("User"))
+                        {
+                            RoleManager.Create(new IdentityRole("User"));
+                        }
+                        // add the role admin to the registered user since it's the first user the role assigned
+                        // should be admin
+                        await UserManager.AddToRoleAsync(registeredUser.Id, "Admin");
+                        user.Admin = true;
+                    }
+                    else
+                    {
+                        // check if user should have role "admin" or "user" and assign role to user
+                        if (user.Admin == true)
+                        {
+                            await UserManager.AddToRoleAsync(registeredUser.Id, "Admin");
+                        }
+                        else
+                        {
+                            await UserManager.AddToRoleAsync(registeredUser.Id, "User");
+                        }
+                    }
 
                     //the user is registered and saved ok to database, log in automatically
                     //LogInViewModel vm = new LogInViewModel();
@@ -174,14 +180,87 @@ namespace BookStore.Controllers
             {
                 var message = string.Join(" | ", ModelState.Values
                     .SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage));             
+                    .Select(e => e.ErrorMessage));
 
                 return Json(message);
 
             }
 
-            return Json("NonValid");
-        
+            //    return Json("NonValid");
+
+        }
+
+        /// <summary>
+        /// function for logging in a person
+        /// </summary>
+        /// <param name="user">User whom should be logged in</param>
+        /// <returns>Json</returns>
+        public async System.Threading.Tasks.Task<JsonResult> LogInPerson([Bind(Include = "UserName, PassWord")] LogInPersonViewModel user)
+        {
+            //check if information entered ok
+            if (ModelState.IsValid)
+            {
+                // trying to log in the user
+                var status = await SignIn.PasswordSignInAsync(user.UserName, user.Password,
+                    isPersistent: false, shouldLockout: true);
+                // check if user is logged in ok
+                switch (status)
+                {
+                    //user logged in, return to home page
+                    case SignInStatus.Success:
+                        return Json("Success");
+                    //user not logged in, show information for the user
+                    case SignInStatus.Failure:
+                        return Json("Failure");
+                    default:
+                        break;
+                }
+                return Json("Failure");
+            }
+            else
+            {
+                // user didn't enter information correct
+                var message = string.Join(" | ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+
+                return Json(message);
+            }
+
+        }
+
+        /// <summary>
+        /// Action for logging out a user and redirect to home page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogOutUser()
+        {
+            SignIn.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// function for getting all the people in the database
+        /// </summary>
+        /// <param name="user">User whom should be logged in</param>
+        /// <returns>Json</returns>
+        public JsonResult GetPeople()
+        {
+            //fetch peoples with attributes as EditUserVIewModel           
+            var people = UserManager.Users.ToList().Select(x => new EditUserVIewModel
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Address = x.Address,
+                City = x.City,
+                ZipCode = x.ZipCode,
+                Email = x.Email,
+                Id = x.Id
+            }).ToList();
+
+            // return peoples, allowing the method to be HttpGet
+            return Json(people, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

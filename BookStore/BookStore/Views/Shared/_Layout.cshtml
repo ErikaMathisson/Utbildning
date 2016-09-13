@@ -29,13 +29,40 @@
             <!--     </div>  -->
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-               <!--     <li><a href="#/">Home</a></li> -->
-               <!--     <li><a href="#/register">Register</a></li> -->
-               <!--     <li><a href="#/logIn">Log in</a></li> -->
+                    <!--     <li><a href="#/">Home</a></li> -->
+                    <!--     <li><a href="#/register">Register</a></li> -->
+                    <!--     <li><a href="#/logIn">Log in</a></li> -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    @if (!User.Identity.IsAuthenticated) {
                     <li><a href="#/register"><font color="green"><span class="glyphicon glyphicon-user"></span> Register</font></a></li>
-                    <li><a href="#/logIn"><font color="green"><span class="glyphicon glyphicon-log-in"></span> Login</font></a></li>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a href="#/handlePeople"><font color="green"><span class="glyphicon glyphicon-user"></span> Handle people</font></a></li>
+                    }                    
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="#/logIn"><font color="green"><span class="glyphicon glyphicon-log-in"></span> Login</font></a></li>
+                    }
+                   
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a href="#/logIn"><font color="green"><span class="glyphicon glyphicon-log-in"></span> Admin</font></a></li>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @*<ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink("Log out", "LogOutUser", "Account")</li>
+
+                        </ul>*@
+                        <li><a href="/Person/LogOutUser"><font color="green"><span class="glyphicon glyphicon-log-out"></span> Log out</font></a></li>
+
+                   //     <li><a href="/#/logIn"><font color="green"><span class="glyphicon glyphicon-log-out"></span> Log out</font></a></li>
+
+                    }
+                    
                 </ul>
             </div>
         </div>
