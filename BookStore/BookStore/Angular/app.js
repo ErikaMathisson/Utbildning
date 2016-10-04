@@ -30,11 +30,21 @@
             });
     });
 
-    app.factory('bookFactory', function ($http, $window) {
+    app.factory('bookFactory', function ($http, $window, $rootScope, $timeout) {
 
         var bookFactory = {};
         bookFactory.message = "";
         bookFactory.people = [];
+        bookFactory.isAuthorized = false;
+        bookFactory.userRole = null;
+
+        // for checking if user is logged in
+        $http.post("/Person/IsLoggedIn").then(function (response) {
+            if (response.data.status === true) {
+                bookFactory.isAuthorized = true;
+                bookFactory.userRole = response.data.role;
+            }
+        })
 
         //function for register a person
         bookFactory.registerPerson = function (person) {
@@ -48,21 +58,15 @@
                     else if (data === "Empty") {
                         bookFactory.message = "No data has been submitted, enter required information!";
                     }
-                    //else if (data === "NonValid") {
-                    //    bookFactory.message = "All required information not entered or in wrong format, try again!";
-                    //}
-                    else if (data === "UserNameExists")
-                    {
+                    else if (data === "UserNameExists") {
                         bookFactory.message = "User name already exist, please re enter your information!";
                     }
                         //person is saved to database
                     else if (data === "Success") {
-                        bookFactory.message = "Success";                       
+                        bookFactory.message = "Success";
                     }
-                    else
-                    {
+                    else {
                         // model isn't valid set the error message/messages
-                        console.log(data);
                         bookFactory.message = data;
                     }
                 })
@@ -74,27 +78,29 @@
 
         //function for logging in a person
         bookFactory.logInPerson = function (logInPerson) {
-            console.log("log in person in factory");
             return $http.post('/Person/LogInPerson', logInPerson)
-               .success(function (data) {
-                   //check if error message is returned, in that case sent it to the controller               
-                   if (data === "Failure") {
-                       bookFactory.message = "No data has been submitted, something went wrong!";
-                   }
-                       //person is logged in ok
-                   else if (data === "Success") {
-                       bookFactory.message = "Person logged in ok";
-                       $window.location.href = "#/";
-                   }
-                   else {
-                       // model isn't valid set the error message/messages
-                       console.log(data);
-                       bookFactory.message = data;
-                   }
-               })
-       .error(function () {
-           console.log("Error");
-       });
+                .success(function (data) {
+        //check if error message is returned, in that case sent it to the controller               
+        if (data.status === "Failure") {
+            bookFactory.message = "No data has been submitted, something went wrong!";
+        }
+            //person is logged in ok
+        else if (data.status === "Success") {
+            bookFactory.message = "Person logged in ok";
+            //$timeout(function () {
+                 bookFactory.isAuthorized = true;
+                bookFactory.userRole = data.role;
+            //});
+            $window.location.href = "#/";
+        }
+        else {
+            // model isn't valid set the error message/messages            
+            bookFactory.message = data;
+        }
+    })
+.error(function () {
+    console.log("Error");
+});
         };
 
         //function for getting people from database
@@ -110,35 +116,7 @@
                 bookFactory.message = "Something went wrong...";
             });
         };
-
-        ////function for editing an existing person
-        //bookFactory.editPerson = function (person) {
-        //    return $http.post('/Home/EditPerson', person)
-        //    .success(function (data) {
-        //        //check if error message is returned, set it to the message property
-        //        if (data === "EmailExists") {
-        //            bookFactory.message = "Email already exist, please re enter your information!";
-        //        }
-        //        else if (data === "Empty") {
-        //            bookFactory.message = "No data has been submitted, enter required information!";
-        //        }
-        //        else if (data === "NonValid") {
-        //            bookFactory.message = "All required information not entered or in wrong format, try again!";
-        //        }
-        //        else {
-        //            //find the person using id and update it
-        //            for (var i in bookFactory.people) {
-        //                if (bookFactory.people[i].Id == person.Id) {
-        //                    bookFactory.people[i] = person;
-        //                }
-        //            }
-        //        }
-        //    })
-        //    .error(function () {
-        //        console.log("Error");
-        //    });
-        //};
-
+        
         //function for getting a person with a specific id and returning it
         bookFactory.get = function (Id) {
             console.log("bookfactory get");
@@ -154,15 +132,20 @@
             }
         };
 
-
-
-
         return bookFactory;
     });
 
     //  main controller with $scope injected
-    app.controller('mainController', function ($scope) {
+    app.controller('mainController', function ($scope, $rootScope, bookFactory) {
         $scope.message = 'This is the main page';
+        $rootScope.$watch(function () {
+            return bookFactory.isAuthorized;
+        }, function (n, o) {
+            if (n === true) {
+                $scope.isLoggedIn = true;
+                $scope.role = $rootScope.userRole;
+            }
+        })
     });
 
     //controller for handling registration
@@ -177,12 +160,12 @@
             //call the registerPerson function in factory
             bookFactory
             .registerPerson($scope.person)
-            .then(function () {               
+            .then(function () {
                 //check if a message is returned from factory in that case print the message on the page
-                if (bookFactory.message.length !== 0) {                   
+                if (bookFactory.message.length !== 0) {
                     $scope.statusMessage = bookFactory.message;
-                }               
-             //   $window.location.href = "#/";
+                }
+                //   $window.location.href = "#/";
 
             });
         };
@@ -193,33 +176,30 @@
         $scope.message = 'This is the handle people page!';
 
         //setting people
-        $scope.people = bookFactory.people;
-
-     //   var person = $scope.person;
+        $scope.people = bookFactory.people;      
 
         //function for setting the array of people to the scope
-       bookFactory
-            .getPeople()
-        .then(function () {
-            $scope.people = bookFactory.people;
-           
-        });
+        bookFactory
+             .getPeople()
+         .then(function () {
+             $scope.people = bookFactory.people;
+
+         });
 
         //function for copying information about a specific person and paste the information to the form 
-       this.edit = function (Id) {
-           console.log("edit people in controller");
-           console.log(bookFactory.people);
-           console.log(Id);
-           $scope.person = angular.copy(bookFactory.get(Id));
-           console.log($scope.person);
-           $scope.test = "Hejsan";
-       };
+        this.edit = function (Id) {
+            console.log("edit people in controller");
+            console.log(bookFactory.people);
+            console.log(Id);
+            $scope.person = angular.copy(bookFactory.get(Id));           
+            console.log($scope.person);          
+        };
 
-      
+
     });
 
     // controller for handling log in
-    app.controller('loginController', function ($scope, $window, bookFactory) {
+    app.controller('loginController', function ($scope, $window, bookFactory, $rootScope, $timeout) {
         //message for log in page
         $scope.message = 'This is the log in page';
         // person who will log in from ng-model
@@ -230,16 +210,23 @@
             //call the log in function in factory
             bookFactory.logInPerson($scope.login)
             .then(function () {
+                if (bookFactory.isAuthorized) {
+                    $timeout(function () {
+                        $rootScope.isAuthorized = true;
+                        $rootScope.userRole = bookFactory.userRole;
+                        $rootScope.$apply();
+                    }, 0);
+                }
                 //check if message is returned from factory in that case print the message on the page
                 if (bookFactory.message.length !== 0) {
-                    if (bookFactory.message === "Success")
-                    {
+                    if (bookFactory.message === "Success") {
                         $window.location.href = "#/";
                     }
                     else {
                         $scope.statusMessage = bookFactory.message;
-                    }                   
-                }              
+                    }
+                }
+                
 
             });
         };

@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Erikas bookstore</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bookstoreStyle.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+
+<body ng-controller="mainController">
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/"><font color="green" face="Meddon"> Erikas Bookstore </font></a>
+                <img class="img-responsive" style="max-width:20%;max-height:20%" src="~/Angular/Templates/Img/books2.jpg" alt="WebPageName" />
+            </div>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="!isLoggedIn"><a href="#/register"><font color="green"><span class="glyphicon glyphicon-user"></span> Register</font></a></li>
+                    <li ng-if="isLoggedIn && role == 'Admin'"><a href="#/handlePeople"><font color="green"><span class="glyphicon glyphicon-user"></span> Handle people</font></a></li>
+                    <li ng-if="isLoggedIn && role == 'User'" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown"><font color="green"><span class="glyphicon glyphicon-user"></span> My pages </font><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/myPages"><font color="green">Change userinfo</font></a></li>
+                            <li><a href="#/changePassword"><font color="green">Change password</font></a></li>
+                            <li><a href="#/orderHistory"><font color="green">Order history</font></a></li>
+                        </ul>
+                    </li>
+                    <li ng-if="!isLoggedIn"><a href="#/logIn"><font color="green"><span class="glyphicon glyphicon-log-in"></span> Login</font></a></li>
+                    <li><a href="#/cart"><font color="green"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</font></a></li>
+                    <li ng-if="isLoggedIn"><a href="/Person/LogOutUser"><font color="green"><span class="glyphicon glyphicon-log-out"></span> Log out</font></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Erika Mathisson</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.1.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Angular/app.js"></script>
+
+    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+    {
+        <script src="~/Angular/userApp.js"></script>
+    }
+
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <script src="~/Angular/adminApp.js"></script>
+    }
+
+</body>
+</html>

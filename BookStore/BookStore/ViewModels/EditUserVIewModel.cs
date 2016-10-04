@@ -10,7 +10,10 @@ namespace BookStore.ViewModels
     {
         [Required]
         public string Id { get; set; }
-        
+
+        [Required]
+        public string UserName { get; set; }
+
         [Required]
         [MinLength(4)]
         [MaxLength(25)]

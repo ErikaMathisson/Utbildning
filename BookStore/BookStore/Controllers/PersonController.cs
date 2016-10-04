@@ -208,10 +208,11 @@ namespace BookStore.Controllers
                 {
                     //user logged in, return to home page
                     case SignInStatus.Success:
-                        return Json("Success");
+                        string role = (User.IsInRole("Admin")) ? "Admin" : "User";
+                        return Json(new { status = "Success", role = role });
                     //user not logged in, show information for the user
                     case SignInStatus.Failure:
-                        return Json("Failure");
+                        return Json(new { status = "Failure", role = "" });
                     default:
                         break;
                 }
@@ -251,6 +252,7 @@ namespace BookStore.Controllers
             {
                 FirstName = x.FirstName,
                 LastName = x.LastName,
+                UserName = x.UserName,
                 Address = x.Address,
                 City = x.City,
                 ZipCode = x.ZipCode,
@@ -260,6 +262,19 @@ namespace BookStore.Controllers
 
             // return peoples, allowing the method to be HttpGet
             return Json(people, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public JsonResult IsLoggedIn()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var role = (User.IsInRole("Admin")) ? "Admin" : "User";
+                return Json(new { status = true, role = role });
+
+            }
+            return Json(null);
 
         }
     }

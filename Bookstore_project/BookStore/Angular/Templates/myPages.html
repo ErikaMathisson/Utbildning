@@ -1,0 +1,49 @@
+﻿<!-- myPages.html -->
+
+<h1>My pages - Change info </h1>
+
+<p class="pageInfo">{{ message }}</p>
+
+<div ng-controller="myPagesController as mpc">
+    <form ng-show="myForm" class="form-horizontal" name="myForm" method="post" novalidate>
+        <div class="form-group">
+            <label class="control-label col-xs-2">User name: </label>
+            <input ng-model="myPerson.UserName" class="form-control" ng-minlength="4" ng-maxlength="25" ng-readonly="true" ng-required="true" name="UserName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">First name: </label>
+            <input ng-model="myPerson.FirstName" class="form-control" ng-minlength="4" ng-maxlength="25" ng-required="true" name="FirstName" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Last name: </label>
+            <input ng-model="myPerson.LastName" class="form-control" ng-minlength="4" ng-maxlength="25" ng-required="true" name="LastName" />
+        </div>        
+        <div class="form-group">
+            <label class="control-label col-xs-2">Email: </label>
+            <input ng-model="myPerson.Email" class="form-control" type="email" ng-minlength="7" ng-maxlength="30" ng-readonly="true" ng-required="true" name="Email" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Address: </label>
+            <input ng-model="myPerson.Address" class="form-control" ng-minlength="4" ng-maxlength="25" ng-required="true" name="Address" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">City: </label>
+            <input ng-model="myPerson.City" class="form-control" ng-minlength="4" ng-maxlength="25" ng-required="true" name="City" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Zip code: </label>
+            <input ng-model="myPerson.ZipCode" class="form-control" ng-minlength="5" ng-maxlength="10" ng-required="true" name="ZipCode" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-2">Phone number: </label>
+            <input ng-model="myPerson.PhoneNumber" class="form-control" ng-minlength="9" ng-maxlength="15" name="PhoneNumber" />
+        </div>
+        <div class="form-group">
+            <input type="hidden" ng-model="myPerson.Id" />
+        </div>
+        <button type="submit" ng-disabled="addForm.$invalid" ng-click="mpc.updatePerson()" class="btn btn-success">Submit</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+    </form>
+    <font color="red"> {{statusMessage}} </font>
+    <br />  
+    </div>

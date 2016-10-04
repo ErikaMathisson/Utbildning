@@ -1,0 +1,34 @@
+﻿<!-- checkout.html -->
+<h1>Check out</h1>
+
+<p class="pageInfo">{{ message }}</p>
+
+<div ng-controller="checkoutController as checkC">
+
+    <div class="col-xs-12">
+        <div class="col-xs-2" style="font-size:large">Title</div>
+        <div class="col-xs-2" style="font-size:large">Author</div>
+        <div class="col-xs-2" style="font-size:large">ISBN</div>
+        <div class="col-xs-2" style="font-size:large">Price</div>
+        <div class="col-xs-2" style="font-size:large">No of item</div>
+        <div class="col-xs-1" style="font-size:large">Action</div>
+
+    </div>
+    <br />
+    <div class="col-xs-12" ng-repeat="book in cart |filter:search track by $index">
+        <div class="col-xs-2">{{book.Title}}</div>
+        <div class="col-xs-2">{{book.Author}}</div>
+        <div class="col-xs-2">{{book.ISBN}}</div>
+        <div class="col-xs-2">{{book.Price}}</div>
+        <div class="col-xs-2">{{book.NoOfItem}}</div>
+    </div>
+    <br />
+    <br />
+    <div class="col-xs-12 col-xs-offset-10">
+        <p class="text-danger" ng-show="!isLoggedIn">You need to log in before you can go to checkout!</p>
+        <button type="submit" ng-disabled="!isLoggedIn" ng-click="checkC.placeOrder()" class="btn btn-success">Place order</button>
+        <button type="reset" ng-click="go('/cart')" class="btn btn-default">Go back to cart</button>
+    </div>
+    {{orderInfo.Id}}
+    {{orderInfo.OrderDate|date:'yyyy/MM/dd'}}
+</div>
